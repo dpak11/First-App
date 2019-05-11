@@ -58,8 +58,13 @@ console.log(net.run([3,1]));
 */
 
 
-const fetch = require('node-fetch');
-const lodash = require('lodash');
+
+
+
+
+
+//const fetch = require('node-fetch');
+//const lodash = require('lodash');
 
 function sleep(seconds) {
     let ms = seconds * 1000;
@@ -142,7 +147,7 @@ async function sleepFetch(n) {
     const statusList = ["Div...", "Single", "Single moth...", "Married", "[Unknown]", "[Private]", "[Private]"];
     const indianList = generateIndianList();
     const bundleList = [...indianList, ...emaiList];
-    const the_list = lodash.shuffle(bundleList);
+    const the_list = _.shuffle(bundleList);
     let onlyMail = the_list.map(data => {
 
         return {
@@ -153,10 +158,11 @@ async function sleepFetch(n) {
         
 
     });
-    //initConsole(onlyMail, 0);
+    initConsole(onlyMail, 0);
 
 
 }
 
+sleepFetch(2);
 
-module.exports = sleepFetch;
+//module.exports = sleepFetch;

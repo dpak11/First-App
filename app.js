@@ -1,22 +1,21 @@
-const http = require('http');
-const tester = require('./tester');
+
+const express = require("express");
+const app = express();
+//const tester = require('./tester');
+
+app.use(express.static(__dirname + "/public"));
 
 const port = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
 
-    res.statusCode = 200;
 
-    res.setHeader('Content-Type', 'text/html');
-
-    res.end('<h1>Hello World !!!</h1>');
-
+app.get("/", (req, res) => {
+    console.log("main page >> " + __dirname);
+    res.sendFile(__dirname + "/public/main.html");
+    // tester(2);
 
 });
 
-server.listen(port, () => {
-
+app.listen(port, () => {
     console.log(`Server running at port ` + port);
-    tester(2);
-
-});
+})
