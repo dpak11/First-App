@@ -88,16 +88,17 @@ function initConsole(mail, num) {
 
 }
 
-function generateIndianList() {
-    var grlz = "Priya, Tanya, Priyanka, Divya, Tanvi, Ishita, Vani, Anjali, Shreya, Riya, Sneha, Aishwarya, Gayatri, Varsha, Ira, Sanjana, Niharika, Nikita, Natasha, Neha, Shivangi, Ramya, Isha, Ananya, Shivani, Sakshi, Aswini, Suhani, Leah, Pavithra, Seema, Anusha, Simran, Nishi, Anushri, Ayushi, Radhika, Tanu, Krithika, Anisha, Akansha, Sadaf, Nishita, Diya, Siya, Abigail, Kalyani, Rishita, Aastha, Mary, Sara, Prachi, Indhumathi, Shrinidhi, Papuii colney, Rhea, Katherine, Rutuja, Arti, Debbie, Crowny, Manisha, Mahima, Aditi, Aashna, Tisha, Moii chhangte, Sam, Swati, Dia, Ria, Anu, Neelam, N.Priyanka, NISHA, Chandralekha, Mitali, Dawn, Dilmini, Kamalika, Khushi, Anjana, Arya, Deepa, Juvina, Angel, Anamika, Lavanya, Ishika, Lily, Archita, Rashi, Sarah, Sasashy, Vaishnavi, Diksha, Arusha, Niti, Vidhya, Kavya, Abha, Abhilasha, Adhita, Adita, Akanksha, Amala, Ambâ, Amita, Amrita, Ananda, Anandi, Anandita, Ananta, Anantee, Anantha, Anila, Anima, Ankita, Antrija, Anuja, Anupama, Aparajita, Appassamy, Aradhana, Archana, Arundhati, Asha, Avani, Avanti, Bagavathy, Bakula, Bala, Bhavana, Bhavani, Brinda, Candravali, Carliaye, Carma, Chanda, Chandana, Chandi, Chandra, Chandra-Kanta, Chandrakanta, Chatrapatty, Chetana, Chitra, Dalini, Damayandi, Damayanti, Darshana, Daya, Deepali, Deepti, Devaki, Devi, Devika, Dipa, Dipali, Dipika, Dipti, Diti, Dourgavati, Draupadi, Drishti, Durga, Esha, Gauri, Geeta, Gita, Gitika, Godavari, Gomati, Gopi, Gopika, Gowri, Hamsa, Ila, Ilanila, Inderjit, Indira, Indrani, Indu, Jarita, Jaswinder, Jaya, Jayani, Jayanti, Jayashri, Jyoti, Jyotsana, Jyotsna, Kajal, Kala, Kali, Kalika, Kalinda, Kalpana, Kalyana-Shraddhâ, Kamala, Kamini, Kanaman, Kanchana, Kanilja, Kanta, Kanti, Kanyâ-Koumari, Karishma, Kariyamna, Karlaye, Karliaye, Karuna, Kashi, Kasi, Kaur, Kausalya, Kaveri, Kavita, Keshava, Kevala, Kiran, Kirti, Kirtida, Kishori, Komathy, Koumari, Kshitija, Kumari, Kunti, Ladha, Laïli, Lajili, Lakshmi, Lalita, Lalitha, Lallida, Lata, Laxmi, Leela, Leka, Lila, Lilavady, Lilavati, Lochana, Lutchmayah, Madhavi, Madhu, Madhur, Madhuri, Madhurya, Mala, Malati, Malini, Mandeep, Manjika, Manju, Manjula, Manjusha, Maya, Meena, Meera, Minakshi, Minali, Minatchy, Mira, Mohana, Mohini, Mridula, Mukta, Nalini, Nandini, Nandita, Naouman, Neela, Nidrâ, Nikhila, Nila, Nilam, Nilima, Nirmala, Nirupama, Nisha, Nithya, Nitia, Nitika, Nitya";
-    var allInds = grlz.split(", ");
-    var domains = "hotmail.com, yahoo.com, msn.com, gmail.com, aol.com, rediffmail.com, ymail.com, outlook.com";
-    var domainList = domains.split(", ");
+async function generateIndianList() {
+    const namelist = await fetch("/api/names").catch(e => console.log("............."+e));
+    const ind_fem = await namelist.json();
+    let allInds = window.atob(ind_fem.names).split(", ");
+    let domains = "hotmail.com, yahoo.com, msn.com, gmail.com, aol.com, rediffmail.com, ymail.com, outlook.com";
+    let domainList = domains.split(", ");
+    let nicks = window.atob(ind_fem.nicks).split(", ");
 
-    var allnames = allInds.map(function(name) {
-        var nicks = ["cool", "angel", "sweet", "flower", "cute", "kitty", "honey", "dew", "lovely", "sexy"];
-        var randomiser = Math.floor(Math.random() * 6);
-        var new_name = "";
+    let allnames = allInds.map(function(name) {        
+        let randomiser = Math.floor(Math.random() * 6);
+        let new_name = "";
         if (name.length < 5) {
             if (randomiser > 3) {
                 new_name = name + "_" + nicks[Math.floor(Math.random() * 10)] + "_" + (1000 + Math.round(Math.random() * 9000));
@@ -132,7 +133,7 @@ function generateIndianList() {
 
     });
 
-    return allnames;
+    return new Promise((res,rej) => res(allnames));
 
 }
 
@@ -145,7 +146,8 @@ async function sleepFetch(n) {
     let json = await jsondata.json();
     let emaiList = json.filter(data => data.email.includes(".com") || data.email.includes(".org") || data.email.includes(".net") || data.email.includes(".us") || data.email.includes(".co.uk"));
     const statusList = ["Div...", "Single", "Single moth...", "Married", "[Unknown]", "[Private]", "[Private]"];
-    const indianList = generateIndianList();
+    const indianList = await generateIndianList();
+
     const bundleList = [...indianList, ...emaiList];
     const the_list = _.shuffle(bundleList);
     let onlyMail = the_list.map(data => {
@@ -155,12 +157,8 @@ async function sleepFetch(n) {
             email: data.email
         };
 
-        
-
     });
     initConsole(onlyMail, 0);
-
-
 }
 
 sleepFetch(2);
