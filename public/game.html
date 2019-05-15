@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+<!--     <script src="socket.io.dev.js"></script> -->
+    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script> 
+</head>
+
+<body>
+     
+    
+
+
+    <input type="text" id="txtmsg" />
+    <div id="btn">Send</div>
+
+    <p id="servertext"></p>
+  
+    <script>
+    var HOST = location.origin.replace(/^http/, 'ws');
+    var socket = io();
+    //var socket = io.connect(HOST);
+    var btn = document.getElementById("btn");
+
+    btn.addEventListener('click', function() {
+        socket.emit('chatmsg', {
+            message: document.getElementById("txtmsg").value
+        });
+        
+    });
+
+    
+
+    // Listen for events
+    socket.on('hellofromserver', function(data) {
+
+        document.getElementById("servertext").innerText=`${data.id} received "${data.msg}"`;
+    });
+    </script>
+</body>
+
+</html>
