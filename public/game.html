@@ -6,6 +6,16 @@
     <title>Game</title>
 <!--     <script src="socket.io.dev.js"></script> -->
     <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script> 
+    <style>
+        table{
+            margin:auto;
+        }
+        td{
+            width:50px;
+            height:50px;
+            border: 1px solid black
+        }
+    </style>
 </head>
 
 <body>
@@ -17,12 +27,58 @@
     <div id="btn">Send</div>
 
     <p id="servertext"></p>
+        <table>
+            <tr>
+                <td id="cell0"></td>
+                <td id="cell1"></td>
+                <td id="cell2"></td>
+                <td id="cell3"></td>
+                <td id="cell4"></td>
+            </tr>
+            <tr>
+                <td id="cell5"></td>
+                <td id="cell6"></td>
+                <td id="cell7"></td>
+                <td id="cell8"></td>
+                <td id="cell9"></td>
+            </tr>
+            <tr>
+                <td id="cell10"></td>
+                <td id="cell11"></td>
+                <td id="cell12"></td>
+                <td id="cell13"></td>
+                <td id="cell14"></td>
+            </tr>
+            <tr>
+                <td id="cell15"></td>
+                <td id="cell16"></td>
+                <td id="cell17"></td>
+                <td id="cell18"></td>
+                <td id="cell19"></td>
+            </tr>
+            <tr>
+                <td id="cell20"></td>
+                <td id="cell21"></td>
+                <td id="cell22"></td>
+                <td id="cell23"></td>
+                <td id="cell24"></td>
+            </tr>
+        </table>
+
   
     <script>
     var HOST = location.origin.replace(/^http/, 'ws');
     var socket = io();
     //var socket = io.connect(HOST);
     var btn = document.getElementById("btn");
+    var cells = document.querySelectorAll("td");
+    cells.forEach(function(elem){
+        elem.addEventListener("click", function(e){
+            e.preventDefault();
+            e.target.style.background="orange"
+        });
+
+    });
 
     btn.addEventListener('click', function() {
         socket.emit('chatmsg', {
@@ -31,11 +87,8 @@
         
     });
 
-    
-
     // Listen for events
     socket.on('hellofromserver', function(data) {
-
         document.getElementById("servertext").innerText=`${data.id} received "${data.msg}"`;
     });
     </script>
