@@ -3,17 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content=""> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game</title>
 <!--     <script src="socket.io.dev.js"></script> -->
     <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script> 
     <style>
         table{
             margin:auto;
+            border: 1px solid black
         }
         td{
             width:50px;
             height:50px;
-            border: 1px solid black
+            border-radius: 50px
+            /* border: 1px solid black */
         }
     </style>
 </head>
@@ -72,10 +77,14 @@
     //var socket = io.connect(HOST);
     var btn = document.getElementById("btn");
     var cells = document.querySelectorAll("td");
+    var currentElt;
+
     cells.forEach(function(elem){
         elem.addEventListener("click", function(e){
             e.preventDefault();
-            e.target.style.background="orange"
+            e.target.style.background="orange";
+            currentElt = e.target;
+             socket.emit('tapped', {msg: ""});
         });
 
     });
@@ -90,6 +99,14 @@
     // Listen for events
     socket.on('hellofromserver', function(data) {
         document.getElementById("servertext").innerText=`${data.id} received "${data.msg}"`;
+    });
+
+    socket.on('tapReceived', function() {
+        currentElt.style.background="black";
+    });
+
+     socket.on('disconnected', function(data) {
+        document.getElementById("servertext").innerText=`${data.id} is disconnected"`;
     });
     </script>
 </body>

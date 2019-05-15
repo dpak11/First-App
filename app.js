@@ -48,9 +48,14 @@ io.on('connection', (socket) => {
         //socket.broadcast.emit('hi');
     });
 
+    socket.on('tapped', function() {
+        socket.emit('tapReceived',"");
+    });
+
 
     socket.on('disconnect', function() {
         console.log('user disconnected: ' + socket.id);
+        socket.broadcast.emit('disconnected',{id:socket.id});
     });
 
 
