@@ -25,6 +25,17 @@
         text-align: right
     }
 
+    #gameover {
+        font-size: 40px;
+        font-weight: bold;
+        color: #21b5e8;
+        text-align: center;
+        position: relative;
+        top: -300px;
+        opacity: .4;
+        display: none
+    }
+
     .row p {
         text-align: center;
         height: 48px;
@@ -33,7 +44,7 @@
         /* opacity: .4; */
 
     }
-    
+
 
     .container {
         max-width: 365px;
@@ -45,10 +56,12 @@
         height: 100%;
         background: var(--color-main);
     }
-    #points div{
+
+    #points div {
         text-align: center
     }
-    #points span{
+
+    #points span {
         font-size: 2em;
         font-weight: bold
     }
@@ -90,14 +103,16 @@
         }
     }
 
-    @keyframes explosion {
-        
-        to{
-            opacity: .1; 
-            transform: scale(3,3);
+    @keyframes implosion {
+
+        to {
+            opacity: .1;
+            transform: scale(.5, .5);
         }
-        
+
     }
+
+   
 
     .apply-shake {
         animation: shake 0.5s infinite;
@@ -108,9 +123,11 @@
         animation-name: fadeaway;
         animation-duration: 1.5s;
     }
-     .explode {
-        animation-name: explosion;
+
+    .implode {
+        animation-name: implosion;
         animation-duration: 1s;
+        animation-delay: .5s
     }
 
     
@@ -159,126 +176,13 @@
                 <div class="row" id="points">
                     <div class="col-12"><span>0</span> points</div>
                 </div>
+                <div class="row" id="gameover">
+                    <div class="col-12"><span>Game Over</span></div>
+                </div>
             </div>
-            
         </div>
-
     </div>
-   
-    <script>
-    let socket = io();
-    /* var btn = document.getElementById("btn");*/
-    let cells = document.querySelectorAll("p");
-    let currentElt;
-    let singlePlayer = true;
-    let rndm = [];
-    let bomber = 14;
-    let cellsLoop = 0;
-    let totalPoints = 0;
-
-    const pointsSound = new Audio("points.mp3");
-    const missoutSound = new Audio("missout.mp3");
-    const bombSound = new Audio("bombsound.mp3");
-
-    const vaporizeRemaining = () => {
-        let remainingActive = document.querySelectorAll("p[data-active='on']");
-        if(remainingActive.length>0){
-             remainingActive.forEach(function(e){
-                e.addEventListener("animationend", function(el) {
-                    el.style.opacity = 0;
-                    console.log("animation ended")
-                }, false);
-                e.classList.add("explode")
-           })
-        }
-       
-    }
-
-    const initRandomCells = () => {
-        for (let i in rndm) {
-            let tabcell = "cell" + rndm[i];
-            document.getElementById(tabcell).style.opacity = 1;
-            document.getElementById(tabcell).setAttribute("data-active", "on");
-        }
-
-        // Bind Events
-
-        cells.forEach(function(elem) {
-            
-            elem.addEventListener("click", function(e) {
-                e.preventDefault();
-                currentElt = e.target;
-                socket.emit('tapped', { msg: "" });
-                if (e.target.getAttribute("data-active") == "on") {
-                    if (bomber === parseInt(e.target.getAttribute("id").split("cell")[1])) {
-                        e.target.classList.add("apply-shake", "redbomb");  
-                        bombSound.play();                      
-                        //vaporizeRemaining();
-
-                    } else {
-                        e.target.style.background = "url(images/box-green.png) center no-repeat";
-                        totalPoints++;
-                        document.querySelector("#points span").innerText = totalPoints;
-                        pointsSound.play();
-                    }
-                    e.target.setAttribute("data-active", "");
-
-
-                } else {
-                    e.target.addEventListener("animationend", function(e) {
-                        e.target.style.opacity = 0
-                    }, false);
-                    e.target.classList.add("disappear");
-                    missoutSound.play();
-                }
-
-            });
-
-        });
-    }
-
-
-    const randomizer = (n) => {
-        let nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-        for (let z = 0; z < n; z++) {
-            let rnd_pos = Math.floor(Math.random() * nums.length);
-            rndm.push(nums[rnd_pos]);
-            nums.splice(rnd_pos, 1)
-        }
-        bomber = rndm[Math.floor(Math.random() * rndm.length)];
-        console.log(bomber);
-        initRandomCells();
-    }
-
-
-    randomizer(10);
-
-
-
-
-
-    /*  btn.addEventListener('click', function() {
-          socket.emit('chatmsg', {
-              message: document.getElementById("txtmsg").value
-          });
-
-      });*/
-
-    // Listen for events
-    socket.on('hellofromserver', function(data) {
-        document.getElementById("servertext").innerText = `${data.id} received "${data.msg}"`;
-    });
-
-    socket.on('tapReceived', function() {
-
-        //currentElt.style.background = "url(images/box-green.png)"
-
-    });
-
-    socket.on('disconnected', function(data) {
-        document.getElementById("servertext").innerText = `${data.id} is disconnected"`;
-    });
-    </script>
+    <script src="game.js"></script>
 </body>
 
 </html>
