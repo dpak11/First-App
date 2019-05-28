@@ -12,22 +12,34 @@ const pointsSound = new Audio("points.mp3");
 const missoutSound = new Audio("missout.mp3");
 const bombSound = new Audio("bombsound.mp3");
 
+if (Modernizr.queryselector) {
+    let allclasses = document.querySelector("html").getAttribute("class").trim();
+    if(allclasses.includes("no-")){
+        alert("To play this game, you must have latest version of Google Chrome browser");
+        alert(allclasses)
+    }
+   console.log(allclasses);
+
+}else{
+    alert("To play this game, you must have latest version of Google Chrome browser")
+}
+
 const vaporizeRemaining = () => {
-    let remainingElts= document.querySelectorAll("p");
+    let remainingElts = document.querySelectorAll("p");
     document.querySelector("#gameover span").innerText = `Game Over!
     You Scored ${totalPoints} points`;
     remainingElts.forEach(function(e) {
-        if(!e.getAttribute("class").includes("disappear") && !e.getAttribute("class").includes("apply-shake")){
+        if (!e.getAttribute("class").includes("disappear") && !e.getAttribute("class").includes("apply-shake")) {
             e.addEventListener("animationend", function(el) {
                 el.target.style.opacity = 0;
-                document.getElementById("gameover").style.display="block";
-                document.getElementById("points").style.display="none";
+                document.getElementById("gameover").style.display = "block";
+                document.getElementById("points").style.opacity = 0;
             }, false);
             e.classList.add("implode")
         }
-        
+
     })
-    
+
 
 }
 
