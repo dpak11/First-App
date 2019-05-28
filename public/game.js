@@ -8,14 +8,24 @@ let bomber = 14;
 let cellsLoop = 0;
 let totalPoints = 0;
 
-const pointsSound = new Audio("points.mp3");
+/*const pointsSound = new Audio("points.mp3");
 const missoutSound = new Audio("missout.mp3");
-const bombSound = new Audio("bombsound.mp3");
+const bombSound = new Audio("bombsound.mp3");*/
+
+const pointsSound = new Howl({
+  src: ['points.mp3', 'points.wav']
+});
+const missoutSound = new Howl({
+  src: ['missout.mp3', 'missout.wav']
+});
+const bombSound = new Howl({
+  src: ['bombsound.mp3', 'bombsound.wav']
+});
 
 if (Modernizr.queryselector) {
     let allclasses = document.querySelector("html").getAttribute("class").trim();
     if(allclasses.includes("no-")){
-        alert("To play this game, you must have latest version of Google Chrome browser");
+        alert("Please upgrade your browser to Google Chrome");
         alert(allclasses)
     }
    console.log(allclasses);
@@ -53,7 +63,6 @@ const initRandomCells = () => {
     // Bind Events
 
     cells.forEach(function(elem) {
-
         elem.addEventListener("click", function(e) {
             e.preventDefault();
             currentElt = e.target;
@@ -67,8 +76,10 @@ const initRandomCells = () => {
                 } else {
                     e.target.style.background = "url(images/box-green.png) center no-repeat";
                     totalPoints++;
-                    document.querySelector("#points span").innerText = totalPoints;
+                    document.querySelector("#points span").innerText = totalPoints;                    
                     pointsSound.play();
+                    
+                    
                 }
                 e.target.setAttribute("data-active", "off");
 
@@ -79,6 +90,11 @@ const initRandomCells = () => {
                 }, false);
                 e.target.classList.add("disappear");
                 missoutSound.play();
+                /*if(pointsSound.paused){
+                        pointsSound.play(1);
+                    }else{
+                        pointsSound.play(1);
+                    }*/
 
             }
 
