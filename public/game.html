@@ -9,130 +9,35 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <title>Game</title>
     <!--     <script src="socket.io.dev.js"></script> -->
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script type="text/javascript" src="socket.io.js"></script>
-    <style>
-    body {
-        --color-main: white;
-    }
-
-    p.redbomb {
-        background: url(images/box-red.png) center no-repeat !important;
-
-    }
-
-    #btn {
-        text-align: right
-    }
-
-    #gameover {
-        font-size: 40px;
-        font-weight: bold;
-        color: #21b5e8;
-        text-align: center;
-        position: relative;
-        top: -300px;
-        opacity: .4;
-        display: none
-    }
-
-    .row p {
-        text-align: center;
-        height: 48px;
-        width: 48px;
-        background: url(images/box.png) center no-repeat;
-    }
-
-
-    .container {
-        max-width: 365px;
-        height: 95vh;
-        /* background: lightgrey */
-    }
-
-    .container>div {
-        height: 100%;
-        background: var(--color-main);
-    }
-
-    #points div {
-        text-align: center
-    }
-
-    #points span {
-        font-size: 2em;
-        font-weight: bold
-    }
-
-    @keyframes shake {
-
-        10%,
-        90% {
-            transform: translate3d(-1px, 0, 0);
-        }
-
-        20%,
-        80% {
-            transform: translate3d(2px, 0, 0) rotate(15deg);
-        }
-
-        30%,
-        50%,
-        70% {
-            transform: translate3d(-3px, 0, 0);
-        }
-
-        40%,
-        60% {
-            transform: translate3d(4px, 0, 0) rotate(-5deg);
-        }
-
-        100% {
-            transform: translate3d(5px, 0, 0) rotate(5deg);
-        }
-    }
-
-    @keyframes fadeaway {
-        to {
-            opacity: 0;
-            transform: translate(5px, -50px);
-
-
-        }
-    }
-
-    @keyframes implosion {
-
-        to {
-            opacity: .1;
-            transform: scale(.5, .5);
-        }
-
-    }
-
-
-
-    .apply-shake {
-        animation: shake 0.5s 5;
-
-    }
-
-    .disappear {
-        animation-name: fadeaway;
-        animation-duration: 1.5s;
-    }
-
-    .implode {
-        animation-name: implosion;
-        animation-duration: 1s;
-        animation-delay: .5s
-    }
-    </style>
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="assets/socket.io.js"></script>
 </head>
 
 <body>
+     
     <div class="container">
-        <div class="row align-items-center">
+        <div id="GameHeader" class="row show-none">
+            <div class="col6" id="chgID"></div>
+            <div class="col6" id="statusMsg"></div>
+            <div class="col12" id="challengerInfo"></div>
+        </div>
+        <div id="playmode" class="row align-items-center show-none">
+            <div class="col">
+                <h5 id="oneplayer" class="btn btn-primary">Single Player</h5>
+            </div>
+            <div class="col">
+                <h5 id="twoplayer" class="btn btn-primary">Two Players</h5>
+                <div id="joinoraccept">
+                    <input id="username" type="text" placeholder="Type your name here"> <br />
+                    <span id="createBtn" class="btn btn-outline-primary">Challenge someone </span> (or) <span id="joinBtn" class="btn btn-outline-primary">Accept a Challenge</span> <br />
+                    <div id="acceptBlock">
+                        <input id="acceptID" type="text" placeholder="Enter Game ID"> <span id="readyBtn" class="btn btn-outline-primary btn-sm"> I am Ready </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="gametable" class="row align-items-center show-none">
             <div class="col-12">
                 <div class="row">
                     <p class="col" id="cell0"></p>
@@ -178,8 +83,8 @@
             </div>
         </div>
     </div>
-    <script src="howler.min.js"></script>
-    <script src="modernizr-custom.js"></script>
+    <script src="assets/howler.min.js"></script>
+    <script src="assets/modernizr-custom.js"></script>
     <script src="game.js"></script>
 </body>
 

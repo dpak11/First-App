@@ -1,0 +1,153 @@
+    #playmode h5 {
+        cursor: pointer;
+
+    }
+
+
+    #statusMsg {
+        padding: 5px;
+        color: #e1e9d2;
+        background: #476b8f;
+        opacity:0;
+    }
+
+    .marked.zoom{
+        transform: scale(1.3);
+    }
+
+    .show-none,
+    #joinoraccept,
+    #acceptBlock {
+        display: none;
+    }
+
+    #gametable p.redbomb {
+        background: url(images/box-red.png) center no-repeat !important;
+
+    }
+
+    #gametable p.greenbox {
+        background: url(images/box-green.png) center no-repeat !important;
+    }
+
+    #btn {
+        text-align: right
+    }
+
+    #challengerInfo {
+        font-size: 20px;
+        text-align: center;
+        padding-top: 15px;
+        color: #9590e7;
+
+    }
+    #challengerInfo span{
+        font-weight: bold;
+        font-size: 26px
+    }
+
+    #gameover {
+        font-size: 40px;
+        font-weight: bold;
+        color: #21b5e8;
+        text-align: center;
+        position: relative;
+        top: -300px;
+        opacity: .4;
+        display: none
+    }
+
+    #gametable .row p {
+        text-align: center;
+        height: 48px;
+        width: 48px;
+        background: url(images/box.png) center no-repeat;
+    }
+
+
+    .container {
+        max-width: 365px;
+        height: 95vh;
+        /* background: lightgrey */
+    }
+
+    .container>div {
+        height: 100%;
+    }
+
+    #GameHeader {
+        height: auto !important;
+    }
+
+    #points div {
+        text-align: center
+    }
+
+    #points span {
+        font-size: 2em;
+        font-weight: bold
+    }
+
+    @keyframes shake {
+
+        10%,
+        90% {
+            transform: translate3d(-1px, 0, 0);
+        }
+
+        20%,
+        80% {
+            transform: translate3d(2px, 0, 0) rotate(15deg);
+        }
+
+        30%,
+        50%,
+        70% {
+            transform: translate3d(-3px, 0, 0);
+        }
+
+        40%,
+        60% {
+            transform: translate3d(4px, 0, 0) rotate(-5deg);
+        }
+
+        100% {
+            transform: translate3d(5px, 0, 0) rotate(5deg);
+        }
+    }
+
+    @keyframes fadeaway {
+        to {
+            opacity: 0;
+            transform: translate(5px, -50px);
+
+
+        }
+    }
+
+    @keyframes implosion {
+
+        to {
+            opacity: .1;
+            transform: scale(.5, .5);
+        }
+
+    }
+
+
+
+    .apply-shake {
+        animation: shake 0.5s 5;
+
+    }
+
+    .disappear {
+        animation-name: fadeaway;
+        animation-duration: 1.5s;
+    }
+
+    .implode {
+        animation-name: implosion;
+        animation-duration: 1s;
+        animation-delay: .5s
+    }
