@@ -202,8 +202,8 @@
                  }
              }
              if (!isChallenger) {
-                 if (thisElt.getAttribute("data-active") == "on") {
-                     let _num = parseInt(thisElt.getAttribute("id").split("cell")[1]);
+                let _num = parseInt(thisElt.getAttribute("id").split("cell")[1]);
+                 if (thisElt.getAttribute("data-active") == "on") {                     
                      if (bomber === _num) {
                          gameState.bombed(thisElt);
                          if(!singlePlayer){
