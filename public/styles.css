@@ -11,6 +11,10 @@
         opacity:0;
     }
 
+    #chgID span{
+        font-weight: bold;
+    }
+
     .marked.zoom{
         transform: scale(1.3);
     }
@@ -75,8 +79,14 @@
         height: 100%;
     }
 
-    #GameHeader {
+    #GameHeader, #anotherGameOpt {
         height: auto !important;
+    }
+    #anotherGameOpt{
+        top: auto;
+        position: absolute;
+        z-index: 10;
+        text-align: center
     }
 
     #points div {

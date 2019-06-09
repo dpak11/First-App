@@ -44,13 +44,13 @@ const getroomID = () => {
 
 const broadcastCellPicks = (socket, status, data) => {
     let socket_room = io.sockets.mygameRooms;
-        let _id = data.id;
-        for (let i in socket_room) {
-            if (socket_room[i].id == _id) {                
-                socket.broadcast.to(io.sockets.mygameRooms[i].players[0].sock).emit('player2CellPicked', { state: status, cell: data.cell });                            
-                break;
-            }
+    let _id = data.id;
+    for (let i in socket_room) {
+        if (socket_room[i].id == _id) {
+            socket.broadcast.to(io.sockets.mygameRooms[i].players[0].sock).emit('player2CellPicked', { state: status, cell: data.cell });
+            break;
         }
+    }
 }
 
 io.on('connection', (socket) => {
@@ -58,13 +58,29 @@ io.on('connection', (socket) => {
 
     socket.on('createRoom', function(data) {
         console.log("Creating for: " + data.player1);
+
         let obj = {
             id: getroomID(),
             players: [{ sock: socket.id, name: data.player1.toLowerCase() }]
         };
 
+
         if (io.sockets.mygameRooms) {
-            io.sockets.mygameRooms.push(obj);
+            let soc_room = io.sockets.mygameRooms;
+            if (data.preserveReload) {
+                for (var j in soc_room) {
+                    if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
+                        soc_room[j].players[0].sock = socket.id;
+                        console.log("Create room preserve...");
+                        socket.emit("roomcreated", { player: data.player1, id: data.id });
+                        //socket.emit("objectDebug", io.sockets.mygameRooms[j]); 
+                        break;
+                    }
+                }
+            } else {
+                io.sockets.mygameRooms.push(obj);
+                socket.emit("roomcreated", { player: data.player1, id: obj.id });
+            }
             console.log("Pushed data into io.sockets array");
 
         } else {
@@ -72,10 +88,11 @@ io.on('connection', (socket) => {
             rooms.push(obj);
             io.sockets.mygameRooms = rooms;
             console.log("created New rooms array in io.sockets");
+            socket.emit("roomcreated", { player: data.player1, id: obj.id });
         }
 
 
-        socket.emit("roomcreated", { player: data.player1, id: obj.id });
+
 
         //broadcast to everyone except this socket
         //socket.broadcast.emit('hi');
@@ -95,11 +112,18 @@ io.on('connection', (socket) => {
                         matched = true;
                         let ply = socket_room[rm].players;
                         let plName = data.player2.toLowerCase();
-                        if (ply.length == 1) {
+                        if ((!socket_room[rm].preserveReload && ply.length == 1) || (socket_room[rm].preserveReload && ply.length == 2)){
                             if (ply[0].name != plName) {
-                                io.sockets.mygameRooms[rm].players.push({ sock: socket.id, name: plName });
-                                socket.emit('joined', { players: io.sockets.mygameRooms[rm].players, id: acceptID, cells: io.sockets.mygameRooms[rm].cellPoints});
-                                socket.broadcast.to(socket_room[rm].players[0].sock).emit('player2in', { players: io.sockets.mygameRooms[rm].players, id: acceptID });
+                                if (socket_room[rm].preserveReload) {
+                                    console.log("joing room preserve reload");
+                                    io.sockets.mygameRooms[rm].players[1].sock = socket.id;
+                                    io.sockets.mygameRooms[rm].preserveReload = false;
+                                } else {
+                                    io.sockets.mygameRooms[rm].players.push({ sock: socket.id, name: plName });
+                                }
+
+                                socket.emit('joined', { players: io.sockets.mygameRooms[rm].players, id: acceptID, cells: io.sockets.mygameRooms[rm].cellPoints });
+                                socket.broadcast.to(io.sockets.mygameRooms[rm].players[0].sock).emit('player2in', { players: io.sockets.mygameRooms[rm].players, id: acceptID });
                                 break;
                             } else {
                                 socket.emit('duplicateName', "");
@@ -134,19 +158,51 @@ io.on('connection', (socket) => {
         for (let i in socket_room) {
             if (socket_room[i].id == _id) {
                 io.sockets.mygameRooms[i].cellPoints = data.cells;
+                if (data.preserve) {
+                    socket.emit("objectDebug", socket_room[i]); 
+                    socket.broadcast.to(socket_room[i].players[1].sock).emit('Player2Refresh', '');
+                }
                 break;
             }
-        }        
+        }
     });
 
     socket.on('correctPick', function(data) {
-        broadcastCellPicks(socket, "correct", data);        
+        broadcastCellPicks(socket, "correct", data);
     });
     socket.on('wrongPick', function(data) {
         broadcastCellPicks(socket, "wrong", data);
     });
     socket.on('bombPick', function(data) {
         broadcastCellPicks(socket, "bomb", data);
+    });
+
+    socket.on('reqestChallenge', function(data) {
+        if (io.sockets.mygameRooms) {
+            let rooms = io.sockets.mygameRooms;
+            for (let rm in rooms) {
+                if (rooms[rm].id == data.id) {
+                    socket.broadcast.to(rooms[rm].players[0].sock).emit('ChlngReqFromPlayer2', { id: rooms[rm].id });
+                    break;
+                }
+            }
+        }
+    });
+
+    socket.on('acceptRequest', function(data) {
+        if (io.sockets.mygameRooms) {
+            let rooms = io.sockets.mygameRooms;
+            for (let rm in rooms) {
+                if (rooms[rm].id == data.id) {
+                    if (rooms[rm].players.length == 2) {
+                        io.sockets.mygameRooms[rm].preserveReload = true;
+                        socket.broadcast.to(rooms[rm].players[1].sock).emit('replayReqAccepted', { id: rooms[rm].id, players: rooms[rm].players });
+                        break;
+                    }
+
+                }
+            }
+        }
     });
 
 
@@ -159,7 +215,15 @@ io.on('connection', (socket) => {
             for (let rm in rooms) {
                 for (let sid in rooms[rm].players) {
                     if (socket.id == rooms[rm].players[sid].sock) {
-                        if (rooms[rm].players.length == 2) {
+                        if (rooms[rm].preserveReload) {
+                            console.log("preserved disconnect....");
+                            let theOther = 0;
+                            theOther = sid == 0 ? 1 : 0;
+                             socket.broadcast.to(rooms[rm].players[theOther].sock).emit('objectDebug', io.sockets.mygameRooms[rm]);
+                            
+                            searched = true;
+                            break;
+                        } else if (rooms[rm].players.length == 2) {
                             let theOther = 0;
                             theOther = sid == 0 ? 1 : 0;
                             socket.broadcast.to(rooms[rm].players[theOther].sock).emit('playergone', { name: rooms[rm].players[sid].name, id: rooms[rm].id });
