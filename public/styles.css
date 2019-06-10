@@ -8,14 +8,18 @@
         padding: 5px;
         color: #e1e9d2;
         background: #476b8f;
-        opacity:0;
+        opacity: 0;
     }
 
-    #chgID span{
+    #chgID {
+        text-align: center
+    }
+
+    #chgID span {
         font-weight: bold;
     }
 
-    .marked.zoom{
+    .marked.zoom {
         transform: scale(1.3);
     }
 
@@ -41,13 +45,25 @@
     #challengerInfo {
         font-size: 20px;
         text-align: center;
-        padding-top: 15px;
-        color: #9590e7;
+        padding: 5px;
+        color: #fff;
+        background: #9ba4e6a8;
+        /* position: absolute;
+        z-index: 8;
+        top: 35px; */
 
     }
-    #challengerInfo span{
+
+    #challengerInfo span {
         font-weight: bold;
         font-size: 26px
+    }
+
+    #challengerInfo span.link-game {
+        font-size: .7em;
+        font-weight: lighter;
+        color: blue;
+        text-decoration: underline;
     }
 
     #gameover {
@@ -79,14 +95,36 @@
         height: 100%;
     }
 
-    #GameHeader, #anotherGameOpt {
+    #GameHeader,
+    #anotherGameOpt {
         height: auto !important;
     }
-    #anotherGameOpt{
-        top: auto;
+
+
+
+    #anotherGameOpt {
+        /* top: 100px; */
         position: absolute;
         z-index: 10;
-        text-align: center
+        text-align: center;
+        background: #9ba4e6;
+        padding: 10px;
+        color: #453e83;
+    }
+
+    @media screen and (max-width: 700px) {
+        #anotherGameOpt {
+            width: 80%;
+            left: 12%;
+        }
+
+    }
+
+    @media screen and (min-width: 701px) {
+        #anotherGameOpt {
+            width: 50%;
+            left: 26%;
+        }
     }
 
     #points div {

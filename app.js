@@ -159,7 +159,7 @@ io.on('connection', (socket) => {
             if (socket_room[i].id == _id) {
                 io.sockets.mygameRooms[i].cellPoints = data.cells;
                 if (data.preserve) {
-                    socket.emit("objectDebug", socket_room[i]); 
+                    //socket.emit("objectDebug", socket_room[i]); 
                     socket.broadcast.to(socket_room[i].players[1].sock).emit('Player2Refresh', '');
                 }
                 break;
@@ -194,8 +194,9 @@ io.on('connection', (socket) => {
             let rooms = io.sockets.mygameRooms;
             for (let rm in rooms) {
                 if (rooms[rm].id == data.id) {
-                    if (rooms[rm].players.length == 2) {
+                    if (rooms[rm].players.length == 2) {                        
                         io.sockets.mygameRooms[rm].preserveReload = true;
+                        console.log("preserve set to TRUE");
                         socket.broadcast.to(rooms[rm].players[1].sock).emit('replayReqAccepted', { id: rooms[rm].id, players: rooms[rm].players });
                         break;
                     }
@@ -219,8 +220,7 @@ io.on('connection', (socket) => {
                             console.log("preserved disconnect....");
                             let theOther = 0;
                             theOther = sid == 0 ? 1 : 0;
-                             socket.broadcast.to(rooms[rm].players[theOther].sock).emit('objectDebug', io.sockets.mygameRooms[rm]);
-                            
+                           //  socket.broadcast.to(rooms[rm].players[theOther].sock).emit('objectDebug', io.sockets.mygameRooms[rm]);                            
                             searched = true;
                             break;
                         } else if (rooms[rm].players.length == 2) {

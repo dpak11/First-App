@@ -16,15 +16,15 @@
 
 <body>
     <div class="container">
-        <div id="GameHeader" class="row show-none">
-            <div class="col6" id="chgID"></div>
-            <div class="col6" id="statusMsg"></div>
-            <div class="col12" id="challengerInfo"></div>
+        <div id="GameHeader" class="row justify-content-center show-none">
+            <div class="col-12" id="chgID"></div>
+            <!-- <div class="col6" id="statusMsg"></div> -->
+            <div class="col-12" id="challengerInfo"></div>
         </div>
-        <div id="anotherGameOpt" class="row show-none">
+        <div id="anotherGameOpt" class="row justify-content-around show-none">
             <h4 class="col-12">Do you want another Challenge?</h4>
-            <h5 class="col-6 btn btn-primary" id="anotherYes">Yes</h5>
-            <h5 class="col-6 btn btn-primary" id="anotherNo">No</h5>
+            <h5 class="col-5 btn btn-primary" id="anotherYes">Yes</h5>
+            <h5 class="col-5 btn btn-primary" id="anotherNo">No</h5>
         </div>
         <div id="playmode" class="row align-items-center show-none">
             <div class="col">
@@ -34,7 +34,7 @@
                 <h5 id="twoplayer" class="btn btn-primary">Two Players</h5>
                 <div id="joinoraccept">
                     <input id="username" type="text" placeholder="Type your name here"> <br />
-                    <span id="createBtn" class="btn btn-outline-primary">Challenge someone </span> (or) <span id="joinBtn" class="btn btn-outline-primary">Accept a Challenge</span> <br />
+                    <span id="createBtn" class="btn btn-outline-primary">Challenge someone </span> <span>(or)</span> <span id="joinBtn" class="btn btn-outline-primary">Accept a Challenge</span> <br />
                     <div id="acceptBlock">
                         <input id="acceptID" type="text" placeholder="Enter Game ID"> <span id="readyBtn" class="btn btn-outline-primary btn-sm"> I am Ready </span>
                     </div>
@@ -82,11 +82,10 @@
                     <div class="col-12"><span>0</span> points</div>
                 </div>
                 <div class="row" id="gameover">
-                    <div class="col-12"><span>Game Over</span></div>
+                    <div class="col-12"><span></span></div>
                 </div>
             </div>
         </div>
-        
     </div>
     <script src="assets/howler.min.js"></script>
     <script src="assets/modernizr-custom.js"></script>
