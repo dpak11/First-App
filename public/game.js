@@ -34,9 +34,9 @@
              thisPlayer = cache.name;
              challengerPoints = parseInt(cache.pl1score);
              temp_total = parseInt(cache.pl2score);
-             localStorage.clear();
-             singlePlayer = false;
              alert(localStorage.getItem("refresher"));
+             localStorage.clear();
+             singlePlayer = false;             
              console.log("localstorage...");
              if (cache.player == "two") {
                  isChallenger = false;
