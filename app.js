@@ -76,11 +76,11 @@ io.on('connection', (socket) => {
             let soc_room = io.sockets.mygameRooms;
             if (data.preserveReload) {
                 for (var j in soc_room) {
-                    socket.emit("objectDebug", {alert:true, msg: `DEBUG ${soc_room[j].id} == ${data.id} && ${soc_room[j].players[0].name} == ${data.player1}`}); 
+                    //socket.emit("objectDebug", {alert:true, msg: `DEBUG ${soc_room[j].id} == ${data.id} && ${soc_room[j].players[0].name} == ${data.player1}`}); 
                     if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
                         soc_room[j].players[0].sock = socket.id;
                         console.log("Create room preserve...");
-                         socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
+                         //socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
                         socket.emit("roomcreated", { player: data.player1, id: data.id });
                         break;
                     }

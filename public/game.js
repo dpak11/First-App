@@ -119,7 +119,7 @@
      });
 
      createBtn.addEventListener("click", function() {
-         let name = document.getElementById("username").value.toLowercase().trim();
+         let name = document.getElementById("username").value.toLowerCase().trim();
          let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
          if (pattern.test(name)) {
              socketHandlers("create", { name: name, preserve: false, id: null });
@@ -132,7 +132,7 @@
 
  readyBtn.addEventListener("click", function() {
      let acceptID = document.getElementById("acceptID").value.trim();
-     let name = document.getElementById("username").value.toLowercase().trim();
+     let name = document.getElementById("username").value.toLowerCase().trim();
      let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
      if (pattern.test(name)) {
          if (acceptID.length == 9 && acceptID.includes(".")) {
@@ -429,7 +429,7 @@
              isChallenger = true;
              gameID = data.id;
              bindCellEvents();
-             alert("CREATED!!");
+             //alert("CREATED!!");
 
          });
 
