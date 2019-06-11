@@ -1,3 +1,5 @@
+/*jshint esversion: 6*/
+
 const express = require("express");
 const app = express();
 /*const axios = require("axios");
@@ -42,10 +44,10 @@ app.get("/api/names", (req, res) => {
 const getroomID = () => {
     let _id = "";
     for (let i = 0; i < 8; i++) {
-        _id = _id + "" + Math.floor(Math.random() * 10)
+        _id = _id + "" + Math.floor(Math.random() * 10);
     }
-    return _id.substr(0, 4) + "." + _id.substr(4)
-}
+    return _id.substr(0, 4) + "." + _id.substr(4);
+};
 
 const broadcastCellPicks = (socket, status, data) => {
     let socket_room = io.sockets.mygameRooms;
@@ -56,7 +58,7 @@ const broadcastCellPicks = (socket, status, data) => {
             break;
         }
     }
-}
+};
 
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
@@ -66,14 +68,13 @@ io.on('connection', (socket) => {
 
         let obj = {
             id: getroomID(),
-            players: [{ sock: socket.id, name: data.player1.toLowerCase() }]
+            players: [{ sock: socket.id, name: data.player1 }]
         };
 
 
         if (io.sockets.mygameRooms) {
             let soc_room = io.sockets.mygameRooms;
             if (data.preserveReload) {
-               // socket.emit("objectDebug", {alert:true, msg: `Debug: ${data.player1}, ${data.id}`}); 
                 for (var j in soc_room) {
                     socket.emit("objectDebug", {alert:true, msg: `DEBUG ${soc_room[j].id} == ${data.id} && ${soc_room[j].players[0].name} == ${data.player1}`}); 
                     if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
@@ -106,8 +107,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinRoom', function(data) {
-        console.log("Joining for: " + data.player2);
-        //socket.emit("objectDebug", io.sockets.mygameRooms);      
+        console.log("Joining for: " + data.player2);    
         let acceptID = data.id;
         if (acceptID.length == 9 && acceptID.includes(".")) {
             let id = acceptID.split(".");
@@ -225,9 +225,6 @@ io.on('connection', (socket) => {
                     if (socket.id == rooms[rm].players[sid].sock) {
                         if (rooms[rm].preserveReload) {
                             console.log("preserved disconnect....");
-                            let theOther = 0;
-                            theOther = sid == 0 ? 1 : 0;
-                           //  socket.broadcast.to(rooms[rm].players[theOther].sock).emit('objectDebug', io.sockets.mygameRooms[rm]);                            
                             searched = true;
                             break;
                         } else if (rooms[rm].players.length == 2) {
@@ -240,7 +237,6 @@ io.on('connection', (socket) => {
                         }
 
                         searched = true;
-                        console.log("found player in socket to disconnect");
                     }
                 }
                 if (searched) {
@@ -266,10 +262,10 @@ app.get("/playgame", (req, res) => {
 
 
 app.get('/*', (req, res) => {
-    res.redirect('/error.html')
+    res.redirect('/error.html');
 
 });
 
 http.listen(port, () => {
     console.log(`Server running at port ` + port);
-})
+});

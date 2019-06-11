@@ -28,28 +28,25 @@
      } else {
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
-            alert("load data from local storage");
              let cache = JSON.parse(localStorage.getItem("refresher"));
              gameID = cache.id;
              thisPlayer = cache.name;
              challengerPoints = parseInt(cache.pl1score);
              temp_total = parseInt(cache.pl2score);             
              localStorage.clear();
-             singlePlayer = false;             
-             alert(`${cache.id}, ${cache.name}, ${cache.player}`);
+             singlePlayer = false;           
+            
              if (cache.player == "two") {
                  isChallenger = false;
                  socketHandlers("join", { name: thisPlayer, id: gameID });
-             } else {
-                alert("creating room from localstorage");
-                 console.log(thisPlayer,gameID);
+             } else {                 
                  isPreserve = true;
                  socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
              }
 
 
          } else {
-             alert("no local storage data");
+             
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
                  if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
@@ -122,7 +119,7 @@
      });
 
      createBtn.addEventListener("click", function() {
-         let name = document.getElementById("username").value.trim();
+         let name = document.getElementById("username").value.toLowercase().trim();
          let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
          if (pattern.test(name)) {
              socketHandlers("create", { name: name, preserve: false, id: null });
@@ -135,7 +132,7 @@
 
  readyBtn.addEventListener("click", function() {
      let acceptID = document.getElementById("acceptID").value.trim();
-     let name = document.getElementById("username").value.trim();
+     let name = document.getElementById("username").value.toLowercase().trim();
      let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
      if (pattern.test(name)) {
          if (acceptID.length == 9 && acceptID.includes(".")) {
@@ -421,9 +418,8 @@
 
      if (firstSetup) {
          socket.on('roomcreated', function(data) {
-            alert("roomcreated function");
              document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.player}`;
-             thisPlayer = document.getElementById("username").value;
+             thisPlayer = data.player;
              document.getElementById("playmode").remove();
              document.getElementById("gametable").classList.remove("show-none");
              document.getElementById("GameHeader").classList.remove("show-none");
@@ -439,7 +435,7 @@
 
          socket.on('joined', function(data) {
              document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.players[0].name}, ${data.players[1].name} / <span>Game ID: ${data.id}</span> `;
-             thisPlayer = document.getElementById("username").value;
+             thisPlayer = data.players[1].name;
              document.getElementById("playmode").remove();
              document.getElementById("gametable").classList.remove("show-none");
              document.getElementById("GameHeader").classList.remove("show-none");
@@ -511,7 +507,6 @@
          socket.on('errorID', function(data) {
              firstSetup = false;
              if (data.error) {
-                 console.log(data.rooms);
                  alert(data.error);
              } else {
                  alert(data);
@@ -533,7 +528,7 @@
          });
 
          socket.on('disconnected', function(data) {
-             console.log(data.id + " disconnected");
+             //console.log(data.id + " disconnected");
          });
      }
 
