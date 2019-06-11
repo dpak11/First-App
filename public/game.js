@@ -442,6 +442,7 @@
              document.getElementById("gametable").classList.remove("align-items-center");
              document.getElementById("gametable").style.marginTop = "30px";
              document.querySelector("#points span").innerText = temp_total;
+             document.getElementById("challengerInfo").innerHTML = `${data.players[0].name} has hidden <span>10 green balls</span> and <span>1-Bomber Ball</span> among these. Any Guess?`;
              isChallenger = false;
              gameID = data.id;
              player1Name = data.players[0].name;
