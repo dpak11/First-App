@@ -22,7 +22,8 @@
 
  if (Modernizr.queryselector) {
      let allclasses = document.querySelector("html").getAttribute("class").trim();
-     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json")) {
+     console.log(allclasses);
+     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d") ) {
          alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
      } else {
          compatableBrowser = true;
@@ -287,7 +288,7 @@
                          gameState.bombed(thisElt);
                          if (!singlePlayer) {
                              socket.emit('bombPick', { cell: _num, id: gameID });
-                             challengerPoints = challengerPoints + 5;
+                             //challengerPoints = challengerPoints + 5;
                              document.getElementById("anotherGameOpt").classList.remove("show-none");
                              document.getElementById("anotherGameOpt").classList.add("tweenDown");
                              document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
