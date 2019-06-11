@@ -28,6 +28,7 @@
      } else {
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
+            alert("load data from local storage");
              let cache = JSON.parse(localStorage.getItem("refresher"));
              gameID = cache.id;
              thisPlayer = cache.name;
@@ -35,6 +36,7 @@
              temp_total = parseInt(cache.pl2score);
              localStorage.clear();
              singlePlayer = false;
+             alert(localStorage.getItem("refresher"));
              console.log("localstorage...");
              if (cache.player == "two") {
                  isChallenger = false;
@@ -48,7 +50,7 @@
 
 
          } else {
-             
+             alert("no local storage data");
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
                  if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
