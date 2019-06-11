@@ -410,7 +410,12 @@
      }
 
      socket.on("objectDebug", function(d) {
-         console.log(d);
+         if(d.alert){
+            alert(d.msg);
+         }else{
+            console.log(d);
+         }
+         
      });
 
 
