@@ -421,6 +421,7 @@
 
      if (firstSetup) {
          socket.on('roomcreated', function(data) {
+            alert("roomcreated function");
              document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.player}`;
              thisPlayer = document.getElementById("username").value;
              document.getElementById("playmode").remove();

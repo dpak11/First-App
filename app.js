@@ -73,12 +73,13 @@ io.on('connection', (socket) => {
         if (io.sockets.mygameRooms) {
             let soc_room = io.sockets.mygameRooms;
             if (data.preserveReload) {
-                socket.emit("objectDebug", {alert:true, msg: `Debug: ${data.player1}, ${data.id}`}); 
+               // socket.emit("objectDebug", {alert:true, msg: `Debug: ${data.player1}, ${data.id}`}); 
                 for (var j in soc_room) {
                     socket.emit("objectDebug", {alert:true, msg: `Debug: ${soc_room[j].players[0].name}, ${soc_room[j].players[0].sock}`}); 
                     if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
                         soc_room[j].players[0].sock = socket.id;
                         console.log("Create room preserve...");
+                         socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
                         socket.emit("roomcreated", { player: data.player1, id: data.id });
                         break;
                     }
@@ -224,6 +225,7 @@ io.on('connection', (socket) => {
                     if (socket.id == rooms[rm].players[sid].sock) {
                         if (rooms[rm].preserveReload) {
                             console.log("preserved disconnect....");
+                            socket.emit("objectDebug", {alert:true, msg: `preserved disconnect...`}); 
                             let theOther = 0;
                             theOther = sid == 0 ? 1 : 0;
                            //  socket.broadcast.to(rooms[rm].players[theOther].sock).emit('objectDebug', io.sockets.mygameRooms[rm]);                            
