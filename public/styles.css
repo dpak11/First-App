@@ -107,9 +107,10 @@
         position: absolute;
         z-index: 10;
         text-align: center;
-        background: #9ba4e6;
+        background: #cbd0f3;
         padding: 10px;
         color: #453e83;
+        border: solid 2px #fff;
     }
 
     @media screen and (max-width: 700px) {
@@ -182,7 +183,24 @@
 
     }
 
+    @keyframes slide-down {
+        from {
+            transform: translateY(-120px);
+            opacity: .2;
+        }
 
+        to {
+            transform: translateY(0px, 0, 0);
+            opacity: 1;
+        }
+
+    }
+
+    .tweenDown {
+        animation-name: slide-down;
+        animation-duration: 1s;
+        transition-timing-function: ease-out;
+    }
 
     .apply-shake {
         animation: shake 0.5s 5;

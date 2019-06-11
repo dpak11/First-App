@@ -40,13 +40,14 @@
                  socketHandlers("join", { name: thisPlayer, id: gameID });
              } else {
                  console.log("creating room from localstorage");
+                 console.log(thisPlayer,gameID);
                  isPreserve = true;
                  socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
              }
 
 
          } else {
-             // no cache item
+             
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
                  if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
@@ -288,6 +289,7 @@
                              socket.emit('bombPick', { cell: _num, id: gameID });
                              challengerPoints = challengerPoints + 5;
                              document.getElementById("anotherGameOpt").classList.remove("show-none");
+                             document.getElementById("anotherGameOpt").classList.add("tweenDown");
                              document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
                          }
 
@@ -297,6 +299,7 @@
                              if (totalPoints == 10) {
                                  bomber = 1000;
                                  document.getElementById("anotherGameOpt").classList.remove("show-none");
+                                 document.getElementById("anotherGameOpt").classList.add("tweenDown");
                                  document.getElementById("challengerInfo").innerHTML = `Great! You got all 10 Right!<br/>
                                     Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
                                  document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
@@ -463,6 +466,7 @@
 
          socket.on('ChlngReqFromPlayer2', function(data) {
              document.getElementById("anotherGameOpt").classList.remove("show-none");
+             document.getElementById("anotherGameOpt").classList.add("tweenDown");
              document.querySelector("#anotherGameOpt h4").innerHTML = `<b>${secondPlayer}</b> likes to try another Challenge from you`;
              document.getElementById("anotherYes").innerText = "Accept";
              document.getElementById("anotherNo").innerText = "Decline";
