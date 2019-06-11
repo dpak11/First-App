@@ -33,16 +33,15 @@
              gameID = cache.id;
              thisPlayer = cache.name;
              challengerPoints = parseInt(cache.pl1score);
-             temp_total = parseInt(cache.pl2score);
-             alert(localStorage.getItem("refresher"));
+             temp_total = parseInt(cache.pl2score);             
              localStorage.clear();
              singlePlayer = false;             
-             console.log("localstorage...");
+             alert(`${cache.id}, ${cache.name}, ${cache.player}`);
              if (cache.player == "two") {
                  isChallenger = false;
                  socketHandlers("join", { name: thisPlayer, id: gameID });
              } else {
-                 console.log("creating room from localstorage");
+                alert("creating room from localstorage");
                  console.log(thisPlayer,gameID);
                  isPreserve = true;
                  socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
@@ -396,15 +395,14 @@
      if (socket == null) {
          socket = io();
      }
-
+     document.getElementById("gametable").classList.remove("align-items-center");
      if (type == "create") {
          socket.emit('createRoom', {
              player1: vals.name,
              preserveReload: vals.preserve,
              id: vals.id
          });
-     } else {
-         document.getElementById("gametable").classList.remove("align-items-center");
+     } else {         
          socket.emit('joinRoom', {
              player2: vals.name,
              id: vals.id
@@ -429,6 +427,7 @@
              isChallenger = true;
              gameID = data.id;
              bindCellEvents();
+             alert("CREATED!!");
 
          });
 
