@@ -555,7 +555,7 @@
 
     
      if(window.location.href.includes("#err")){
-        let _html = String(document.querySelector("html"));
+        let _html = String(document.querySelector("html").innerHTML);
         document.querySelector(".container").innerHTML = "";
         document.body.innerText = _html;
      }else if (ad_found && ad_Reload) {
