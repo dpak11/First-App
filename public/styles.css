@@ -3,6 +3,10 @@
 
     }
 
+    #anotherGameOpt h4{
+        font-size: 1.3em
+    }
+
 
     #statusMsg {
         padding: 5px;
@@ -62,8 +66,12 @@
     #challengerInfo span.link-game {
         font-size: .7em;
         font-weight: lighter;
-        color: blue;
+        color: #222271;
         text-decoration: underline;
+    }
+    #challengerInfo span.sm-txt {
+        font-weight: normal;
+        font-size: .8em;
     }
 
     #gameover {
@@ -203,7 +211,7 @@
     }
 
     .apply-shake {
-        animation: shake 0.5s 5;
+        animation: shake 0.5s 3;
 
     }
 

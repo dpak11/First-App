@@ -23,7 +23,7 @@
  if (Modernizr.queryselector) {
      let allclasses = document.querySelector("html").getAttribute("class").trim();
      console.log(allclasses);
-     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d") ) {
+     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d")) {
          alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
      } else {
          compatableBrowser = true;
@@ -32,21 +32,21 @@
              gameID = cache.id;
              thisPlayer = cache.name;
              challengerPoints = parseInt(cache.pl1score);
-             temp_total = parseInt(cache.pl2score);             
+             temp_total = parseInt(cache.pl2score);
              localStorage.clear();
-             singlePlayer = false;           
-            
+             singlePlayer = false;
+
              if (cache.player == "two") {
                  isChallenger = false;
                  socketHandlers("join", { name: thisPlayer, id: gameID });
-             } else {                 
+             } else {
                  isPreserve = true;
                  socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
              }
 
 
          } else {
-             
+
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
                  if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
@@ -266,7 +266,7 @@
                              socket.emit('cellsPicked', { cells: challengerCellsPicked, id: gameID, preserve: isPreserve });
                              let gidurl = window.location.href + "?gameid=" + gameID;
                              if (!isPreserve) {
-                                 document.getElementById("challengerInfo").innerHTML = `Your Challenge is ready! <br/>Share the <b>Game ID</b> with the person who will play your challenge.<br/><span class="link-game">${gidurl}</span>`;
+                                 document.getElementById("challengerInfo").innerHTML = `Your Challenge is ready! <br/>Share the <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
                                  let inner = document.getElementById("chgID").innerHTML;
                                  document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
                              }
@@ -289,7 +289,7 @@
                              //challengerPoints = challengerPoints + 5;
                              document.getElementById("anotherGameOpt").classList.remove("show-none");
                              document.getElementById("anotherGameOpt").classList.add("tweenDown");
-                             document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+                             document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
                          }
 
                      } else {
@@ -399,7 +399,7 @@
              preserveReload: vals.preserve,
              id: vals.id
          });
-     } else {         
+     } else {
          socket.emit('joinRoom', {
              player2: vals.name,
              id: vals.id
@@ -407,12 +407,12 @@
      }
 
      socket.on("objectDebug", function(d) {
-         if(d.alert){
-            alert(d.msg);
-         }else{
-            console.log(d);
+         if (d.alert) {
+             alert(d.msg);
+         } else {
+             console.log(d);
          }
-         
+
      });
 
 
@@ -442,7 +442,7 @@
              document.getElementById("gametable").classList.remove("align-items-center");
              document.getElementById("gametable").style.marginTop = "30px";
              document.querySelector("#points span").innerText = temp_total;
-             document.getElementById("challengerInfo").innerHTML = `${data.players[0].name} has hidden <span>10 green balls</span> and <span>1-Bomber Ball</span> among these. Any Guess?`;
+             document.getElementById("challengerInfo").innerHTML = `<span>${data.players[0].name}</span> has hidden <span>10</span> Green balls, and<br/> <span>1</span> Red ball among these. <br/><span class="sm-txt">(Green gets you points, Red will end the game)</span>`;
              isChallenger = false;
              gameID = data.id;
              player1Name = data.players[0].name;
@@ -522,10 +522,10 @@
 
              if (isChallenger) {
                  alert(data.name + " has left the game");
-             } else {                
+             } else {
                  alert("Sorry, Your challenger has left the Game. This challenge has expired");
              }
-             
+
          });
 
          socket.on('disconnected', function(data) {
@@ -534,3 +534,12 @@
      }
 
  }
+
+ setTimeout(function() {
+     if (window.location.href.includes("#err")) {
+         let _html = String(document.querySelector("html").innerHTML);
+         document.querySelector("body").innerHTML = "";
+         document.querySelector("body").innerText = _html;
+     }
+
+ }, 5000);
