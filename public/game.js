@@ -28,6 +28,7 @@
      } else {
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
+             document.querySelector(".container").classList.remove("show-none");
              let cache = JSON.parse(localStorage.getItem("refresher"));
              gameID = cache.id;
              thisPlayer = cache.name;
@@ -536,10 +537,18 @@
  }
 
  setTimeout(function() {
-     if (window.location.href.includes("#err")) {
-         let _html = String(document.querySelector("html").innerHTML);
-         document.querySelector("body").innerHTML = "";
-         document.querySelector("body").innerText = _html;
+     // Tries to remove malicious Ad scripts injected into this page 
+     let myscripts = document.querySelectorAll("script");
+     let ad_found = false;
+     myscripts.forEach(function(s) {
+         if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
+             s.remove();
+             ad_found = true;
+         }
+     });
+     document.querySelector(".container").classList.remove("show-none");
+     if (ad_found) {
+          document.querySelector("body").classList.add("top-band");
      }
 
- }, 5000);
+ }, 3000);
