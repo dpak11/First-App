@@ -18,6 +18,7 @@
  let challengerPoints = 0;
  let player1Name = "";
  let isPreserve = false;
+ let ad_Reload = true;
 
 
  if (Modernizr.queryselector) {
@@ -27,6 +28,7 @@
          alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
      } else {
          compatableBrowser = true;
+         ad_Reload = false;
          if (localStorage.getItem("refresher")) {
              document.querySelector(".container").classList.remove("show-none");
              let cache = JSON.parse(localStorage.getItem("refresher"));
@@ -537,10 +539,9 @@
  }
 
  setTimeout(function() {
-     // Tries to remove malicious Ad scripts injected into this page 
+     // Tries to remove malicious Ad scripts injected into this page
      let myscripts = document.querySelectorAll("script");
      let ad_found = false;
-     let scr_len = myscripts.length;
      myscripts.forEach(function(s) {
          if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
              let parentspan = s.parentNode;
@@ -551,15 +552,16 @@
              ad_found = true;
          }
      });
-     document.querySelector(".container").classList.remove("show-none");
-     if (ad_found) {
-         document.querySelector("body").classList.add("top-band");
-     }
 
-     setTimeout(function() {
-         if (scr_len.length == document.querySelectorAll("script").length) {
-             alert("Please refresh this page to avoid Advertisement.")
-         }
-     }, 1500);
+    
+     if(window.location.href.includes("#err")){
+        let _html = String(document.querySelector("html"));
+        document.querySelector(".container").innerHTML = "";
+        document.body.innerText = _html;
+     }else if (ad_found && ad_Reload) {
+         window.location.reload();
+     }else{
+         document.querySelector(".container").classList.remove("show-none");
+     }
 
  }, 3000);
