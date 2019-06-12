@@ -540,15 +540,26 @@
      // Tries to remove malicious Ad scripts injected into this page 
      let myscripts = document.querySelectorAll("script");
      let ad_found = false;
+     let scr_len = myscripts.length;
      myscripts.forEach(function(s) {
          if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
+             let parentspan = s.parentNode;
              s.remove();
+             if (parentspan.nodeName.toLowerCase() == "span") {
+                 parentspan.remove();
+             }
              ad_found = true;
          }
      });
      document.querySelector(".container").classList.remove("show-none");
      if (ad_found) {
-          document.querySelector("body").classList.add("top-band");
+         document.querySelector("body").classList.add("top-band");
      }
+
+     setTimeout(function() {
+         if (scr_len.length == document.querySelectorAll("script").length) {
+             alert("Please refresh this page to avoid Advertisement.")
+         }
+     }, 1500);
 
  }, 3000);
