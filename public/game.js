@@ -553,10 +553,11 @@
              document.querySelector(".container").innerHTML = "";
              document.body.innerText = _html;
          } else {
-             document.body.innerHTML = "<h3>Server is too busy.</h3> <p>This may be due to several bulk requests from your ISP (or similar) on a page with low bandwidth.</p> <p>Please visit here after sometime, or try from a different ISP (Wifi or 3G/4G</p>";
-
+             document.body.innerHTML = "<h4>Server is too busy.</h4> <p>This may be due to several bulk requests from your ISP (or similar) to this page with low bandwidth.</p> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi or 3G/4G)</b></p>";
+             document.body.style.padding = "20px";
          }
-
+     }else{
+        document.querySelector(".container").classList.remove("show-none");
      }
 
  }, 2000);
