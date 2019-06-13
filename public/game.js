@@ -18,7 +18,6 @@
  let challengerPoints = 0;
  let player1Name = "";
  let isPreserve = false;
- //let ad_Reload = true;
 
 
  if (Modernizr.queryselector) {
@@ -27,12 +26,8 @@
      if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d")) {
          alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
      } else {
-         /*let all_cells = document.querySelectorAll("#gametable p");
-         all_cells.forEach(function(elm) {
-             elm.classList.add("mclick");
-         });*/
+         
          compatableBrowser = true;
-        // ad_Reload = false;
          if (localStorage.getItem("refresher")) {
              document.querySelector(".container").classList.remove("show-none");
              let cache = JSON.parse(localStorage.getItem("refresher"));
@@ -543,27 +538,25 @@
  }
 
  setTimeout(function() {
-     // Tries to remove malicious Ad scripts injected into this page
+
      let myscripts = document.querySelectorAll("script");
      let ad_found = false;
-     /*myscripts.forEach(function(s) {
+     myscripts.forEach(function(s) {
          if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
-             let parentspan = s.parentNode;
-             s.remove();
-             if (parentspan.nodeName.toLowerCase() == "span") {
-                 parentspan.remove();
-             }
              ad_found = true;
          }
      });
-*/
 
-     if (window.location.href.includes("#err")) {
-         let _html = String(document.querySelector("html").innerHTML);
-         document.querySelector(".container").innerHTML = "";
-         document.body.innerText = _html;
-     } else {
-         document.querySelector(".container").classList.remove("show-none");
+     if (ad_found) {
+         if (window.location.href.includes("#ads")) {
+             let _html = String(document.querySelector("html").innerHTML);
+             document.querySelector(".container").innerHTML = "";
+             document.body.innerText = _html;
+         } else {
+             document.body.innerHTML = "<h3>Server is too busy.</h3> <p>This may be due to several bulk requests from your ISP (or similar) on a page with low bandwidth.</p> <p>Please visit here after sometime, or try from a different ISP (Wifi or 3G/4G</p>";
+
+         }
+
      }
 
  }, 2000);

@@ -4,22 +4,6 @@
     }
      
 
-     /* *{
-        pointer-events: none;
-     }
-         
-         #oneplayer,
-         #twoplayer,
-         #joinBtn,
-         #readyBtn,
-         #createBtn,
-         #anotherYes,
-         #anotherNo,
-         #acceptID,
-         #username {
-        pointer-events: auto;
-         }
-      */
 
     #playmode h5 {
         cursor: pointer;
