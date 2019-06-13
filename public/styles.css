@@ -2,7 +2,25 @@
      body{        
         padding-top: 10px;
     }
-    
+     
+
+     /* *{
+        pointer-events: none;
+     }
+         
+         #oneplayer,
+         #twoplayer,
+         #joinBtn,
+         #readyBtn,
+         #createBtn,
+         #anotherYes,
+         #anotherNo,
+         #acceptID,
+         #username {
+        pointer-events: auto;
+         }
+      */
+
     #playmode h5 {
         cursor: pointer;
 
@@ -96,13 +114,13 @@
         height: 48px;
         width: 48px;
         background: url(images/box.png) center no-repeat;
+       /*  pointer-events: auto; */
     }
 
 
     .container {
         max-width: 365px;
         height: 95vh;
-        /* background: lightgrey */
     }
 
     .container>div {
