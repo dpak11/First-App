@@ -1,16 +1,32 @@
-    
-     body{        
-        padding-top: 10px;
+    html {
+        height: 100%
     }
-     
 
+    body {
+        padding-top: 10px;
+        background: linear-gradient(180deg, rgba(32, 24, 97, 0.11), rgba(0, 0, 0, 0.52));
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        height: 100%;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    input {
+        box-shadow: inset 1px 2px 5px rgb(38, 34, 34);
+        padding: 6px;
+        border-radius: 11px;
+        margin-bottom: 15px;
+    }
 
     #playmode h5 {
         cursor: pointer;
 
     }
 
-    #anotherGameOpt h4{
+    #anotherGameOpt h4 {
         font-size: 1.3em
     }
 
@@ -31,9 +47,20 @@
     }
 
     .marked.zoom {
-        transform: scale(1.3);
+        transform: scale(0.5);
     }
-   
+
+    #readyBtn,
+    #createBtn,
+    #joinBtn {
+        color: #cfc2d7;
+        display: inline-block;
+        background-color: rgba(61, 54, 144, 0.77);
+        cursor: pointer;
+        border-radius: 12px;
+        margin-bottom: 4px;
+    }
+
 
     .show-none,
     #joinoraccept,
@@ -42,12 +69,16 @@
     }
 
     #gametable p.redbomb {
-        background: url(images/box-red.png) center no-repeat !important;
+        /* background: url(images/box-red.png) center no-repeat !important; */
+        background: linear-gradient(-53deg, red, red, #e2d8d873) !important;
+        box-shadow: inset 3px 3px 7px #000 !important;
 
     }
 
     #gametable p.greenbox {
-        background: url(images/box-green.png) center no-repeat !important;
+        /*  background: url(images/box-green.png) center no-repeat !important; */
+        background: linear-gradient(-53deg, green, green, #e2d8d873) !important;
+        box-shadow: inset 3px 3px 7px #000 !important;
     }
 
     #btn {
@@ -73,10 +104,12 @@
 
     #challengerInfo span.link-game {
         font-size: .7em;
-        font-weight: lighter;
-        color: #222271;
-        text-decoration: underline;
+        font-weight: normal;
+        color: #743ede;
+        padding: 3px;
+        border-bottom: 2px solid #743ede;
     }
+
     #challengerInfo span.sm-txt {
         font-weight: normal;
         font-size: .8em;
@@ -85,7 +118,7 @@
     #gameover {
         font-size: 40px;
         font-weight: bold;
-        color: #21b5e8;
+        color: #fff;
         text-align: center;
         position: relative;
         top: -300px;
@@ -95,16 +128,22 @@
 
     #gametable .row p {
         text-align: center;
-        height: 48px;
+        /* height: 48px;
         width: 48px;
-        background: url(images/box.png) center no-repeat;
-       /*  pointer-events: auto; */
+        background: url(images/box.png) center no-repeat; */
+
+        border-radius: 50%;
+        height: 62px;
+        width: 76px;
+        background: linear-gradient(-20deg, rgba(0, 0, 0, 0.44), rgba(239, 235, 235, 0.72));
+        box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.66);
+        margin-left: 4px;
     }
 
 
     .container {
         max-width: 365px;
-        height: 95vh;
+        height: 100%
     }
 
     .container>div {

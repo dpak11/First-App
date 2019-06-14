@@ -23,10 +23,10 @@
  if (Modernizr.queryselector) {
      let allclasses = document.querySelector("html").getAttribute("class");
      console.log(allclasses);
-     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms") || allclasses.includes("no-fetch") || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d")) {
+     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms")  || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d") || allclasses.includes("no-flexbox") || allclasses.includes("no-boxshadow") || allclasses.includes("no-borderradius") || allclasses.includes("no-cssvhunit") || allclasses.includes("no-placeholder") || allclasses.includes("no-rgba") || allclasses.includes("no-cssgradients")) {
          alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
      } else {
-         
+
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
              document.querySelector(".container").classList.remove("show-none");
@@ -59,6 +59,7 @@
                      document.getElementById("createBtn").remove();
                      document.getElementById("joinBtn").remove();
                      document.querySelector("#joinoraccept span").remove();
+                     document.getElementById("twoplayer").innerText = "Welcome Player-2";
                      singlePlayer = false;
 
                  }
@@ -268,7 +269,7 @@
                              socket.emit('cellsPicked', { cells: challengerCellsPicked, id: gameID, preserve: isPreserve });
                              let gidurl = window.location.href + "?gameid=" + gameID;
                              if (!isPreserve) {
-                                 document.getElementById("challengerInfo").innerHTML = `Your Challenge is ready! <br/>Share the <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
+                                 document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
                                  let inner = document.getElementById("chgID").innerHTML;
                                  document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
                              }
@@ -359,6 +360,7 @@
           document.getElementById("statusMsg").style.opacity = 0;
       }, 4000);
   };*/
+
 
  const watchReview = (status, num) => {
      if (status == "correct") {
@@ -556,8 +558,13 @@
              document.body.innerHTML = "<h4>Server is too busy.</h4> <p>This may be due to several bulk requests from your ISP (or similar) to this page with low bandwidth.</p> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi or 3G/4G)</b></p>";
              document.body.style.padding = "20px";
          }
-     }else{
-        document.querySelector(".container").classList.remove("show-none");
+     } else {
+         document.querySelector(".container").classList.remove("show-none");
      }
 
  }, 2000);
+
+ window.addEventListener("resize", function(){
+    document.querySelector(".container").style.height = "100%";
+
+ })
