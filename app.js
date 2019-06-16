@@ -80,7 +80,7 @@ io.on('connection', (socket) => {
                     if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
                         soc_room[j].players[0].sock = socket.id;
                         console.log("Create room preserve...");
-                         //socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
+                        //socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
                         socket.emit("roomcreated", { player: data.player1, id: data.id });
                         break;
                     }
@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinRoom', function(data) {
-        console.log("Joining for: " + data.player2);    
+        console.log("Joining for: " + data.player2);
         let acceptID = data.id;
         if (acceptID.length == 9 && acceptID.includes(".")) {
             let id = acceptID.split(".");
@@ -119,7 +119,7 @@ io.on('connection', (socket) => {
                         matched = true;
                         let ply = socket_room[rm].players;
                         let plName = data.player2.toLowerCase();
-                        if ((!socket_room[rm].preserveReload && ply.length == 1) || (socket_room[rm].preserveReload && ply.length == 2)){
+                        if ((!socket_room[rm].preserveReload && ply.length == 1) || (socket_room[rm].preserveReload && ply.length == 2)) {
                             if (ply[0].name != plName) {
                                 if (socket_room[rm].preserveReload) {
                                     console.log("joing room preserve reload");
@@ -129,7 +129,13 @@ io.on('connection', (socket) => {
                                     io.sockets.mygameRooms[rm].players.push({ sock: socket.id, name: plName });
                                 }
 
-                                socket.emit('joined', { players: io.sockets.mygameRooms[rm].players, id: acceptID, cells: io.sockets.mygameRooms[rm].cellPoints });
+                                let isPuzzle = false;
+                                if (socket_room[rm].puzzler) {
+                                    isPuzzle = JSON.parse(JSON.stringify(socket_room[rm].puzzler));
+                                    io.sockets.mygameRooms[rm].puzzler = { set: false };
+                                }
+
+                                socket.emit('joined', { players: io.sockets.mygameRooms[rm].players, id: acceptID, cells: io.sockets.mygameRooms[rm].cellPoints, puzzler: isPuzzle });
                                 socket.broadcast.to(io.sockets.mygameRooms[rm].players[0].sock).emit('player2in', { players: io.sockets.mygameRooms[rm].players, id: acceptID });
                                 break;
                             } else {
@@ -165,14 +171,18 @@ io.on('connection', (socket) => {
         for (let i in socket_room) {
             if (socket_room[i].id == _id) {
                 io.sockets.mygameRooms[i].cellPoints = data.cells;
+                if (data.puzz.set) {
+                    io.sockets.mygameRooms[i].puzzler = data.puzz;
+                }
                 if (data.preserve) {
-                    //socket.emit("objectDebug", socket_room[i]); 
                     socket.broadcast.to(socket_room[i].players[1].sock).emit('Player2Refresh', '');
                 }
                 break;
             }
         }
     });
+
+
 
     socket.on('correctPick', function(data) {
         broadcastCellPicks(socket, "correct", data);
@@ -183,6 +193,31 @@ io.on('connection', (socket) => {
     socket.on('bombPick', function(data) {
         broadcastCellPicks(socket, "bomb", data);
     });
+
+    socket.on('puzzleBombClear', function(data) {
+          if (io.sockets.mygameRooms) {
+            let rooms = io.sockets.mygameRooms;
+            for (let rm in rooms) {
+                if (rooms[rm].id == data.id) {
+                    socket.broadcast.to(rooms[rm].players[0].sock).emit('puzzBombCleared', '');
+                    break;
+                }
+            }
+        }
+    });
+
+    socket.on('puzzleFailed', function(data) {
+          if (io.sockets.mygameRooms) {
+            let rooms = io.sockets.mygameRooms;
+            for (let rm in rooms) {
+                if (rooms[rm].id == data.id) {
+                    socket.broadcast.to(rooms[rm].players[0].sock).emit('p2PuzzleFailed', '');
+                    break;
+                }
+            }
+        }
+    });
+
 
     socket.on('reqestChallenge', function(data) {
         if (io.sockets.mygameRooms) {
@@ -201,7 +236,7 @@ io.on('connection', (socket) => {
             let rooms = io.sockets.mygameRooms;
             for (let rm in rooms) {
                 if (rooms[rm].id == data.id) {
-                    if (rooms[rm].players.length == 2) {                        
+                    if (rooms[rm].players.length == 2) {
                         io.sockets.mygameRooms[rm].preserveReload = true;
                         console.log("preserve set to TRUE");
                         socket.broadcast.to(rooms[rm].players[1].sock).emit('replayReqAccepted', { id: rooms[rm].id, players: rooms[rm].players });
@@ -211,6 +246,28 @@ io.on('connection', (socket) => {
                 }
             }
         }
+    });
+
+    socket.on('getWord', function(data) {
+        console.log('word pick....');
+        let words = "ability absence academy account accused achieve acquire address advance adviser airline airport alcohol analyst ancient anxious anxiety article assault attract auction average banking balance battery bedroom believe benefit billion brother cabinet captain capital careful caption capture carrier caution ceiling century central chapter charity chicken circuit classic climate collect clothes combine comfort college command comment compact compete compare company concept confirm concert connect content contact control council correct convert country counter crystal culture current decline default deliver defence desktop density destroy develop diamond discuss disease display distant driving drawing dynamic eastern economy element enhance essence evening examine example explain explore express factory extreme failure fashion fiction fifteen finance fishing forever foreign fitness formula fortune forward founder freedom general gateway gallery genetic genuine greater healthy helpful highway himself history housing holiday hundred husband illegal illness imagine include improve inquiry insight install instant involve intense journey justice kitchen kingdom liberty library license machine manager married maximum meaning meeting medical measure message million mineral minimum mistake mission mistake monthly monitor morning musical mystery natural nervous neutral network nuclear nothing nursing obvious offense nursing officer opening operate opinion optical outdoor organic outcome overall outside outlook package pacific partner parking passion patient pattern payment percent pension perform perfect picture pioneer plastic poverty popular precise predict premium prepare present primary printer privacy private problem process profile program product project promise protect protein protest publish quality qualify railway quarter respect restore satisfy science serious section silence speaker special station website welcome western welcome vehicle village uniform";
+        let wordlist = words.split(" ");
+        let word = wordlist[Math.floor(Math.random() * wordlist.length)];
+        console.log(word);
+        if (data.player == "two") {
+            let rooms = io.sockets.mygameRooms;
+            for (let rm in rooms) {
+                if(rooms[rm].id == data.id){
+                    socket.broadcast.to(rooms[rm].players[0].sock).emit('p2PuzzPlay', { player: rooms[rm].players[0].name });
+                     break;
+                }                
+            }
+
+        }else{
+             socket.emit("wordPicked", {word: word.toUpperCase()});
+        }
+       
+
     });
 
 

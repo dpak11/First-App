@@ -18,15 +18,26 @@
  let challengerPoints = 0;
  let player1Name = "";
  let isPreserve = false;
+ let countDownInterval;
+ let countDownCount = 20;
+ let pl2Puzz = {};
 
 
  if (Modernizr.queryselector) {
      let allclasses = document.querySelector("html").getAttribute("class");
      console.log(allclasses);
-     if (allclasses.includes("no-cssanimations") || allclasses.includes("no-arrow") || allclasses.includes("no-promises") || allclasses.includes("no-classlist") || allclasses.includes("no-opacity") || allclasses.includes("no-csstransforms")  || allclasses.includes("no-json") || allclasses.includes("no-localstorage") || allclasses.includes("no-templatestrings") || allclasses.includes("no-mediaqueries") || allclasses.includes("no-csstransforms3d") || allclasses.includes("no-flexbox") || allclasses.includes("no-boxshadow") || allclasses.includes("no-borderradius") || allclasses.includes("no-cssvhunit") || allclasses.includes("no-placeholder") || allclasses.includes("no-rgba") || allclasses.includes("no-cssgradients")) {
-         alert("Sorry, your browser does not support some features.\n Please use the latest version Google Chrome");
-     } else {
 
+     const featurelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
+     let feature = true;
+
+     for (let i in featurelist) {
+         if (allclasses.includes(featurelist[i])) {
+             feature = false;
+             break;
+         }
+     }
+
+     if (feature) {
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
              document.querySelector(".container").classList.remove("show-none");
@@ -46,9 +57,7 @@
                  socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
              }
 
-
          } else {
-
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
                  if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
@@ -65,6 +74,9 @@
                  }
              }
          }
+
+     } else {
+         alert("Sorry, your browser does not support some features.\n Please view this page on the latest version Google Chrome");
      }
 
  } else {
@@ -78,6 +90,9 @@
  const createBtn = document.getElementById("createBtn");
  const anotherReqBtn = document.getElementById("anotherYes");
  const declineBtn = document.getElementById("anotherNo");
+ const puzzTry = document.getElementById("trytest");
+ const puzzSkip = document.getElementById("skiptest");
+ const msgIconBtn = document.getElementById("msgicon");
 
  oneplayerBtn.addEventListener("click", function(e) {
      randomizer(11, null);
@@ -154,6 +169,32 @@
 
  });
 
+ puzzTry.addEventListener("click", function() {
+     if (isChallenger) {
+         socket.emit('getWord', { player: "one" });
+     } else {
+         socket.emit('getWord', { player: "two", id: gameID });
+         scrambleValidate();
+     }
+ });
+
+ puzzSkip.addEventListener("click", function() {
+     if (isChallenger) {
+         emitPuzzle({ set: false });
+     } else {
+         document.getElementById("puzword").classList.add("show-none");
+         document.getElementById("puzword").classList.remove("puzzTween");
+         msgIconBtn.style.display = "block";
+     }
+
+ });
+
+ msgIconBtn.addEventListener("click", function() {
+     msgIconBtn.style.display = "none";
+     document.getElementById("puzword").classList.remove("show-none");
+     document.getElementById("plIntroMsg").innerHTML = `<b>${player1Name}</b> has given you a Scrambled Word to solve in <b>20 Seconds</b>. If you get it correct, you will gain all the 10 points and also escape the Red Bomb`;
+
+ });
 
 
  const soundCheck = {
@@ -204,7 +245,7 @@
      }
 
 
-     let remainingElts = document.querySelectorAll("#gametable p");
+     let remainingElts = document.querySelectorAll("#gametable .row p");
      remainingElts.forEach(function(e) {
          if (!e.getAttribute("class").includes("disappear") && !e.getAttribute("class").includes("apply-shake")) {
              e.addEventListener("animationend", function(el) {
@@ -246,11 +287,14 @@
 
  };
 
+
+
+
  const bindCellEvents = () => {
-     const cells = document.querySelectorAll("#gametable p");
+     const cells = document.querySelectorAll("#gametable .row p");
      if (isChallenger) {
          challengeEnabled = true;
-         document.getElementById("challengerInfo").innerHTML = "Pick any <span>10 balls</span> to make them Green.<br/>The last one you pick will be the Bomber Ball";
+         document.getElementById("challengerInfo").innerHTML = "Pick any <span>10 balls</span> to make them Green. The last one you pick will be the Bomber Ball";
      }
      cells.forEach(function(elem) {
          elem.addEventListener("click", function(e) {
@@ -265,15 +309,13 @@
                              document.getElementById("challengerInfo").innerHTML = `Good. Now pick the final<br/> <span>Bomber Ball</span>`;
                          } else if (challengeSetsCount == 11) {
                              thisElt.classList.add("redbomb", "marked");
-                             challengeEnabled = false;
-                             socket.emit('cellsPicked', { cells: challengerCellsPicked, id: gameID, preserve: isPreserve });
-                             let gidurl = window.location.href + "?gameid=" + gameID;
-                             if (!isPreserve) {
-                                 document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
-                                 let inner = document.getElementById("chgID").innerHTML;
-                                 document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
-                             }
-                             isPreserve = false;
+                             challengeEnabled = false;                             
+                             document.getElementById("challengerInfo").innerHTML = `You are almost Done!`;
+                             setTimeout(function(){
+                                document.getElementById("puzword").classList.remove("show-none");
+                                document.getElementById("puzword").classList.add("puzzTween");
+                             },500);
+                             //isPreserve = false;
 
                          } else {
                              thisElt.classList.add("greenbox", "marked");
@@ -298,6 +340,10 @@
                      } else {
                          gameState.getPoints(thisElt);
                          if (!singlePlayer) {
+                             if (totalPoints == 9) {
+                                 document.getElementById("msgicon").remove();
+                                 document.getElementById("puzword").remove();
+                             }
                              if (totalPoints == 10) {
                                  bomber = 1000;
                                  document.getElementById("anotherGameOpt").classList.remove("show-none");
@@ -331,7 +377,149 @@
          let tabcell = "cell" + rand[i];
          document.getElementById(tabcell).setAttribute("data-active", "on");
      }
+ };
 
+ const emitPuzzle = (ob) => {
+     document.getElementById("puzword").remove();
+     socket.emit('cellsPicked', { cells: challengerCellsPicked, id: gameID, preserve: isPreserve, puzz: ob });
+     let gidurl = window.location.href + "?gameid=" + gameID;
+     document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
+     let inner = document.getElementById("chgID").innerHTML;
+     document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
+ };
+
+ const pl2PuzzleFail = () => {
+     document.getElementById("puzword").remove();
+     const pcells = document.querySelectorAll("#gametable .row p");
+     pcells.forEach(function(elm) {
+         if (elm.getAttribute("data-active") == "on") {
+             elm.setAttribute("data-active", "off");
+         }
+     });
+     let bmbCell = "cell" + bomber;
+     document.getElementById(bmbCell).classList.add("redbomb");
+     bomber = 1000;
+     document.getElementById("anotherGameOpt").classList.remove("show-none");
+     document.getElementById("anotherGameOpt").classList.add("tweenDown");
+     document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
+      socket.emit("puzzleFailed", { id: gameID });
+
+ };
+
+ const escapeRedBomb = () => {
+     const pcells = document.querySelectorAll("#gametable .row p");
+     pcells.forEach(function(elm) {
+         if (elm.getAttribute("data-active") == "on") {
+             let clss = elm.getAttribute("class");
+             if (!clss.includes("redbomb") && !clss.includes("greenbox") && !clss.includes("disappear")) {
+                 elm.classList.add("greenbox");
+                 elm.setAttribute("data-active", "off");
+             }
+         }
+     });
+     let bmbCell = "cell" + bomber;
+     document.getElementById(bmbCell).style.opacity = 0.4;
+     bomber = 1000;
+     totalPoints = 10;
+     document.querySelector("#points span").innerText = totalPoints + temp_total;
+     pointsSound.play();
+     document.getElementById("anotherGameOpt").classList.remove("show-none");
+     document.getElementById("anotherGameOpt").classList.add("tweenDown");
+     document.getElementById("challengerInfo").innerHTML = `You gained 10 points and escaped the Red Bomb<br/>
+                                    Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
+     document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+     socket.emit("puzzleBombClear", { id: gameID });
+
+ };
+
+ const scrambleValidate = (w) => {
+     let new_w = [];
+     if (isChallenger) {
+         let word = w.word.split("");
+         for (let j = 0; j < w.word.length; j++) {
+             let pos = Math.floor(Math.random() * word.length);
+             new_w.push(word[pos]);
+             word.splice(pos, 1);
+         }
+
+     }
+
+     let _word = isChallenger ? window.btoa(w.word) : pl2Puzz.word;
+     let _scramb = isChallenger ? new_w : pl2Puzz.scramb.split("");
+
+
+     document.getElementById("thetimer").style.display = "block";
+     document.getElementById("thetimer").innerText = countDownCount;
+
+     countDownInterval = setInterval(function() {
+         countDownCount--;
+         document.getElementById("thetimer").innerText = countDownCount;
+         if (countDownCount == 0) {
+             document.getElementById("thetimer").remove();
+             document.querySelector("#puzword div").remove();
+             clearInterval(countDownInterval);
+             if (isChallenger) {
+                 emitPuzzle({ set: false });
+             }else{
+                pl2PuzzleFail();
+             }
+
+         }
+     }, 1000);
+
+     document.getElementById("trytest").remove();
+     document.getElementById("skiptest").remove();
+     document.querySelector("#puzword p").innerHTML = `Pick the letters in <b>correct order</b><br/><br/>
+                <span id="txtsequence"></span>`;
+
+     document.getElementById("puzword").setAttribute("data-pzw", _word);
+     document.querySelector("#puzword div").innerHTML = `<span>${_scramb[0]}</span><span>${_scramb[1]}</span><span>${_scramb[2]}</span><span>${_scramb[3]}</span><span>${_scramb[4]}</span><span>${_scramb[5]}</span><span>${_scramb[6]}</span>`;
+     document.getElementById("puzword").setAttribute("data-scramb", String(_scramb.join("")));
+     let p_letters = document.querySelectorAll("#puzword div span");
+
+     p_letters.forEach(function(sp) {
+         sp.addEventListener("click", function(el) {
+             let picky = document.getElementById("puzword").getAttribute("data-picktxt");
+             let _txt = `${picky}${el.target.innerText}`;
+             document.getElementById("txtsequence").style.opacity = 1;
+             document.getElementById("puzword").setAttribute("data-picktxt", _txt);
+             document.getElementById("txtsequence").innerText = _txt;
+             el.target.remove();
+
+             if (_txt.length == 7) {
+                 let _right = window.atob(document.getElementById("puzword").getAttribute("data-pzw"));
+                 if (_txt == _right) {
+                     clearInterval(countDownInterval);
+                     document.querySelector("#puzword p").innerHTML = `<b>You got it right :)</b>`;
+                     setTimeout(function() {
+                         if (isChallenger) {
+                             emitPuzzle({
+                                 set: true,
+                                 scramb: document.getElementById("puzword").getAttribute("data-scramb"),
+                                 word: document.getElementById("puzword").getAttribute("data-pzw")
+                             });
+                         } else {
+                             escapeRedBomb();
+                         }
+
+                         document.getElementById("thetimer").remove();
+                     }, 3000);
+                 } else {
+                     clearInterval(countDownInterval);
+                     document.querySelector("#puzword p").innerHTML = `Sorry, the correct word is <b>${_right}</b>`;
+                     setTimeout(function() {
+                         if (isChallenger) {
+                             emitPuzzle({ set: false });
+                         } else {
+                             pl2PuzzleFail();
+                         }
+                         document.getElementById("thetimer").remove();
+                     }, 5000);
+                 }
+             }
+
+         });
+     });
  };
 
 
@@ -354,12 +542,7 @@
      bindCellEvents();
  };
 
- /* const autohideStatus = () => {
-      setTimeout(function() {
-          document.getElementById("statusMsg").innerHTML = "";
-          document.getElementById("statusMsg").style.opacity = 0;
-      }, 4000);
-  };*/
+
 
 
  const watchReview = (status, num) => {
@@ -433,7 +616,6 @@
              isChallenger = true;
              gameID = data.id;
              bindCellEvents();
-             //alert("CREATED!!");
 
          });
 
@@ -447,6 +629,11 @@
              document.getElementById("gametable").style.marginTop = "30px";
              document.querySelector("#points span").innerText = temp_total;
              document.getElementById("challengerInfo").innerHTML = `<span>${data.players[0].name}</span> has hidden <span>10</span> Green balls, and<br/> <span>1</span> Red ball among these. <br/><span class="sm-txt">(Green gets you points, Red will end the game)</span>`;
+             if (data.puzzler.set) {
+                 pl2Puzz = data.puzzler;
+                 document.getElementById("msgicon").style.display = "block";
+             }
+
              isChallenger = false;
              gameID = data.id;
              player1Name = data.players[0].name;
@@ -456,11 +643,40 @@
 
          socket.on('player2in', function(data) {
              document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.players[0].name}, ${data.players[1].name} / <span>Game ID: ${data.id}</span> `;
-             //document.getElementById("statusMsg").innerHTML = `<b>${data.players[1].name}</b> has accepted your challenge`;
-             //document.getElementById("statusMsg").style.opacity = 1;
              document.getElementById("challengerInfo").innerHTML = `<b>${data.players[1].name}</b> has accepted your challenge`;
              secondPlayer = data.players[1].name;
-             //autohideStatus();
+
+         });
+
+         socket.on('p2PuzzPlay', function(data) {
+             document.getElementById("challengerInfo").innerHTML = `<b>${data.player}</b> is now playing the Word Scramble...`;
+         });
+
+         socket.on('p2PuzzleFailed', function(data) {
+             challengerPoints = challengerPoints + 5 + (10- totalPoints);
+             document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> failed at Word Scramble.<br/>
+             You get ${10- totalPoints} bonus points + 5 <br/>
+             <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b>`;
+         });
+
+         socket.on('puzzBombCleared', function(data) {
+             totalPoints = 10;
+             document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> cleared Word Scramble and gets <b>10 Points</b><br/>
+                <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b>
+             `;
+
+             const xcells = document.querySelectorAll("#gametable .row p.marked");
+             xcells.forEach(function(elm) {
+                 let clss = elm.getAttribute("class");
+                 if (clss.includes("greenbox")) {
+                     elm.classList.add("zoom");
+                 }
+             });
+             pointsSound.play();
+         });
+
+         socket.on('wordPicked', function(w) {
+             scrambleValidate(w);
          });
 
 
@@ -550,21 +766,11 @@
      });
 
      if (ad_found) {
-         if (window.location.href.includes("#ads")) {
-             let _html = String(document.querySelector("html").innerHTML);
-             document.querySelector(".container").innerHTML = "";
-             document.body.innerText = _html;
-         } else {
-             document.body.innerHTML = "<h4>Server is too busy.</h4> <p>This may be due to several bulk requests from your ISP (or similar) to this page with low bandwidth.</p> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi or 3G/4G)</b></p>";
-             document.body.style.padding = "20px";
-         }
+         document.body.innerHTML = "<h4>Server is too busy.</h4> <p>This may be due to several bulk requests from your ISP (or similar) to this page with low bandwidth.</p> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi or 3G/4G)</b></p>";
+         document.body.style.padding = "20px";
+
      } else {
          document.querySelector(".container").classList.remove("show-none");
      }
 
  }, 2000);
-
- window.addEventListener("resize", function(){
-    document.querySelector(".container").style.height = "100%";
-
- })
