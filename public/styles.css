@@ -114,7 +114,7 @@
 
     #gametable p.greenbox {
         /*  background: url(images/box-green.png) center no-repeat !important; */
-        background: linear-gradient(-53deg, green, green, rgba(226, 216, 216, 0.5)) !important;        
+        background: linear-gradient(-53deg, green, green, rgba(226, 216, 216, 0.5)) !important;
         box-shadow: inset 3px 3px 7px #000 !important;
     }
 
@@ -233,7 +233,7 @@
         top: 20%;
         min-width: 350px;
         background: rgba(154, 218, 223, 0.8);
-        height: 240px;
+        min-height: 145px;
         max-width: 372px;
         padding: 10px;
         border: 1px solid #cedfe2;
@@ -248,9 +248,10 @@
     #trytest,
     #skiptest {
         display: inline-block;
-        padding: 5px;
-        border: 1px solid black;
-        cursor: pointer
+        padding: 2px 5px;
+        border: 1px solid rgb(146, 145, 174);
+        cursor: pointer;
+        background-color: rgba(215, 216, 221, 0.29);
     }
 
     #trytest {
@@ -342,7 +343,7 @@
     }
 
     .puzzTween {
-        
+
         animation-name: puzz-slide-down;
         animation-duration: 1s;
         transition-timing-function: ease-out;
