@@ -17,10 +17,10 @@ app.get("/", (req, res) => {
 
 });
 
-app.get("/people", (req, res) => {
+/*app.get("/people", (req, res) => {
     res.sendFile(__dirname + "/public/main.html");
 
-});
+});*/
 
 app.get("/api/names", (req, res) => {
     console.log("names api call... ");
