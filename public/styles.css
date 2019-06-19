@@ -226,7 +226,7 @@
         left: 0;
     }
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 450px) {
         #msgicon {
             top: 50%;
             background: rgba(255, 255, 255, 0.6);
@@ -237,7 +237,7 @@
 
     }
 
-    @media screen and (min-width: 401px) {
+    @media screen and (min-width: 451px) {
         #msgicon {
             top: 5px;
             left: 5px;

@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
                     //socket.emit("objectDebug", {alert:true, msg: `DEBUG ${soc_room[j].id} == ${data.id} && ${soc_room[j].players[0].name} == ${data.player1}`}); 
                     if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
                         soc_room[j].players[0].sock = socket.id;
+                        soc_room[j].preserveReload = false;
                         console.log("Create room preserve...");
                         //socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
                         socket.emit("roomcreated", { player: data.player1, id: data.id });
@@ -122,7 +123,7 @@ io.on('connection', (socket) => {
                         if ((!socket_room[rm].preserveReload && ply.length == 1) || (socket_room[rm].preserveReload && ply.length == 2)) {
                             if (ply[0].name != plName) {
                                 if (socket_room[rm].preserveReload) {
-                                    console.log("joing room preserve reload");
+                                    console.log("joining room preserve reload");
                                     io.sockets.mygameRooms[rm].players[1].sock = socket.id;
                                     io.sockets.mygameRooms[rm].preserveReload = false;
                                 } else {
@@ -175,6 +176,7 @@ io.on('connection', (socket) => {
                     io.sockets.mygameRooms[i].puzzler = data.puzz;
                 }
                 if (data.preserve) {
+                    io.sockets.mygameRooms[i].preserveReload = true;
                     socket.broadcast.to(socket_room[i].players[1].sock).emit('Player2Refresh', '');
                 }
                 break;
