@@ -475,10 +475,11 @@
      countDownInterval = setInterval(function() {
          countDownCount--;
          document.getElementById("thetimer").innerText = countDownCount;
-         if (countDownCount == 15) {
-             document.getElementById("refreshScramble").remove();
-             document.getElementById("temp_or").remove();
-
+         if (countDownCount == 10) {
+            if(document.getElementById("refreshScramble")){
+                document.getElementById("refreshScramble").remove();
+                document.getElementById("temp_or").remove();
+            }
          }
          if (countDownCount == 0) {
              document.getElementById("thetimer").remove();
