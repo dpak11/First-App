@@ -50,14 +50,21 @@ const getroomID = () => {
 };
 
 const broadcastCellPicks = (socket, status, data) => {
-    let socket_room = io.sockets.mygameRooms;
-    let _id = data.id;
-    for (let i in socket_room) {
-        if (socket_room[i].id == _id) {
-            socket.broadcast.to(io.sockets.mygameRooms[i].players[0].sock).emit('player2CellPicked', { state: status, cell: data.cell });
-            break;
+    let srch = searchSocket(data.id);
+    if (srch) {
+        socket.broadcast.to(srch.players[0].sock).emit('player2CellPicked', { state: status, cell: data.cell });
+    }
+};
+
+const searchSocket = (idval) => {
+    let rooms = io.sockets.mygameRooms;
+    for (let rm in rooms) {
+        if (rooms[rm].id == idval) {
+            return rooms[rm];
         }
     }
+    return false;
+
 };
 
 io.on('connection', (socket) => {
@@ -73,19 +80,14 @@ io.on('connection', (socket) => {
 
 
         if (io.sockets.mygameRooms) {
-            let soc_room = io.sockets.mygameRooms;
             if (data.preserveReload) {
-                for (var j in soc_room) {
-                    //socket.emit("objectDebug", {alert:true, msg: `DEBUG ${soc_room[j].id} == ${data.id} && ${soc_room[j].players[0].name} == ${data.player1}`}); 
-                    if (soc_room[j].id == data.id && soc_room[j].players[0].name == data.player1) {
-                        soc_room[j].players[0].sock = socket.id;
-                        soc_room[j].preserveReload = false;
-                        console.log("Create room preserve...");
-                        //socket.emit("objectDebug", {alert:true, msg: `about to emit...`}); 
-                        socket.emit("roomcreated", { player: data.player1, id: data.id });
-                        break;
-                    }
+                let srch = searchSocket(data.id);
+                if (srch && srch.players[0].name == data.player1) {
+                    srch.players[0].sock = socket.id;
+                    srch.preserveReload = false;
+                    socket.emit("roomcreated", { player: data.player1, id: data.id });
                 }
+
             } else {
                 io.sockets.mygameRooms.push(obj);
                 socket.emit("roomcreated", { player: data.player1, id: obj.id });
@@ -101,8 +103,6 @@ io.on('connection', (socket) => {
         }
 
 
-
-
         //broadcast to everyone except this socket
         //socket.broadcast.emit('hi');
     });
@@ -113,46 +113,35 @@ io.on('connection', (socket) => {
         if (acceptID.length == 9 && acceptID.includes(".")) {
             let id = acceptID.split(".");
             if (id.length == 2 && id[0].length == 4 && id[1].length == 4) {
-                let matched = false;
-                let socket_room = io.sockets.mygameRooms;
-                for (let rm in socket_room) {
-                    if (socket_room[rm].id == acceptID) {
-                        matched = true;
-                        let ply = socket_room[rm].players;
-                        let plName = data.player2.toLowerCase();
-                        if ((!socket_room[rm].preserveReload && ply.length == 1) || (socket_room[rm].preserveReload && ply.length == 2)) {
-                            if (ply[0].name != plName) {
-                                if (socket_room[rm].preserveReload) {
-                                    console.log("joining room preserve reload");
-                                    io.sockets.mygameRooms[rm].players[1].sock = socket.id;
-                                    io.sockets.mygameRooms[rm].preserveReload = false;
-                                } else {
-                                    io.sockets.mygameRooms[rm].players.push({ sock: socket.id, name: plName });
-                                }
-
-                                let isPuzzle = false;
-                                if (socket_room[rm].puzzler) {
-                                    isPuzzle = JSON.parse(JSON.stringify(socket_room[rm].puzzler));
-                                    io.sockets.mygameRooms[rm].puzzler = { set: false };
-                                }
-
-                                socket.emit('joined', { players: io.sockets.mygameRooms[rm].players, id: acceptID, cells: io.sockets.mygameRooms[rm].cellPoints, puzzler: isPuzzle });
-                                socket.broadcast.to(io.sockets.mygameRooms[rm].players[0].sock).emit('player2in', { players: io.sockets.mygameRooms[rm].players, id: acceptID });
-                                break;
+                let srch = searchSocket(acceptID);
+                if (srch) {
+                    let ply = srch.players;
+                    let plName = data.player2.toLowerCase();
+                    if ((!srch.preserveReload && ply.length == 1) || (srch.preserveReload && ply.length == 2)) {
+                        if (ply[0].name != plName) {
+                            if (srch.preserveReload) {
+                                console.log("joining room preserve reload");
+                                srch.players[1].sock = socket.id;
+                                srch.preserveReload = false;
                             } else {
-                                socket.emit('duplicateName', "");
-                                break;
+                                srch.players.push({ sock: socket.id, name: plName });
                             }
-                        } else if (ply.length > 1) {
-                            socket.emit('playerfull', "");
-                            break;
+
+                            let isPuzzle = srch.puzzler ? JSON.parse(JSON.stringify(srch.puzzler)) : false;
+                            if (srch.puzzler) { srch.puzzler = { set: false }; }
+
+                            socket.emit('joined', { players: srch.players, id: acceptID, cells: srch.cellPoints, puzzler: isPuzzle });
+                            socket.broadcast.to(srch.players[0].sock).emit('player2in', { players: srch.players, id: acceptID });
+
                         } else {
-                            socket.emit('noplayer', "");
-                            break;
+                            socket.emit('duplicateName', "");
                         }
+                    } else if (ply.length > 1) {
+                        socket.emit('playerfull', "");
+                    } else {
+                        socket.emit('noplayer', "");
                     }
-                }
-                if (!matched) {
+                } else {
                     console.log('ID not found');
                     socket.emit('errorID', { error: "ID not found", rooms: io.sockets.mygameRooms });
                 }
@@ -167,21 +156,18 @@ io.on('connection', (socket) => {
     });
 
     socket.on('cellsPicked', function(data) {
-        let socket_room = io.sockets.mygameRooms;
-        let _id = data.id;
-        for (let i in socket_room) {
-            if (socket_room[i].id == _id) {
-                io.sockets.mygameRooms[i].cellPoints = data.cells;
-                if (data.puzz.set) {
-                    io.sockets.mygameRooms[i].puzzler = data.puzz;
-                }
-                if (data.preserve) {
-                    io.sockets.mygameRooms[i].preserveReload = true;
-                    socket.broadcast.to(socket_room[i].players[1].sock).emit('Player2Refresh', '');
-                }
-                break;
+        let srch = searchSocket(data.id);
+        if (srch) {
+            srch.cellPoints = data.cells;
+            if (data.puzz.set) {
+                srch.puzzler = data.puzz;
+            }
+            if (data.preserve) {
+                srch.preserveReload = true;
+                socket.broadcast.to(srch.players[1].sock).emit('Player2Refresh', '');
             }
         }
+
     });
 
 
@@ -197,55 +183,34 @@ io.on('connection', (socket) => {
     });
 
     socket.on('puzzleBombClear', function(data) {
-          if (io.sockets.mygameRooms) {
-            let rooms = io.sockets.mygameRooms;
-            for (let rm in rooms) {
-                if (rooms[rm].id == data.id) {
-                    socket.broadcast.to(rooms[rm].players[0].sock).emit('puzzBombCleared', '');
-                    break;
-                }
-            }
+        let srch = searchSocket(data.id);
+        if (srch) {
+            socket.broadcast.to(srch.players[0].sock).emit('puzzBombCleared', '');
         }
     });
 
     socket.on('puzzleFailed', function(data) {
-          if (io.sockets.mygameRooms) {
-            let rooms = io.sockets.mygameRooms;
-            for (let rm in rooms) {
-                if (rooms[rm].id == data.id) {
-                    socket.broadcast.to(rooms[rm].players[0].sock).emit('p2PuzzleFailed', '');
-                    break;
-                }
-            }
+        let srch = searchSocket(data.id);
+        if (srch) {
+            socket.broadcast.to(srch.players[0].sock).emit('p2PuzzleFailed', '');
         }
     });
 
 
     socket.on('reqestChallenge', function(data) {
-        if (io.sockets.mygameRooms) {
-            let rooms = io.sockets.mygameRooms;
-            for (let rm in rooms) {
-                if (rooms[rm].id == data.id) {
-                    socket.broadcast.to(rooms[rm].players[0].sock).emit('ChlngReqFromPlayer2', { id: rooms[rm].id });
-                    break;
-                }
-            }
+        let srch = searchSocket(data.id);
+        if (srch) {
+            socket.broadcast.to(srch.players[0].sock).emit('ChlngReqFromPlayer2', { id: srch.id });
         }
     });
 
     socket.on('acceptRequest', function(data) {
-        if (io.sockets.mygameRooms) {
-            let rooms = io.sockets.mygameRooms;
-            for (let rm in rooms) {
-                if (rooms[rm].id == data.id) {
-                    if (rooms[rm].players.length == 2) {
-                        io.sockets.mygameRooms[rm].preserveReload = true;
-                        console.log("preserve set to TRUE");
-                        socket.broadcast.to(rooms[rm].players[1].sock).emit('replayReqAccepted', { id: rooms[rm].id, players: rooms[rm].players });
-                        break;
-                    }
-
-                }
+        let srch = searchSocket(data.id);
+        if (srch) {
+            if (srch.players.length == 2) {
+                srch.preserveReload = true;
+                console.log("preserve set to TRUE");
+                socket.broadcast.to(srch.players[1].sock).emit('replayReqAccepted', { id: srch.id, players: srch.players });
             }
         }
     });
@@ -257,18 +222,14 @@ io.on('connection', (socket) => {
         let word = wordlist[Math.floor(Math.random() * wordlist.length)];
         console.log(word);
         if (data.player == "two") {
-            let rooms = io.sockets.mygameRooms;
-            for (let rm in rooms) {
-                if(rooms[rm].id == data.id){
-                    socket.broadcast.to(rooms[rm].players[0].sock).emit('p2PuzzPlay', { player: rooms[rm].players[0].name });
-                     break;
-                }                
+            let srch = searchSocket(data.id);
+            if (srch) {
+                socket.broadcast.to(srch.players[0].sock).emit('p2PuzzPlay', { player: srch.players[0].name });
             }
 
-        }else{
-             socket.emit("wordPicked", {word: word.toUpperCase()});
+        } else {
+            socket.emit("wordPicked", { word: word.toUpperCase() });
         }
-       
 
     });
 
@@ -305,8 +266,6 @@ io.on('connection', (socket) => {
         }
 
     });
-
-
 });
 
 //io.emit('some event', { for: 'everyone' });
