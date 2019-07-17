@@ -1,1 +1,872 @@
-var _0x4a67=['</b>\x20is\x20now\x20playing\x20the\x20Word\x20Scramble...','p2PuzzleFailed','</b>\x20failed\x20at\x20Word\x20Scramble.<br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20You\x20get\x20','puzzBombCleared','</b>\x20cleared\x20Word\x20Scramble\x20and\x20gets\x20<b>10\x20Points</b><br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<b>Your\x20score:\x20','zoom','wordPicked','player2CellPicked','</b>\x20has\x20started\x20playing....','#points\x20div','state','ChlngReqFromPlayer2','Decline','Player2Refresh','Your\x20challenge\x20will\x20load\x20now...','replayReqAccepted','</b>\x20is\x20now\x20preparing,\x20please\x20wait...','duplicateName','Choose\x20a\x20different\x20user\x20name','playerfull','Sorry,\x20someone\x20has\x20already\x20accepted\x20this\x20Challenge','noplayer','Sorry,\x20Your\x20challenger\x20has\x20left\x20the\x20Game.\x20This\x20challenge\x20has\x20expired','errorID','error','playergone','\x20</span>','\x20has\x20left\x20the\x20game','disconnected','script','src','howler.min.js','modernizr-custom.js','body','<h4>Server\x20is\x20too\x20busy.</h4>\x20<p>This\x20may\x20be\x20due\x20to\x20several\x20bulk\x20requests\x20from\x20your\x20ISP\x20(or\x20similar)\x20to\x20this\x20page\x20with\x20low\x20bandwidth.</p>\x20<p>Please\x20visit\x20again\x20after\x20sometime,\x20or\x20we\x20recommend\x20you\x20to\x20<b>try\x20from\x20a\x20different\x20ISP\x20(Wifi\x20or\x203G/4G)</b></p>','padding','20px','queryselector','querySelector','html','getAttribute','class','log','no-cssanimations','no-classList','no-opacity','no-csstransforms','no-templatestrings','no-mediaqueries','no-csstransforms3d','no-flexbox','no-boxshadow','no-borderradius','no-placeholder','no-rgba','no-cssgradients','includes','getItem','refresher','.container','classList','remove','show-none','parse','name','pl2score','clear','player','join','create','location','href','playgame?gameid=','length','joinoraccept','style','display','block','getElementById','oneplayer','parentNode','none','acceptBlock','acceptID','value','createBtn','joinBtn','innerText','Welcome\x20Player-2','Sorry,\x20your\x20browser\x20does\x20not\x20support\x20some\x20features.\x0a\x20Please\x20view\x20this\x20page\x20on\x20the\x20latest\x20version\x20Google\x20Chrome','Sorry,\x20you\x20are\x20using\x20an\x20outdated\x20browser','readyBtn','anotherYes','anotherNo','trytest','skiptest','addEventListener','click','playmode','emit','acceptRequest','setItem','stringify','one','reload','reqestChallenge','#anotherGameOpt\x20h4','split','?gameid=','username','toLowerCase','test','Enter\x20a\x20valid\x20User\x20Name','trim','^([a-zA-Z0-9_]){2,20}$','Invalid\x20ID','getWord','two','puzword','puzzTween','plIntroMsg','innerHTML','count','assets/points.wav','assets/missout.mp3','assets/bombsound.mp3','assets/bombsound.wav','once','load','isLoad','challengerInfo','<b>Game\x20Over!</b><br/>\x0a\x20\x20\x20\x20Your\x20Score:\x20','\x27s\x20score:\x20','querySelectorAll','#gametable\x20.row\x20p','apply-shake','animationend','target','opacity','gameover','points','add','implode','greenbox','#points\x20span','play','setAttribute','data-active','off','redbomb','disappear','Pick\x20any\x20<span>10\x20balls</span>\x20to\x20make\x20them\x20Green.\x20The\x20last\x20one\x20you\x20pick\x20will\x20be\x20the\x20Bomber\x20Ball','forEach','cell','marked','You\x20are\x20almost\x20Done!','Pick\x20<span>','</span>\x20more\x20balls','bombPick','msgicon','anotherGameOpt','tweenDown','Add\x20more\x20points\x20to\x20your\x20score?\x20Ask\x20for\x20a\x20Challenge.','getPoints','Great!\x20You\x20got\x20all\x2010\x20Right!<br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Your\x20Score:\x20','Do\x20you\x20want\x20to\x20take\x20another\x20Challenge?','missed','cellsPicked','</b>','Challenge\x20Ready!\x20<br/>Share\x20this\x20<b>Game\x20ID</b>\x20with\x20the\x20person\x20who\x20will\x20play\x20your\x20challenge.<br/><a\x20href=\x22','\x22><span\x20class=\x22link-game\x22>','</span></a>','#challengerInfo\x20a','chgID','\x20/\x20<span>Game\x20ID:\x20','</span>','Better\x20Luck\x20next\x20time','puzzleFailed','refreshScramble','removeEventListener','#puzword\x20div\x20span','word','floor','random','push','splice','plain','thetimer','temp_or','#puzword\x20div','#puzword\x20p','Arrange\x20the\x20letters\x20in\x20<b>correct\x20order</b>\x20<span\x20id=\x22temp_or\x22>or</span>\x20<span\x20id=\x22refreshScramble\x22>Try\x20another?</span><br/><br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22txtsequence\x22></span>','Arrange\x20the\x20letters\x20in\x20<b>correct\x20order</b>\x20<br/><br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22txtsequence\x22></span>','data-pzw','<span>','</span><span>','data-picktxt','txtsequence','encoded','data-scramb','Sorry,\x20the\x20correct\x20word\x20is\x20<b>','slice','pop','Ma_X_iM','piX_Xel','_BrOxxO_','btoa','correct','<b>','</b>\x20has\x20scored\x20<b>','</b>\x20points','wrong','</b>\x20is\x20Bombed!<br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20<b>Your\x20score:\x20','</b>,\x20','\x27s\x20score:\x20<b>','</b>\x20','gametable','align-items-center','joinRoom','objectDebug','msg','<b>Players:</b>\x20','marginTop','30px','joined','players','</span>\x20','GameHeader','</span>\x20has\x20hidden\x20<span>10</span>\x20Green\x20balls,\x20and<br/>\x20<span>1</span>\x20Red\x20ball\x20among\x20these.\x20<br/><span\x20class=\x22sm-txt\x22>(Green\x20gets\x20you\x20points,\x20Red\x20will\x20end\x20the\x20game)</span>','puzzler','cells','player2in','</b>\x20has\x20accepted\x20your\x20challenge','p2PuzzPlay'];(function(_0x5b8052,_0x321697){var _0x50f7fb=function(_0x57fb4a){while(--_0x57fb4a){_0x5b8052['push'](_0x5b8052['shift']());}};_0x50f7fb(++_0x321697);}(_0x4a67,0x10f));var _0x314c=function(_0x21f31c,_0x194e28){_0x21f31c=_0x21f31c-0x0;var _0x32f635=_0x4a67[_0x21f31c];return _0x32f635;};let socket=null;let singlePlayer=!![];let firstSetup=!![];let compatableBrowser=![];let bomber=0xe;let totalPoints=0x0;let temp_total=0x0;let thisPlayer='';let isChallenger=![];let challengeEnabled=![];let challengeSetsCount=0x0;let challengerCellsPicked=[];let gameID='';let secondPlayer='';let challengerPoints=0x0;let player1Name='';let isPreserve=![];let countDownInterval;let countDownCount=0x19;let pl2Puzz={};if(Modernizr[_0x314c('0x0')]){let allclasses=document[_0x314c('0x1')](_0x314c('0x2'))[_0x314c('0x3')](_0x314c('0x4'));console[_0x314c('0x5')](allclasses);const featurelist=[_0x314c('0x6'),'no-arrow',_0x314c('0x7'),_0x314c('0x8'),_0x314c('0x9'),'no-json','no-localstorage',_0x314c('0xa'),_0x314c('0xb'),_0x314c('0xc'),_0x314c('0xd'),_0x314c('0xe'),_0x314c('0xf'),_0x314c('0x10'),_0x314c('0x11'),_0x314c('0x12')];let feature=!![];for(let i in featurelist){if(allclasses[_0x314c('0x13')](featurelist[i])){feature=![];break;}}if(feature){compatableBrowser=!![];if(localStorage[_0x314c('0x14')](_0x314c('0x15'))){document[_0x314c('0x1')](_0x314c('0x16'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));let cache=JSON[_0x314c('0x1a')](localStorage['getItem']('refresher'));gameID=cache['id'];thisPlayer=cache[_0x314c('0x1b')];challengerPoints=parseInt(cache['pl1score']);temp_total=parseInt(cache[_0x314c('0x1c')]);localStorage[_0x314c('0x1d')]();singlePlayer=![];if(cache[_0x314c('0x1e')]=='two'){isChallenger=![];socketHandlers(_0x314c('0x1f'),{'name':thisPlayer,'id':gameID,'preserve':![]});}else{isPreserve=!![];socketHandlers(_0x314c('0x20'),{'name':thisPlayer,'preserve':!![],'id':gameID});}}else{if(window[_0x314c('0x21')][_0x314c('0x22')][_0x314c('0x13')](_0x314c('0x23'))){let hashid=window[_0x314c('0x21')]['href']['split']('?gameid=');if(hashid[_0x314c('0x24')]==0x2&&hashid[0x1][_0x314c('0x24')]==0x9&&hashid[0x1]['indexOf']('.')==0x4){document['getElementById'](_0x314c('0x25'))[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');document[_0x314c('0x29')](_0x314c('0x2a'))[_0x314c('0x2b')][_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x2c');document['getElementById'](_0x314c('0x2d'))[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');document[_0x314c('0x29')](_0x314c('0x2e'))[_0x314c('0x2f')]=hashid[0x1];document['getElementById'](_0x314c('0x30'))[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0x31'))[_0x314c('0x18')]();document[_0x314c('0x1')]('#joinoraccept\x20span')[_0x314c('0x18')]();document['getElementById']('twoplayer')[_0x314c('0x32')]=_0x314c('0x33');singlePlayer=![];}}}}else{alert(_0x314c('0x34'));}}else{alert(_0x314c('0x35'));}const oneplayerBtn=document['getElementById'](_0x314c('0x2a'));const twoplayerBtn=document['getElementById']('twoplayer');const joinBtn=document[_0x314c('0x29')](_0x314c('0x31'));const readyBtn=document[_0x314c('0x29')](_0x314c('0x36'));const createBtn=document[_0x314c('0x29')](_0x314c('0x30'));const anotherReqBtn=document[_0x314c('0x29')](_0x314c('0x37'));const declineBtn=document['getElementById'](_0x314c('0x38'));const puzzTry=document[_0x314c('0x29')](_0x314c('0x39'));const puzzSkip=document['getElementById'](_0x314c('0x3a'));const msgIconBtn=document[_0x314c('0x29')]('msgicon');oneplayerBtn[_0x314c('0x3b')](_0x314c('0x3c'),function(_0x1c6a77){randomizer(0xb,null);document[_0x314c('0x29')](_0x314c('0x3d'))[_0x314c('0x18')]();document[_0x314c('0x29')]('gametable')[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));});twoplayerBtn[_0x314c('0x3b')]('click',function(_0x3a8e23){document[_0x314c('0x29')](_0x314c('0x25'))[_0x314c('0x26')]['display']=_0x314c('0x28');document[_0x314c('0x29')]('oneplayer')['parentNode'][_0x314c('0x26')]['display']='none';singlePlayer=![];});anotherReqBtn[_0x314c('0x3b')](_0x314c('0x3c'),function(){if(isChallenger){document[_0x314c('0x29')](_0x314c('0x37'))[_0x314c('0x18')]();document['getElementById'](_0x314c('0x38'))[_0x314c('0x18')]();socket[_0x314c('0x3e')](_0x314c('0x3f'),{'id':gameID});localStorage[_0x314c('0x40')](_0x314c('0x15'),JSON[_0x314c('0x41')]({'id':gameID,'name':thisPlayer,'player':_0x314c('0x42'),'pl1score':challengerPoints,'pl2score':totalPoints+temp_total}));setTimeout(function(){window[_0x314c('0x21')][_0x314c('0x43')]();},0x3e8);}else{socket[_0x314c('0x3e')](_0x314c('0x44'),{'id':gameID});document['querySelector'](_0x314c('0x45'))[_0x314c('0x32')]='Waiting\x20to\x20accept...';document['getElementById'](_0x314c('0x37'))['remove']();document[_0x314c('0x29')](_0x314c('0x38'))[_0x314c('0x18')]();}});declineBtn['addEventListener']('click',function(){if(window[_0x314c('0x21')][_0x314c('0x22')][_0x314c('0x13')]('playgame?gameid=')){let _0x11451e=window[_0x314c('0x21')][_0x314c('0x22')][_0x314c('0x46')](_0x314c('0x47'));window[_0x314c('0x21')][_0x314c('0x22')]=_0x11451e[0x0];}else{window['location']['reload']();}});if(joinBtn&&createBtn){joinBtn[_0x314c('0x3b')](_0x314c('0x3c'),function(){document[_0x314c('0x29')](_0x314c('0x2d'))[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');});createBtn[_0x314c('0x3b')]('click',function(){let _0x175945=document[_0x314c('0x29')](_0x314c('0x48'))[_0x314c('0x2f')][_0x314c('0x49')]()['trim']();let _0x3ddfe0=new RegExp('^([a-zA-Z0-9_]){2,20}$');if(_0x3ddfe0[_0x314c('0x4a')](_0x175945)){socketHandlers(_0x314c('0x20'),{'name':_0x175945,'preserve':![],'id':null});}else{alert(_0x314c('0x4b'));}});}readyBtn['addEventListener']('click',function(){let _0x1e7ebc=document[_0x314c('0x29')](_0x314c('0x2e'))[_0x314c('0x2f')][_0x314c('0x4c')]();let _0x1fa734=document['getElementById'](_0x314c('0x48'))[_0x314c('0x2f')][_0x314c('0x49')]()[_0x314c('0x4c')]();let _0x16b452=new RegExp(_0x314c('0x4d'));if(_0x16b452[_0x314c('0x4a')](_0x1fa734)){if(_0x1e7ebc[_0x314c('0x24')]==0x9&&_0x1e7ebc[_0x314c('0x13')]('.')){let _0x1e34a0=_0x1e7ebc['split']('.');if(_0x1e34a0[_0x314c('0x24')]==0x2&&_0x1e34a0[0x0][_0x314c('0x24')]==0x4&&_0x1e34a0[0x1][_0x314c('0x24')]==0x4){socketHandlers(_0x314c('0x1f'),{'name':_0x1fa734,'id':_0x1e7ebc});}else{alert(_0x314c('0x4e'));}}else{alert('Invalid\x20ID');}}else{alert(_0x314c('0x4b'));}});puzzTry[_0x314c('0x3b')](_0x314c('0x3c'),function(){if(isChallenger){socket[_0x314c('0x3e')](_0x314c('0x4f'),{'player':_0x314c('0x42')});}else{socket['emit'](_0x314c('0x4f'),{'player':_0x314c('0x50'),'id':gameID});scrambleValidate();}});puzzSkip['addEventListener'](_0x314c('0x3c'),function(){if(isChallenger){emitPuzzle({'set':![]});}else{document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x17')]['add'](_0x314c('0x19'));document[_0x314c('0x29')]('puzword')['classList'][_0x314c('0x18')](_0x314c('0x52'));msgIconBtn[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');}});msgIconBtn[_0x314c('0x3b')](_0x314c('0x3c'),function(){msgIconBtn[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x2c');document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x17')]['remove'](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x53'))[_0x314c('0x54')]='<b>'+player1Name+'</b>\x20has\x20given\x20you\x20a\x20Scrambled\x20Word\x20to\x20solve\x20in\x20<b>25\x20Seconds</b>.\x20If\x20you\x20get\x20it\x20correct,\x20you\x20will\x20gain\x20all\x20the\x2010\x20points\x20and\x20also\x20escape\x20the\x20Red\x20Bomb';});const soundCheck={'count':0x0,'isLoad':function(){this[_0x314c('0x55')]++;if(this[_0x314c('0x55')]==0x3&&compatableBrowser){if(document[_0x314c('0x29')](_0x314c('0x3d'))){document['getElementById']('playmode')[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));}}}};const pointsSound=new Howl({'src':['assets/points.mp3',_0x314c('0x56')]});const missoutSound=new Howl({'src':[_0x314c('0x57'),'assets/missout.wav']});const bombSound=new Howl({'src':[_0x314c('0x58'),_0x314c('0x59')]});pointsSound[_0x314c('0x5a')](_0x314c('0x5b'),function(){soundCheck[_0x314c('0x5c')]();});missoutSound[_0x314c('0x5a')]('load',function(){soundCheck[_0x314c('0x5c')]();});bombSound[_0x314c('0x5a')]('load',function(){soundCheck[_0x314c('0x5c')]();});const shrinkRemaining=()=>{if(!singlePlayer){challengerPoints=challengerPoints+0x5;document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0x5e')+(totalPoints+temp_total)+',\x20'+player1Name+_0x314c('0x5f')+challengerPoints;}else{document['querySelector']('#gameover\x20span')[_0x314c('0x32')]='Game\x20Over!\x0a\x20\x20\x20\x20You\x20Scored\x20'+totalPoints+'\x20points';}let _0xfddc3b=document[_0x314c('0x60')](_0x314c('0x61'));_0xfddc3b['forEach'](function(_0x213c24){if(!_0x213c24[_0x314c('0x3')]('class')[_0x314c('0x13')]('disappear')&&!_0x213c24['getAttribute']('class')[_0x314c('0x13')](_0x314c('0x62'))){_0x213c24[_0x314c('0x3b')](_0x314c('0x63'),function(_0x26d3d9){_0x26d3d9[_0x314c('0x64')][_0x314c('0x26')][_0x314c('0x65')]=0x0;document[_0x314c('0x29')](_0x314c('0x66'))[_0x314c('0x26')][_0x314c('0x27')]='block';document['getElementById'](_0x314c('0x67'))[_0x314c('0x26')][_0x314c('0x65')]=0x0;},![]);_0x213c24[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x69'));}});};const gameState={'getPoints':function(_0x4f8b8e){_0x4f8b8e['classList'][_0x314c('0x68')](_0x314c('0x6a'));totalPoints++;document[_0x314c('0x1')](_0x314c('0x6b'))[_0x314c('0x32')]=totalPoints+temp_total;pointsSound[_0x314c('0x6c')]();_0x4f8b8e[_0x314c('0x6d')](_0x314c('0x6e'),_0x314c('0x6f'));},'bombed':function(_0x135272){_0x135272[_0x314c('0x3b')](_0x314c('0x63'),function(){_0x135272[_0x314c('0x26')][_0x314c('0x65')]=0x0;},![]);_0x135272[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x62'),_0x314c('0x70'));bombSound[_0x314c('0x6c')]();shrinkRemaining();_0x135272[_0x314c('0x6d')](_0x314c('0x6e'),_0x314c('0x6f'));},'missed':function(_0x49e795){_0x49e795[_0x314c('0x3b')](_0x314c('0x63'),function(){_0x49e795[_0x314c('0x26')][_0x314c('0x65')]=0x0;},![]);_0x49e795[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x71'));missoutSound[_0x314c('0x6c')]();}};const bindCellEvents=()=>{const _0x2015b1=document['querySelectorAll'](_0x314c('0x61'));if(isChallenger){challengeEnabled=!![];document[_0x314c('0x29')](_0x314c('0x5d'))['innerHTML']=_0x314c('0x72');}_0x2015b1[_0x314c('0x73')](function(_0x1b4f96){_0x1b4f96[_0x314c('0x3b')](_0x314c('0x3c'),function(_0x556efa){let _0x38b077=_0x556efa[_0x314c('0x64')];if(isChallenger&&challengeEnabled){if(!_0x38b077[_0x314c('0x17')]['contains']('marked')){if(challengeSetsCount<0xb){challengeSetsCount++;challengerCellsPicked['push'](parseInt(_0x38b077[_0x314c('0x3')]('id')['split'](_0x314c('0x74'))[0x1]));if(challengeSetsCount==0xa){_0x38b077[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x6a'),_0x314c('0x75'));document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]='Good.\x20Now\x20pick\x20the\x20final<br/>\x20<span>Bomber\x20Ball</span>';}else if(challengeSetsCount==0xb){_0x38b077['classList'][_0x314c('0x68')](_0x314c('0x70'),_0x314c('0x75'));challengeEnabled=![];document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0x76');setTimeout(function(){document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x52'));},0x1f4);}else{_0x38b077[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x6a'),_0x314c('0x75'));document['getElementById'](_0x314c('0x5d'))['innerHTML']=_0x314c('0x77')+(0xa-challengeSetsCount)+_0x314c('0x78');}}}}if(!isChallenger){let _0x269649=parseInt(_0x38b077[_0x314c('0x3')]('id')[_0x314c('0x46')](_0x314c('0x74'))[0x1]);if(_0x38b077[_0x314c('0x3')](_0x314c('0x6e'))=='on'){if(bomber===_0x269649){gameState['bombed'](_0x38b077);if(!singlePlayer){socket['emit'](_0x314c('0x79'),{'cell':_0x269649,'id':gameID});document[_0x314c('0x29')](_0x314c('0x7a'))[_0x314c('0x18')]();document[_0x314c('0x29')]('puzword')[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0x7b'))[_0x314c('0x17')]['remove'](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x7b'))[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x7c'));document[_0x314c('0x1')]('#anotherGameOpt\x20h4')[_0x314c('0x32')]=_0x314c('0x7d');}}else{gameState[_0x314c('0x7e')](_0x38b077);if(!singlePlayer){if(totalPoints==0x9){document[_0x314c('0x29')](_0x314c('0x7a'))[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x18')]();}if(totalPoints==0xa){bomber=0x3e8;document[_0x314c('0x29')](_0x314c('0x7b'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));document[_0x314c('0x29')]('anotherGameOpt')[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x7c'));document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0x7f')+(totalPoints+temp_total)+',\x20'+player1Name+_0x314c('0x5f')+challengerPoints;document[_0x314c('0x1')](_0x314c('0x45'))[_0x314c('0x32')]=_0x314c('0x80');}socket[_0x314c('0x3e')]('correctPick',{'cell':_0x269649,'id':gameID});}}}else if(_0x38b077[_0x314c('0x3')](_0x314c('0x6e'))!=_0x314c('0x6f')){gameState[_0x314c('0x81')](_0x38b077);if(!singlePlayer){socket[_0x314c('0x3e')]('wrongPick',{'cell':_0x269649,'id':gameID});}}}});});};const initRandomCells=_0x16e518=>{for(let _0x3cb792 in _0x16e518){let _0x4e539b='cell'+_0x16e518[_0x3cb792];document['getElementById'](_0x4e539b)['setAttribute']('data-active','on');}};const emitPuzzle=_0x2952fc=>{document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x18')]();socket[_0x314c('0x3e')](_0x314c('0x82'),{'cells':challengerCellsPicked,'id':gameID,'preserve':isPreserve,'puzz':_0x2952fc});let _0x1e1969=window[_0x314c('0x21')][_0x314c('0x22')]+_0x314c('0x47')+gameID;if(isPreserve){document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]='Your\x20Challenge\x20delivered\x20to\x20<b>'+secondPlayer+_0x314c('0x83');}else{document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0x84')+_0x1e1969+_0x314c('0x85')+_0x1e1969+_0x314c('0x86');document['querySelector'](_0x314c('0x87'))['addEventListener']('click',function(_0xd9b2f5){_0xd9b2f5['preventDefault']();return![];});}let _0xb9588e=document[_0x314c('0x29')]('chgID')[_0x314c('0x54')];document[_0x314c('0x29')](_0x314c('0x88'))[_0x314c('0x54')]=_0xb9588e+_0x314c('0x89')+gameID+_0x314c('0x8a');};const pl2PuzzleFail=()=>{document['getElementById'](_0x314c('0x51'))[_0x314c('0x18')]();const _0x524b43=document['querySelectorAll'](_0x314c('0x61'));_0x524b43[_0x314c('0x73')](function(_0x383d3e){if(_0x383d3e[_0x314c('0x3')](_0x314c('0x6e'))=='on'){_0x383d3e[_0x314c('0x6d')](_0x314c('0x6e'),_0x314c('0x6f'));}});let _0x4749df=_0x314c('0x74')+bomber;document[_0x314c('0x29')](_0x4749df)[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x70'));bomber=0x3e8;document[_0x314c('0x29')](_0x314c('0x7b'))['classList']['remove'](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x7b'))[_0x314c('0x17')][_0x314c('0x68')]('tweenDown');document[_0x314c('0x1')](_0x314c('0x45'))['innerText']=_0x314c('0x7d');document[_0x314c('0x29')]('challengerInfo')[_0x314c('0x54')]=_0x314c('0x8b');socket[_0x314c('0x3e')](_0x314c('0x8c'),{'id':gameID});};const escapeRedBomb=()=>{const _0x4c735c=document['querySelectorAll'](_0x314c('0x61'));_0x4c735c[_0x314c('0x73')](function(_0x288980){if(_0x288980['getAttribute']('data-active')=='on'){let _0x8df62d=_0x288980[_0x314c('0x3')](_0x314c('0x4'));if(!_0x8df62d['includes']('redbomb')&&!_0x8df62d[_0x314c('0x13')](_0x314c('0x6a'))&&!_0x8df62d['includes'](_0x314c('0x71'))){_0x288980[_0x314c('0x17')]['add'](_0x314c('0x6a'));_0x288980['setAttribute'](_0x314c('0x6e'),'off');}}});let _0x48f529='cell'+bomber;document[_0x314c('0x29')](_0x48f529)[_0x314c('0x26')]['opacity']=0.4;bomber=0x3e8;totalPoints=0xa;document[_0x314c('0x1')](_0x314c('0x6b'))[_0x314c('0x32')]=totalPoints+temp_total;pointsSound['play']();document[_0x314c('0x29')]('anotherGameOpt')[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x7b'))['classList'][_0x314c('0x68')](_0x314c('0x7c'));document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]='You\x20gained\x2010\x20points\x20and\x20escaped\x20the\x20Red\x20Bomb<br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Your\x20Score:\x20'+(totalPoints+temp_total)+',\x20'+player1Name+_0x314c('0x5f')+challengerPoints;document[_0x314c('0x1')](_0x314c('0x45'))[_0x314c('0x32')]=_0x314c('0x80');socket[_0x314c('0x3e')]('puzzleBombClear',{'id':gameID});};const refreshScr=_0x29b41b=>{document[_0x314c('0x29')](_0x314c('0x8d'))[_0x314c('0x8e')]('click',refreshScr);clearInterval(countDownInterval);countDownCount=0x19;let _0x1f8015=document[_0x314c('0x60')](_0x314c('0x8f'));_0x1f8015['forEach'](function(_0xab7f0b){_0xab7f0b[_0x314c('0x18')]();});socket[_0x314c('0x3e')](_0x314c('0x4f'),{'player':_0x314c('0x42')});};const scrambleValidate=_0x2cd816=>{let _0x1ccf09=[];if(isChallenger){let _0x50edc1=_0x2cd816['word'][_0x314c('0x46')]('');for(let _0x41eb4c=0x0;_0x41eb4c<_0x2cd816[_0x314c('0x90')][_0x314c('0x24')];_0x41eb4c++){let _0x2188d4=Math[_0x314c('0x91')](Math[_0x314c('0x92')]()*_0x50edc1['length']);_0x1ccf09[_0x314c('0x93')](_0x50edc1[_0x2188d4]);_0x50edc1[_0x314c('0x94')](_0x2188d4,0x1);}}let _0x5d331b=isChallenger?stringCodeMixer(_0x314c('0x95'),_0x2cd816['word']):pl2Puzz[_0x314c('0x90')];let _0xbd1866=isChallenger?_0x1ccf09:pl2Puzz['scramb'][_0x314c('0x46')]('');document[_0x314c('0x29')](_0x314c('0x96'))[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');document[_0x314c('0x29')](_0x314c('0x96'))[_0x314c('0x32')]=countDownCount;countDownInterval=setInterval(function(){countDownCount--;document[_0x314c('0x29')](_0x314c('0x96'))[_0x314c('0x32')]=countDownCount;if(countDownCount==0xa){if(document['getElementById'](_0x314c('0x8d'))){document['getElementById'](_0x314c('0x8d'))[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0x97'))[_0x314c('0x18')]();}}if(countDownCount==0x0){document[_0x314c('0x29')](_0x314c('0x96'))[_0x314c('0x18')]();document[_0x314c('0x1')](_0x314c('0x98'))[_0x314c('0x18')]();clearInterval(countDownInterval);if(isChallenger){emitPuzzle({'set':![]});}else{pl2PuzzleFail();}}},0x3e8);if(document[_0x314c('0x29')](_0x314c('0x39'))){document['getElementById'](_0x314c('0x39'))[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0x3a'))[_0x314c('0x18')]();}if(isChallenger){document[_0x314c('0x1')](_0x314c('0x99'))[_0x314c('0x54')]=_0x314c('0x9a');document['getElementById'](_0x314c('0x8d'))[_0x314c('0x3b')](_0x314c('0x3c'),refreshScr);}else{document[_0x314c('0x1')]('#puzword\x20p')[_0x314c('0x54')]=_0x314c('0x9b');}document[_0x314c('0x29')](_0x314c('0x51'))['setAttribute'](_0x314c('0x9c'),_0x5d331b);document['querySelector']('#puzword\x20div')[_0x314c('0x54')]=_0x314c('0x9d')+_0xbd1866[0x0]+_0x314c('0x9e')+_0xbd1866[0x1]+_0x314c('0x9e')+_0xbd1866[0x2]+_0x314c('0x9e')+_0xbd1866[0x3]+_0x314c('0x9e')+_0xbd1866[0x4]+_0x314c('0x9e')+_0xbd1866[0x5]+_0x314c('0x9e')+_0xbd1866[0x6]+_0x314c('0x8a');document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x6d')]('data-scramb',String(_0xbd1866['join']('')));let _0x23652c=document[_0x314c('0x60')](_0x314c('0x8f'));_0x23652c[_0x314c('0x73')](function(_0x4fbe1f){_0x4fbe1f[_0x314c('0x3b')](_0x314c('0x3c'),function(_0x46146e){if(document[_0x314c('0x29')]('refreshScramble')){document['getElementById'](_0x314c('0x8d'))[_0x314c('0x18')]();document[_0x314c('0x29')]('temp_or')[_0x314c('0x18')]();}let _0x28bf0a=document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x3')](_0x314c('0x9f'));let _0xbee79c=''+_0x28bf0a+_0x46146e['target'][_0x314c('0x32')];document[_0x314c('0x29')](_0x314c('0xa0'))[_0x314c('0x26')][_0x314c('0x65')]=0x1;document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x6d')](_0x314c('0x9f'),_0xbee79c);document['getElementById'](_0x314c('0xa0'))[_0x314c('0x32')]=_0xbee79c;_0x46146e[_0x314c('0x64')][_0x314c('0x18')]();if(_0xbee79c['length']==0x7){let _0x194834=stringCodeMixer(_0x314c('0xa1'),document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x3')](_0x314c('0x9c')));if(_0xbee79c==_0x194834){clearInterval(countDownInterval);document[_0x314c('0x1')](_0x314c('0x99'))[_0x314c('0x54')]='<b>You\x20got\x20it\x20right\x20:)</b>';setTimeout(function(){if(isChallenger){emitPuzzle({'set':!![],'scramb':document[_0x314c('0x29')](_0x314c('0x51'))[_0x314c('0x3')](_0x314c('0xa2')),'word':document[_0x314c('0x29')]('puzword')[_0x314c('0x3')](_0x314c('0x9c'))});}else{escapeRedBomb();}document['getElementById'](_0x314c('0x96'))[_0x314c('0x18')]();},0xbb8);}else{clearInterval(countDownInterval);document[_0x314c('0x1')](_0x314c('0x99'))[_0x314c('0x54')]=_0x314c('0xa3')+_0x194834+_0x314c('0x83');setTimeout(function(){if(isChallenger){emitPuzzle({'set':![]});}else{pl2PuzzleFail();}document[_0x314c('0x29')](_0x314c('0x96'))[_0x314c('0x18')]();},0x1388);}}});});};const randomizer=(_0x20e04d,_0x234b7f)=>{let _0x5909b8=[];if(_0x234b7f==null){let _0x590035=[0x0,0x1,0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xa,0xb,0xc,0xd,0xe,0xf,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18];for(let _0x207c86=0x0;_0x207c86<_0x20e04d;_0x207c86++){let _0x9c7b4e=Math[_0x314c('0x91')](Math[_0x314c('0x92')]()*_0x590035[_0x314c('0x24')]);_0x5909b8[_0x314c('0x93')](_0x590035[_0x9c7b4e]);_0x590035[_0x314c('0x94')](_0x9c7b4e,0x1);}bomber=_0x5909b8[Math[_0x314c('0x91')](Math['random']()*_0x5909b8['length'])];}else{_0x5909b8=_0x234b7f[_0x314c('0xa4')](0x0);bomber=_0x234b7f[_0x314c('0xa5')]();}initRandomCells(_0x5909b8);bindCellEvents();};const stringCodeMixer=(_0x1a1c71,_0x4095b3)=>{let _0x401831={'a':'n','s':'d','b':'k','o':'x','p':'v','v':'p','h':'t','P':'i','j':'y','z':'O','g':'Q','x':'o','G':'c','y':'j','n':'a','t':'h','k':'b','O':'z','Q':'g','c':'G','d':'s','i':'P'};let _0x410894=[_0x314c('0xa6'),_0x314c('0xa7'),_0x314c('0xa8')];let _0x1a1efa={'looper':function(_0x30cdb2){let _0x49d462=[];_0x30cdb2[_0x314c('0x73')](function(_0x5edebd){if(_0x401831[_0x5edebd]){_0x49d462[_0x314c('0x93')](_0x401831[_0x5edebd]);}else{_0x49d462[_0x314c('0x93')](_0x5edebd);}});return String(_0x49d462[_0x314c('0x1f')](''));}};if(_0x1a1c71==_0x314c('0x95')){let _0x3d8d00=window[_0x314c('0xa9')](_0x4095b3);let _0x39340d=_0x3d8d00[_0x314c('0x46')]('');let _0x1015ca=_0x1a1efa['looper'](_0x39340d);let _0xe9cd8f=_0x1015ca[_0x314c('0x46')]('=')[_0x314c('0x1f')](_0x410894[Math[_0x314c('0x91')](Math['random']()*0x3)]);return _0xe9cd8f;}else{let _0x4f0bd6=_0x4095b3;if(_0x4095b3[_0x314c('0x13')](_0x410894[0x0])||_0x4095b3[_0x314c('0x13')](_0x410894[0x1])||_0x4095b3[_0x314c('0x13')](_0x410894[0x2])){_0x4f0bd6=String(_0x4f0bd6['split'](_0x410894[0x0])[_0x314c('0x1f')]('='));_0x4f0bd6=String(_0x4f0bd6[_0x314c('0x46')](_0x410894[0x1])['join']('='));_0x4f0bd6=String(_0x4f0bd6[_0x314c('0x46')](_0x410894[0x2])[_0x314c('0x1f')]('='));}let _0x5e296f=_0x1a1efa['looper'](_0x4f0bd6['split'](''));return window['atob'](_0x5e296f);}};const watchReview=(_0x1ef216,_0x546580)=>{if(_0x1ef216==_0x314c('0xaa')){let _0x5880cc='cell'+_0x546580;document[_0x314c('0x29')](_0x5880cc)['classList'][_0x314c('0x68')]('zoom');totalPoints++;document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0xab')+secondPlayer+_0x314c('0xac')+(totalPoints+temp_total)+_0x314c('0xad');pointsSound[_0x314c('0x6c')]();}if(_0x1ef216==_0x314c('0xae')){let _0x194663=_0x314c('0x74')+_0x546580;let _0x453179=document[_0x314c('0x29')](_0x194663);_0x453179['addEventListener'](_0x314c('0x63'),function(){_0x453179[_0x314c('0x26')][_0x314c('0x65')]=0x0;},![]);_0x453179[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x71'));}if(_0x1ef216=='bomb'){let _0x429e28=_0x314c('0x74')+_0x546580;document[_0x314c('0x29')](_0x429e28)[_0x314c('0x17')][_0x314c('0x68')](_0x314c('0x62'));bombSound['play']();challengerPoints=challengerPoints+0x5;document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]='<b>'+secondPlayer+_0x314c('0xaf')+challengerPoints+_0x314c('0xb0')+secondPlayer+_0x314c('0xb1')+(totalPoints+temp_total)+_0x314c('0xb2');}};function socketHandlers(_0x51d662,_0x3ede67){if(socket==null){socket=io();}document[_0x314c('0x29')](_0x314c('0xb3'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0xb4'));if(_0x51d662==_0x314c('0x20')){socket[_0x314c('0x3e')]('createRoom',{'player1':_0x3ede67['name'],'preserveReload':_0x3ede67['preserve'],'id':_0x3ede67['id']});}else{socket[_0x314c('0x3e')](_0x314c('0xb5'),{'player2':_0x3ede67[_0x314c('0x1b')],'id':_0x3ede67['id']});}socket['on'](_0x314c('0xb6'),function(_0x526dd6){if(_0x526dd6['alert']){alert(_0x526dd6[_0x314c('0xb7')]);}else{console[_0x314c('0x5')](_0x526dd6);}});if(firstSetup){socket['on']('roomcreated',function(_0x12530e){document[_0x314c('0x29')](_0x314c('0x88'))['innerHTML']=_0x314c('0xb8')+_0x12530e['player'];thisPlayer=_0x12530e[_0x314c('0x1e')];document['getElementById'](_0x314c('0x3d'))[_0x314c('0x18')]();document[_0x314c('0x29')](_0x314c('0xb3'))[_0x314c('0x17')][_0x314c('0x18')]('show-none');document[_0x314c('0x29')]('GameHeader')[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));document[_0x314c('0x1')]('#points\x20div')[_0x314c('0x54')]='';document[_0x314c('0x29')](_0x314c('0xb3'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0xb4'));document[_0x314c('0x29')](_0x314c('0xb3'))[_0x314c('0x26')][_0x314c('0xb9')]=_0x314c('0xba');isChallenger=!![];gameID=_0x12530e['id'];bindCellEvents();});socket['on'](_0x314c('0xbb'),function(_0x123a7d){document[_0x314c('0x29')](_0x314c('0x88'))['innerHTML']='<b>Players:</b>\x20'+_0x123a7d['players'][0x0][_0x314c('0x1b')]+',\x20'+_0x123a7d[_0x314c('0xbc')][0x1][_0x314c('0x1b')]+_0x314c('0x89')+_0x123a7d['id']+_0x314c('0xbd');thisPlayer=_0x123a7d[_0x314c('0xbc')][0x1]['name'];document[_0x314c('0x29')](_0x314c('0x3d'))['remove']();document['getElementById'](_0x314c('0xb3'))['classList'][_0x314c('0x18')](_0x314c('0x19'));document['getElementById'](_0x314c('0xbe'))[_0x314c('0x17')]['remove'](_0x314c('0x19'));document['getElementById'](_0x314c('0xb3'))[_0x314c('0x17')][_0x314c('0x18')]('align-items-center');document[_0x314c('0x29')](_0x314c('0xb3'))[_0x314c('0x26')][_0x314c('0xb9')]=_0x314c('0xba');document['querySelector'](_0x314c('0x6b'))[_0x314c('0x32')]=temp_total;document[_0x314c('0x29')](_0x314c('0x5d'))['innerHTML']=_0x314c('0x9d')+_0x123a7d[_0x314c('0xbc')][0x0][_0x314c('0x1b')]+_0x314c('0xbf');if(_0x123a7d[_0x314c('0xc0')]['set']){pl2Puzz=_0x123a7d[_0x314c('0xc0')];document['getElementById'](_0x314c('0x7a'))[_0x314c('0x26')][_0x314c('0x27')]=_0x314c('0x28');}isChallenger=![];gameID=_0x123a7d['id'];player1Name=_0x123a7d['players'][0x0][_0x314c('0x1b')];randomizer(0x0,_0x123a7d[_0x314c('0xc1')]);});socket['on'](_0x314c('0xc2'),function(_0x314094){document[_0x314c('0x29')](_0x314c('0x88'))[_0x314c('0x54')]=_0x314c('0xb8')+_0x314094[_0x314c('0xbc')][0x0][_0x314c('0x1b')]+',\x20'+_0x314094[_0x314c('0xbc')][0x1][_0x314c('0x1b')]+_0x314c('0x89')+_0x314094['id']+_0x314c('0xbd');document[_0x314c('0x29')](_0x314c('0x5d'))['innerHTML']='<b>'+_0x314094['players'][0x1][_0x314c('0x1b')]+_0x314c('0xc3');secondPlayer=_0x314094[_0x314c('0xbc')][0x1]['name'];});socket['on'](_0x314c('0xc4'),function(_0x342ad4){document[_0x314c('0x29')](_0x314c('0x5d'))[_0x314c('0x54')]=_0x314c('0xab')+_0x342ad4[_0x314c('0x1e')]+_0x314c('0xc5');});socket['on'](_0x314c('0xc6'),function(_0x1adf94){challengerPoints=challengerPoints+0x5+(0xa-totalPoints);document[_0x314c('0x29')]('challengerInfo')[_0x314c('0x54')]=_0x314c('0xab')+secondPlayer+_0x314c('0xc7')+(0xa-totalPoints)+'\x20bonus\x20points\x20+\x205\x20<br/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<b>Your\x20score:\x20'+challengerPoints+_0x314c('0xb0')+secondPlayer+_0x314c('0xb1')+(totalPoints+temp_total)+_0x314c('0x83');});socket['on'](_0x314c('0xc8'),function(_0x52a31b){totalPoints=0xa;document[_0x314c('0x29')]('challengerInfo')['innerHTML']=_0x314c('0xab')+secondPlayer+_0x314c('0xc9')+challengerPoints+_0x314c('0xb0')+secondPlayer+_0x314c('0xb1')+(totalPoints+temp_total)+'</b>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';const _0x2251af=document[_0x314c('0x60')]('#gametable\x20.row\x20p.marked');_0x2251af[_0x314c('0x73')](function(_0x511ba0){let _0x65b03f=_0x511ba0[_0x314c('0x3')]('class');if(_0x65b03f['includes'](_0x314c('0x6a'))){_0x511ba0[_0x314c('0x17')]['add'](_0x314c('0xca'));}});pointsSound['play']();});socket['on'](_0x314c('0xcb'),function(_0x59eb03){scrambleValidate(_0x59eb03);});socket['on'](_0x314c('0xcc'),function(_0xcb8c16){if(totalPoints==0x0){document[_0x314c('0x29')]('challengerInfo')[_0x314c('0x54')]=_0x314c('0xab')+secondPlayer+_0x314c('0xcd');document[_0x314c('0x1')](_0x314c('0xce'))[_0x314c('0x54')]='';}watchReview(_0xcb8c16[_0x314c('0xcf')],_0xcb8c16[_0x314c('0x74')]);});socket['on'](_0x314c('0xd0'),function(_0x38ea31){document[_0x314c('0x29')](_0x314c('0x7b'))['classList'][_0x314c('0x18')](_0x314c('0x19'));document[_0x314c('0x29')](_0x314c('0x7b'))['classList']['add'](_0x314c('0x7c'));document['querySelector'](_0x314c('0x45'))['innerHTML']=_0x314c('0xab')+secondPlayer+'</b>\x20likes\x20to\x20try\x20another\x20Challenge\x20from\x20you';document['getElementById'](_0x314c('0x37'))[_0x314c('0x32')]='Accept';document[_0x314c('0x29')](_0x314c('0x38'))[_0x314c('0x32')]=_0x314c('0xd1');});socket['on'](_0x314c('0xd2'),function(_0x3e9cdd){document[_0x314c('0x1')]('#anotherGameOpt\x20h4')[_0x314c('0x32')]=_0x314c('0xd3');localStorage[_0x314c('0x40')](_0x314c('0x15'),JSON[_0x314c('0x41')]({'id':gameID,'name':thisPlayer,'player':_0x314c('0x50'),'pl1score':challengerPoints,'pl2score':totalPoints+temp_total}));setTimeout(function(){window[_0x314c('0x21')][_0x314c('0x43')]();},0x3e8);});socket['on'](_0x314c('0xd4'),function(_0x34bbd1){document['querySelector'](_0x314c('0x45'))[_0x314c('0x54')]=_0x314c('0xab')+_0x34bbd1[_0x314c('0xbc')][0x0][_0x314c('0x1b')]+_0x314c('0xd5');});socket['on'](_0x314c('0xd6'),function(){firstSetup=![];alert(_0x314c('0xd7'));});socket['on'](_0x314c('0xd8'),function(){firstSetup=![];alert(_0x314c('0xd9'));});socket['on'](_0x314c('0xda'),function(){firstSetup=![];alert(_0x314c('0xdb'));});socket['on'](_0x314c('0xdc'),function(_0x4e3396){firstSetup=![];if(_0x4e3396[_0x314c('0xdd')]){alert(_0x4e3396[_0x314c('0xdd')]);}else{alert(_0x4e3396);}});socket['on'](_0x314c('0xde'),function(_0x287249){document[_0x314c('0x29')](_0x314c('0x88'))[_0x314c('0x54')]=_0x314c('0xb8')+thisPlayer+_0x314c('0x89')+_0x287249['id']+_0x314c('0xdf');document[_0x314c('0x29')](_0x314c('0xb3'))['remove']();document[_0x314c('0x29')](_0x314c('0x7b'))[_0x314c('0x18')]();if(isChallenger){alert(_0x287249[_0x314c('0x1b')]+_0x314c('0xe0'));}else{alert(_0x314c('0xdb'));}if(window[_0x314c('0x21')][_0x314c('0x22')][_0x314c('0x13')](_0x314c('0x23'))){let _0x59d450=window[_0x314c('0x21')]['href'][_0x314c('0x46')]('?gameid=');window[_0x314c('0x21')][_0x314c('0x22')]=_0x59d450[0x0];}else{window[_0x314c('0x21')][_0x314c('0x43')]();}});socket['on'](_0x314c('0xe1'),function(_0x525a98){});}}setTimeout(function(){let _0x49af55=document[_0x314c('0x60')](_0x314c('0xe2'));let _0x3a86ad=![];_0x49af55[_0x314c('0x73')](function(_0x1e397d){if(!_0x1e397d[_0x314c('0xe3')][_0x314c('0x13')]('socket.io.js')&&!_0x1e397d[_0x314c('0xe3')]['includes'](_0x314c('0xe4'))&&!_0x1e397d[_0x314c('0xe3')]['includes'](_0x314c('0xe5'))&&!_0x1e397d[_0x314c('0xe3')][_0x314c('0x13')]('game.js')){_0x3a86ad=!![];}});if(_0x3a86ad){document[_0x314c('0xe6')][_0x314c('0x54')]=_0x314c('0xe7');document[_0x314c('0xe6')][_0x314c('0x26')][_0x314c('0xe8')]=_0x314c('0xe9');}else{document[_0x314c('0x1')](_0x314c('0x16'))[_0x314c('0x17')][_0x314c('0x18')](_0x314c('0x19'));}},0x7d0);
+ /*jshint esversion: 6*/
+
+
+ let socket = null;
+ let singlePlayer = true;
+ let firstSetup = true;
+ let compatableBrowser = false;
+ let bomber = 14;
+ let totalPoints = 0;
+ let temp_total = 0;
+ let thisPlayer = "";
+ let isChallenger = false;
+ let challengeEnabled = false;
+ let challengeSetsCount = 0;
+ let challengerCellsPicked = [];
+ let gameID = "";
+ let secondPlayer = "";
+ let challengerPoints = 0;
+ let player1Name = "";
+ let isPreserve = false;
+ let countDownInterval;
+ let countDownCount = 25;
+ let pl2Puzz = {};
+
+
+ if (Modernizr.queryselector) {
+     let allclasses = document.querySelector("html").getAttribute("class");
+     console.log(allclasses);
+
+     const featurelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
+     let feature = true;
+
+     for (let i in featurelist) {
+         if (allclasses.includes(featurelist[i])) {
+             feature = false;
+             break;
+         }
+     }
+
+     if (feature) {
+         compatableBrowser = true;
+         if (localStorage.getItem("refresher")) {
+             document.querySelector(".container").classList.remove("show-none");
+             let cache = JSON.parse(localStorage.getItem("refresher"));
+             gameID = cache.id;
+             thisPlayer = cache.name;
+             challengerPoints = parseInt(cache.pl1score);
+             temp_total = parseInt(cache.pl2score);
+             localStorage.clear();
+             singlePlayer = false;
+
+             if (cache.player == "two") {
+                 isChallenger = false;
+                 socketHandlers("join", { name: thisPlayer, id: gameID, preserve: false });
+             } else {
+                 isPreserve = true;
+                 socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
+             }
+
+         } else {
+             if (window.location.href.includes("playgame?gameid=")) {
+                 let hashid = window.location.href.split("?gameid=");
+                 if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
+                     document.getElementById("joinoraccept").style.display = "block";
+                     document.getElementById("oneplayer").parentNode.style.display = "none";
+                     document.getElementById("acceptBlock").style.display = "block";
+                     document.getElementById("acceptID").value = hashid[1];
+                     document.getElementById("createBtn").remove();
+                     document.getElementById("joinBtn").remove();
+                     document.querySelector("#joinoraccept span").remove();
+                     document.getElementById("twoplayer").innerText = "Welcome Player-2";
+                     singlePlayer = false;
+
+                 }
+             }
+         }
+
+     } else {
+         alert("Sorry, your browser does not support some features.\n Please view this page on the latest version Google Chrome");
+     }
+
+ } else {
+     alert("Sorry, you are using an outdated browser");
+ }
+
+ const oneplayerBtn = document.getElementById("oneplayer");
+ const twoplayerBtn = document.getElementById("twoplayer");
+ const joinBtn = document.getElementById("joinBtn");
+ const readyBtn = document.getElementById("readyBtn");
+ const createBtn = document.getElementById("createBtn");
+ const anotherReqBtn = document.getElementById("anotherYes");
+ const declineBtn = document.getElementById("anotherNo");
+ const puzzTry = document.getElementById("trytest");
+ const puzzSkip = document.getElementById("skiptest");
+ const msgIconBtn = document.getElementById("msgicon");
+
+ oneplayerBtn.addEventListener("click", function(e) {
+     randomizer(11, null);
+     document.getElementById("playmode").remove();
+     document.getElementById("gametable").classList.remove("show-none");
+ });
+
+ twoplayerBtn.addEventListener("click", function(e) {
+     document.getElementById("joinoraccept").style.display = "block";
+     document.getElementById("oneplayer").parentNode.style.display = "none";
+     singlePlayer = false;
+ });
+
+ anotherReqBtn.addEventListener("click", function() {
+     if (isChallenger) {
+         document.getElementById("anotherYes").remove();
+         document.getElementById("anotherNo").remove();
+         socket.emit('acceptRequest', { id: gameID });
+         localStorage.setItem("refresher", JSON.stringify({ id: gameID, name: thisPlayer, player: "one", pl1score: challengerPoints, pl2score: totalPoints + temp_total }));
+         setTimeout(function() { window.location.reload(); }, 1000);
+     } else {
+         socket.emit('reqestChallenge', { id: gameID });
+         document.querySelector("#anotherGameOpt h4").innerText = "Waiting to accept...";
+         document.getElementById("anotherYes").remove();
+         document.getElementById("anotherNo").remove();
+     }
+
+ });
+
+ declineBtn.addEventListener("click", function() {
+     if (window.location.href.includes("playgame?gameid=")) {
+         let base = window.location.href.split("?gameid=");
+         window.location.href = base[0];
+     } else {
+         window.location.reload();
+     }
+ });
+
+ if (joinBtn && createBtn) {
+     joinBtn.addEventListener("click", function() {
+         document.getElementById("acceptBlock").style.display = "block";
+     });
+
+     createBtn.addEventListener("click", function() {
+         let name = document.getElementById("username").value.toLowerCase().trim();
+         let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
+         if (pattern.test(name)) {
+             socketHandlers("create", { name: name, preserve: false, id: null });
+         } else {
+             alert("Enter a valid User Name");
+         }
+     });
+ }
+
+
+ readyBtn.addEventListener("click", function() {
+     let acceptID = document.getElementById("acceptID").value.trim();
+     let name = document.getElementById("username").value.toLowerCase().trim();
+     let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
+     if (pattern.test(name)) {
+         if (acceptID.length == 9 && acceptID.includes(".")) {
+             let id = acceptID.split(".");
+             if (id.length == 2 && id[0].length == 4 && id[1].length == 4) {
+                 socketHandlers("join", { name: name, id: acceptID });
+             } else {
+                 alert("Invalid ID");
+             }
+         } else {
+             alert("Invalid ID");
+         }
+     } else {
+         alert("Enter a valid User Name");
+     }
+
+ });
+
+ puzzTry.addEventListener("click", function() {
+     if (isChallenger) {
+         socket.emit('getWord', { player: "one" });
+     } else {
+         socket.emit('getWord', { player: "two", id: gameID });
+         scrambleValidate();
+     }
+ });
+
+ puzzSkip.addEventListener("click", function() {
+     if (isChallenger) {
+         emitPuzzle({ set: false });
+     } else {
+         document.getElementById("puzword").classList.add("show-none");
+         document.getElementById("puzword").classList.remove("puzzTween");
+         msgIconBtn.style.display = "block";
+     }
+
+ });
+
+ msgIconBtn.addEventListener("click", function() {
+     msgIconBtn.style.display = "none";
+     document.getElementById("puzword").classList.remove("show-none");
+     document.getElementById("plIntroMsg").innerHTML = `<b>${player1Name}</b> has given you a Scrambled Word to solve in <b>25 Seconds</b>. If you get it correct, you will gain all the 10 points and also escape the Red Bomb`;
+
+ });
+
+
+ const soundCheck = {
+     count: 0,
+     isLoad: function() {
+         this.count++;
+         if (this.count == 3 && compatableBrowser) {
+             if (document.getElementById("playmode")) {
+                 document.getElementById("playmode").classList.remove("show-none");
+             }
+
+         }
+     }
+ };
+
+
+ const pointsSound = new Howl({
+     src: ['assets/points.mp3', 'assets/points.wav']
+ });
+ const missoutSound = new Howl({
+     src: ['assets/missout.mp3', 'assets/missout.wav']
+ });
+ const bombSound = new Howl({
+     src: ['assets/bombsound.mp3', 'assets/bombsound.wav']
+ });
+
+ pointsSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+ missoutSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+ bombSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+
+
+
+
+ const shrinkRemaining = () => {
+     if (!singlePlayer) {
+         challengerPoints = challengerPoints + 5;
+         document.getElementById("challengerInfo").innerHTML = `<b>Game Over!</b><br/>
+    Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
+     } else {
+         document.querySelector("#gameover span").innerText = `Game Over!
+    You Scored ${totalPoints} points`;
+     }
+
+
+     let remainingElts = document.querySelectorAll("#gametable .row p");
+     remainingElts.forEach(function(e) {
+         if (!e.getAttribute("class").includes("disappear") && !e.getAttribute("class").includes("apply-shake")) {
+             e.addEventListener("animationend", function(el) {
+                 el.target.style.opacity = 0;
+                 document.getElementById("gameover").style.display = "block";
+                 document.getElementById("points").style.opacity = 0;
+             }, false);
+             e.classList.add("implode");
+         }
+     });
+
+ };
+
+ const gameState = {
+     getPoints: function(e) {
+         e.classList.add("greenbox");
+         totalPoints++;
+         document.querySelector("#points span").innerText = totalPoints + temp_total;
+         pointsSound.play();
+         e.setAttribute("data-active", "off");
+
+     },
+     bombed: function(e) {
+         e.addEventListener("animationend", function() {
+             e.style.opacity = 0;
+         }, false);
+         e.classList.add("apply-shake", "redbomb");
+         bombSound.play();
+         shrinkRemaining();
+         e.setAttribute("data-active", "off");
+     },
+     missed: function(e) {
+         e.addEventListener("animationend", function() {
+             e.style.opacity = 0;
+         }, false);
+         e.classList.add("disappear");
+         missoutSound.play();
+     }
+
+ };
+
+
+
+
+ const bindCellEvents = () => {
+     const cells = document.querySelectorAll("#gametable .row p");
+     if (isChallenger) {
+         challengeEnabled = true;
+         document.getElementById("challengerInfo").innerHTML = "Pick any <span>10 balls</span> to make them Green. The last one you pick will be the Bomber Ball";
+     }
+     cells.forEach(function(elem) {
+         elem.addEventListener("click", function(e) {
+             let thisElt = e.target;
+             if (isChallenger && challengeEnabled) {
+                 if (!thisElt.classList.contains("marked")) {
+                     if (challengeSetsCount < 11) {
+                         challengeSetsCount++;
+                         challengerCellsPicked.push(parseInt(thisElt.getAttribute("id").split("cell")[1]));
+                         if (challengeSetsCount == 10) {
+                             thisElt.classList.add("greenbox", "marked");
+                             document.getElementById("challengerInfo").innerHTML = `Good. Now pick the final<br/> <span>Bomber Ball</span>`;
+                         } else if (challengeSetsCount == 11) {
+                             thisElt.classList.add("redbomb", "marked");
+                             challengeEnabled = false;
+                             document.getElementById("challengerInfo").innerHTML = `You are almost Done!`;
+                             setTimeout(function() {
+                                 document.getElementById("puzword").classList.remove("show-none");
+                                 document.getElementById("puzword").classList.add("puzzTween");
+                             }, 500);
+
+                         } else {
+                             thisElt.classList.add("greenbox", "marked");
+                             document.getElementById("challengerInfo").innerHTML = `Pick <span>${10-challengeSetsCount}</span> more balls`;
+                         }
+                     }
+                 }
+             }
+             if (!isChallenger) {
+                 let _num = parseInt(thisElt.getAttribute("id").split("cell")[1]);
+                 if (thisElt.getAttribute("data-active") == "on") {
+                     if (bomber === _num) {
+                         gameState.bombed(thisElt);
+                         if (!singlePlayer) {
+                             socket.emit('bombPick', { cell: _num, id: gameID });
+                             document.getElementById("msgicon").remove();
+                             document.getElementById("puzword").remove();
+                             document.getElementById("anotherGameOpt").classList.remove("show-none");
+                             document.getElementById("anotherGameOpt").classList.add("tweenDown");
+                             document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
+                         }
+
+                     } else {
+                         gameState.getPoints(thisElt);
+                         if (!singlePlayer) {
+                             if (totalPoints == 9) {
+                                 document.getElementById("msgicon").remove();
+                                 document.getElementById("puzword").remove();
+
+                             }
+                             if (totalPoints == 10) {
+                                 bomber = 1000;
+                                 document.getElementById("anotherGameOpt").classList.remove("show-none");
+                                 document.getElementById("anotherGameOpt").classList.add("tweenDown");
+                                 document.getElementById("challengerInfo").innerHTML = `Great! You got all 10 Right!<br/>
+                                    Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
+                                 document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+
+                             }
+                             socket.emit('correctPick', { cell: _num, id: gameID });
+                         }
+
+                     }
+
+                 } else if (thisElt.getAttribute("data-active") != "off") {
+                     gameState.missed(thisElt);
+                     if (!singlePlayer) {
+                         socket.emit('wrongPick', { cell: _num, id: gameID });
+                     }
+
+                 }
+             }
+
+         });
+
+     });
+ };
+
+
+
+ const initRandomCells = (rand) => {
+     for (let i in rand) {
+         let tabcell = "cell" + rand[i];
+         document.getElementById(tabcell).setAttribute("data-active", "on");
+     }
+ };
+
+ const emitPuzzle = (ob) => {
+     document.getElementById("puzword").remove();
+     socket.emit('cellsPicked', { cells: challengerCellsPicked, id: gameID, preserve: isPreserve, puzz: ob });
+     let gidurl = window.location.href + "?gameid=" + gameID;
+     if (isPreserve) {
+         document.getElementById("challengerInfo").innerHTML = `Your Challenge delivered to <b>${secondPlayer}</b>`;
+     } else {
+         document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
+         document.querySelector("#challengerInfo a").addEventListener("click", function(e) {
+             e.preventDefault();
+             return false;
+         });
+     }
+     let inner = document.getElementById("chgID").innerHTML;
+     document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
+ };
+
+ const pl2PuzzleFail = () => {
+     document.getElementById("puzword").remove();
+     const pcells = document.querySelectorAll("#gametable .row p");
+     pcells.forEach(function(elm) {
+         if (elm.getAttribute("data-active") == "on") {
+             elm.setAttribute("data-active", "off");
+         }
+     });
+     let bmbCell = "cell" + bomber;
+     document.getElementById(bmbCell).classList.add("redbomb");
+     bomber = 1000;
+     document.getElementById("anotherGameOpt").classList.remove("show-none");
+     document.getElementById("anotherGameOpt").classList.add("tweenDown");
+     document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
+     document.getElementById("challengerInfo").innerHTML = `Better Luck next time`;
+     socket.emit("puzzleFailed", { id: gameID });
+
+ };
+
+ const escapeRedBomb = () => {
+     const pcells = document.querySelectorAll("#gametable .row p");
+     pcells.forEach(function(elm) {
+         if (elm.getAttribute("data-active") == "on") {
+             let clss = elm.getAttribute("class");
+             if (!clss.includes("redbomb") && !clss.includes("greenbox") && !clss.includes("disappear")) {
+                 elm.classList.add("greenbox");
+                 elm.setAttribute("data-active", "off");
+             }
+         }
+     });
+     let bmbCell = "cell" + bomber;
+     document.getElementById(bmbCell).style.opacity = 0.4;
+     bomber = 1000;
+     totalPoints = 10;
+     document.querySelector("#points span").innerText = totalPoints + temp_total;
+     pointsSound.play();
+     document.getElementById("anotherGameOpt").classList.remove("show-none");
+     document.getElementById("anotherGameOpt").classList.add("tweenDown");
+     document.getElementById("challengerInfo").innerHTML = `You gained 10 points and escaped the Red Bomb<br/>
+                                    Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
+     document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+     socket.emit("puzzleBombClear", { id: gameID });
+
+ };
+
+ const refreshScr = (e) => {
+     document.getElementById("refreshScramble").removeEventListener("click", refreshScr);
+     clearInterval(countDownInterval);
+     countDownCount = 25;
+     let p_letters = document.querySelectorAll("#puzword div span");
+     p_letters.forEach(function(sp) {
+         sp.remove();
+     });
+
+     socket.emit('getWord', { player: "one" });
+
+ };
+
+ const scrambleValidate = (w) => {
+     let new_w = [];
+     if (isChallenger) {
+         let word = w.word.split("");
+         for (let j = 0; j < w.word.length; j++) {
+             let pos = Math.floor(Math.random() * word.length);
+             new_w.push(word[pos]);
+             word.splice(pos, 1);
+         }
+
+     }
+
+     let _word = isChallenger ? stringCodeMixer("plain", w.word) : pl2Puzz.word;
+     let _scramb = isChallenger ? new_w : pl2Puzz.scramb.split("");
+
+
+     document.getElementById("thetimer").style.display = "block";
+     document.getElementById("thetimer").innerText = countDownCount;
+
+     countDownInterval = setInterval(function() {
+         countDownCount--;
+         document.getElementById("thetimer").innerText = countDownCount;
+         if (countDownCount == 10) {
+             if (document.getElementById("refreshScramble")) {
+                 document.getElementById("refreshScramble").remove();
+                 document.getElementById("temp_or").remove();
+             }
+         }
+         if (countDownCount == 0) {
+             document.getElementById("thetimer").remove();
+             document.querySelector("#puzword div").remove();
+             clearInterval(countDownInterval);
+             if (isChallenger) {
+                 emitPuzzle({ set: false });
+             } else {
+                 pl2PuzzleFail();
+             }
+
+         }
+     }, 1000);
+
+     if (document.getElementById("trytest")) {
+         document.getElementById("trytest").remove();
+         document.getElementById("skiptest").remove();
+     }
+
+     if (isChallenger) {
+         document.querySelector("#puzword p").innerHTML = `Arrange the letters in <b>correct order</b> <span id="temp_or">or</span> <span id="refreshScramble">Try another?</span><br/><br/>
+                <span id="txtsequence"></span>`;
+         document.getElementById("refreshScramble").addEventListener("click", refreshScr);
+     } else {
+         document.querySelector("#puzword p").innerHTML = `Arrange the letters in <b>correct order</b> <br/><br/>
+                <span id="txtsequence"></span>`;
+     }
+
+
+     document.getElementById("puzword").setAttribute("data-pzw", _word);
+     document.querySelector("#puzword div").innerHTML = `<span>${_scramb[0]}</span><span>${_scramb[1]}</span><span>${_scramb[2]}</span><span>${_scramb[3]}</span><span>${_scramb[4]}</span><span>${_scramb[5]}</span><span>${_scramb[6]}</span>`;
+     document.getElementById("puzword").setAttribute("data-scramb", String(_scramb.join("")));
+     let p_letters = document.querySelectorAll("#puzword div span");
+
+     p_letters.forEach(function(sp) {
+         sp.addEventListener("click", function(el) {
+             if (document.getElementById("refreshScramble")) {
+                 document.getElementById("refreshScramble").remove();
+                 document.getElementById("temp_or").remove();
+             }
+             let picky = document.getElementById("puzword").getAttribute("data-picktxt");
+             let _txt = `${picky}${el.target.innerText}`;
+             document.getElementById("txtsequence").style.opacity = 1;
+             document.getElementById("puzword").setAttribute("data-picktxt", _txt);
+             document.getElementById("txtsequence").innerText = _txt;
+             el.target.remove();
+
+             if (_txt.length == 7) {
+                 //let _right = window.atob(document.getElementById("puzword").getAttribute("data-pzw"));
+                 let _right = stringCodeMixer("encoded", document.getElementById("puzword").getAttribute("data-pzw"));
+                 if (_txt == _right) {
+                     clearInterval(countDownInterval);
+                     document.querySelector("#puzword p").innerHTML = `<b>You got it right :)</b>`;
+                     setTimeout(function() {
+                         if (isChallenger) {
+                             emitPuzzle({
+                                 set: true,
+                                 scramb: document.getElementById("puzword").getAttribute("data-scramb"),
+                                 word: document.getElementById("puzword").getAttribute("data-pzw")
+                             });
+                         } else {
+                             escapeRedBomb();
+                         }
+
+                         document.getElementById("thetimer").remove();
+                     }, 3000);
+                 } else {
+                     clearInterval(countDownInterval);
+                     document.querySelector("#puzword p").innerHTML = `Sorry, the correct word is <b>${_right}</b>`;
+                     setTimeout(function() {
+                         if (isChallenger) {
+                             emitPuzzle({ set: false });
+                         } else {
+                             pl2PuzzleFail();
+                         }
+                         document.getElementById("thetimer").remove();
+                     }, 5000);
+                 }
+             }
+
+         });
+     });
+ };
+
+
+ const randomizer = (n, arr) => {
+     let rndm = [];
+     if (arr == null) {
+         let nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+         for (let z = 0; z < n; z++) {
+             let rnd_pos = Math.floor(Math.random() * nums.length);
+             rndm.push(nums[rnd_pos]);
+             nums.splice(rnd_pos, 1);
+         }
+         bomber = rndm[Math.floor(Math.random() * rndm.length)];
+     } else {
+         rndm = arr.slice(0);
+         bomber = arr.pop();
+     }
+
+     initRandomCells(rndm);
+     bindCellEvents();
+ };
+
+
+ const stringCodeMixer = (type, str) => {
+     let replc = { a: "n", s: "d", b: "k", o: "x", p: "v", v: "p", h: "t", P: "i", j: "y", z: "O", g: "Q", x: "o", G: "c", y: "j", n: "a", t: "h", k: "b", O: "z", Q: "g", c: "G", d: "s", i: "P" };
+     let rx = ["Ma_X_iM", "piX_Xel", "_BrOxxO_"];
+
+     let _obj = {
+         looper: function(txtArr) {
+             let _arr = [];
+             txtArr.forEach(function(v) {
+                 if (replc[v]) {
+                     _arr.push(replc[v]);
+                 } else {
+                     _arr.push(v);
+                 }
+             });
+             return String(_arr.join(""));
+         }
+     };
+
+     if (type == "plain") {
+         let _txt = window.btoa(str);
+         let txtArr = _txt.split("");
+         let mxd = _obj.looper(txtArr);
+         let coded = mxd.split("=").join(rx[Math.floor(Math.random() * 3)]);
+         return coded;
+     } else {
+         let _txt = str;
+         if (str.includes(rx[0]) || str.includes(rx[1]) || str.includes(rx[2])) {
+             _txt = String(_txt.split(rx[0]).join("="));
+             _txt = String(_txt.split(rx[1]).join("="));
+             _txt = String(_txt.split(rx[2]).join("="));
+         }
+         let text = _obj.looper(_txt.split(""));
+         return window.atob(text);
+     }
+
+ };
+
+
+
+ const watchReview = (status, num) => {
+     if (status == "correct") {
+         let tabcell = "cell" + num;
+         document.getElementById(tabcell).classList.add("zoom");
+         totalPoints++;
+         document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> has scored <b>${totalPoints+temp_total}</b> points`;
+         pointsSound.play();
+     }
+     if (status == "wrong") {
+         let tabcell = "cell" + num;
+         let c = document.getElementById(tabcell);
+         c.addEventListener("animationend", function() {
+             c.style.opacity = 0;
+         }, false);
+         c.classList.add("disappear");
+     }
+     if (status == "bomb") {
+         let tabcell = "cell" + num;
+         document.getElementById(tabcell).classList.add("apply-shake");
+         bombSound.play();
+         challengerPoints = challengerPoints + 5;
+         document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> is Bombed!<br/>
+         <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b> `;
+     }
+ };
+
+
+
+ // Listen for events
+
+ function socketHandlers(type, vals) {
+     if (socket == null) {
+         socket = io();
+     }
+     document.getElementById("gametable").classList.remove("align-items-center");
+     if (type == "create") {
+         socket.emit('createRoom', {
+             player1: vals.name,
+             preserveReload: vals.preserve,
+             id: vals.id
+         });
+     } else {
+         socket.emit('joinRoom', {
+             player2: vals.name,
+             id: vals.id
+         });
+     }
+
+     socket.on("objectDebug", function(d) {
+         if (d.alert) {
+             alert(d.msg);
+         } else {
+             console.log(d);
+         }
+
+     });
+
+
+     if (firstSetup) {
+         socket.on('roomcreated', function(data) {
+             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.player}`;
+             thisPlayer = data.player;
+             document.getElementById("playmode").remove();
+             document.getElementById("gametable").classList.remove("show-none");
+             document.getElementById("GameHeader").classList.remove("show-none");
+             document.querySelector("#points div").innerHTML = "";
+             document.getElementById("gametable").classList.remove("align-items-center");
+             document.getElementById("gametable").style.marginTop = "30px";
+             isChallenger = true;
+             gameID = data.id;
+             bindCellEvents();
+
+         });
+
+         socket.on('joined', function(data) {
+             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.players[0].name}, ${data.players[1].name} / <span>Game ID: ${data.id}</span> `;
+             thisPlayer = data.players[1].name;
+             document.getElementById("playmode").remove();
+             document.getElementById("gametable").classList.remove("show-none");
+             document.getElementById("GameHeader").classList.remove("show-none");
+             document.getElementById("gametable").classList.remove("align-items-center");
+             document.getElementById("gametable").style.marginTop = "30px";
+             document.querySelector("#points span").innerText = temp_total;
+             document.getElementById("challengerInfo").innerHTML = `<span>${data.players[0].name}</span> has hidden <span>10</span> Green balls, and<br/> <span>1</span> Red ball among these. <br/><span class="sm-txt">(Green gets you points, Red will end the game)</span>`;
+             if (data.puzzler.set) {
+                 pl2Puzz = data.puzzler;
+                 document.getElementById("msgicon").style.display = "block";
+             }
+
+             isChallenger = false;
+             gameID = data.id;
+             player1Name = data.players[0].name;
+             randomizer(0, data.cells);
+
+         });
+
+         socket.on('player2in', function(data) {
+             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.players[0].name}, ${data.players[1].name} / <span>Game ID: ${data.id}</span> `;
+             document.getElementById("challengerInfo").innerHTML = `<b>${data.players[1].name}</b> has accepted your challenge`;
+             secondPlayer = data.players[1].name;
+
+         });
+
+         socket.on('p2PuzzPlay', function(data) {
+             document.getElementById("challengerInfo").innerHTML = `<b>${data.player}</b> is now playing the Word Scramble...`;
+         });
+
+         socket.on('p2PuzzleFailed', function(data) {
+             challengerPoints = challengerPoints + 5 + (10 - totalPoints);
+             document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> failed at Word Scramble.<br/>
+             You get ${10- totalPoints} bonus points + 5 <br/>
+             <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b>`;
+         });
+
+         socket.on('puzzBombCleared', function(data) {
+             totalPoints = 10;
+             document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> cleared Word Scramble and gets <b>10 Points</b><br/>
+                <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b>
+             `;
+
+             const xcells = document.querySelectorAll("#gametable .row p.marked");
+             xcells.forEach(function(elm) {
+                 let clss = elm.getAttribute("class");
+                 if (clss.includes("greenbox")) {
+                     elm.classList.add("zoom");
+                 }
+             });
+             pointsSound.play();
+         });
+
+         socket.on('wordPicked', function(w) {
+             scrambleValidate(w);
+         });
+
+
+         socket.on('player2CellPicked', function(data) {
+             if (totalPoints == 0) {
+                 document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> has started playing....`;
+                 document.querySelector("#points div").innerHTML = "";
+             }
+             watchReview(data.state, data.cell);
+
+         });
+
+         socket.on('ChlngReqFromPlayer2', function(data) {
+             document.getElementById("anotherGameOpt").classList.remove("show-none");
+             document.getElementById("anotherGameOpt").classList.add("tweenDown");
+             document.querySelector("#anotherGameOpt h4").innerHTML = `<b>${secondPlayer}</b> likes to try another Challenge from you`;
+             document.getElementById("anotherYes").innerText = "Accept";
+             document.getElementById("anotherNo").innerText = "Decline";
+         });
+
+         socket.on('Player2Refresh', function(data) {
+             document.querySelector("#anotherGameOpt h4").innerText = "Your challenge will load now...";
+             localStorage.setItem("refresher", JSON.stringify({ id: gameID, name: thisPlayer, player: "two", pl1score: challengerPoints, pl2score: totalPoints + temp_total }));
+             setTimeout(function() { window.location.reload(); }, 1000);
+         });
+
+         socket.on('replayReqAccepted', function(data) {
+             document.querySelector("#anotherGameOpt h4").innerHTML = `<b>${data.players[0].name}</b> is now preparing, please wait...`;
+
+         });
+
+         socket.on('duplicateName', function() {
+             firstSetup = false;
+             alert("Choose a different user name");
+
+         });
+
+         socket.on('playerfull', function() {
+             firstSetup = false;
+             alert("Sorry, someone has already accepted this Challenge");
+
+         });
+
+         socket.on('noplayer', function() {
+             firstSetup = false;
+             alert("Sorry, Your challenger has left the Game. This challenge has expired");
+
+         });
+         socket.on('errorID', function(data) {
+             firstSetup = false;
+             if (data.error) {
+                 alert(data.error);
+             } else {
+                 alert(data);
+             }
+
+         });
+
+         socket.on('playergone', function(data) {
+             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${thisPlayer} / <span>Game ID: ${data.id} </span>`;
+             document.getElementById("gametable").remove();
+             document.getElementById("anotherGameOpt").remove();
+
+             if (isChallenger) {
+                 alert(data.name + " has left the game");
+             } else {
+                 alert("Sorry, Your challenger has left the Game. This challenge has expired");
+             }
+
+             if (window.location.href.includes("playgame?gameid=")) {
+                 let base = window.location.href.split("?gameid=");
+                 window.location.href = base[0];
+             } else {
+                 window.location.reload();
+             }
+
+         });
+
+         socket.on('disconnected', function(data) {
+             //console.log(data.id + " disconnected");
+         });
+     }
+
+ }
+
+ setTimeout(function() {
+
+    // Certin ISP's such as BSNL is found to inject javascript 'tracking' code into websites that do not have SSL certificates.
+    // The below code tries to detect if any externl JS has been injected into <script> tag.
+
+     let myscripts = document.querySelectorAll("script");
+     let extr_script = false;
+
+     
+     myscripts.forEach(function(s) {
+         if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
+             extr_script = true;
+         }
+     });
+
+     // If external script is detected, then display this message to user, and do not initiate the Game. 
+     if (extr_script) {
+         document.body.innerHTML = "<h4>Server is too busy.</h4> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi/3G/4G)</b></p>";
+         document.body.style.padding = "20px";
+
+     } else {
+         document.querySelector(".container").classList.remove("show-none");
+     }
+
+ }, 2000);
