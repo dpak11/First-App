@@ -102,6 +102,7 @@
 
  twoplayerBtn.addEventListener("click", function(e) {
      document.getElementById("joinoraccept").style.display = "block";
+     document.getElementById("introTipbox").style.display = "block";
      document.getElementById("oneplayer").parentNode.style.display = "none";
      singlePlayer = false;
  });

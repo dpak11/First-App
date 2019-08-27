@@ -89,8 +89,17 @@
 
     .show-none,
     #joinoraccept,
+    #introTipbox,
     #acceptBlock {
         display: none;
+    }
+
+    #introTipbox{
+        margin-bottom: 32px;
+        border: 1px solid #6b6565;
+        padding: 8px;
+        border-radius: 6px;
+        color: #4d4c4f;
     }
 
     #thetimer {
@@ -104,7 +113,6 @@
     }
 
     #gametable p.redbomb {
-        /* background: url(images/box-red.png) center no-repeat !important; */
         background: linear-gradient(-53deg, red, red, rgba(226, 216, 216, 0.5)) !important;
         -webkit-box-shadow: inset 3px 3px 7px #000 !important;
         box-shadow: inset 3px 3px 7px #000 !important;
@@ -112,7 +120,6 @@
     }
 
     #gametable p.greenbox {
-        /*  background: url(images/box-green.png) center no-repeat !important; */
         background: linear-gradient(-53deg, green, green, rgba(226, 216, 216, 0.5)) !important;
         -webkit-box-shadow: inset 3px 3px 7px #000 !important;
         box-shadow: inset 3px 3px 7px #000 !important;
@@ -164,10 +171,6 @@
 
     #gametable .row p {
         text-align: center;
-        /* height: 48px;
-        width: 48px;
-        background: url(images/box.png) center no-repeat; */
-
         border-radius: 50%;
         height: 62px;
         width: 76px;
