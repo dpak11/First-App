@@ -60,7 +60,8 @@
          } else {
              if (window.location.href.includes("playgame?gameid=")) {
                  let hashid = window.location.href.split("?gameid=");
-                 if (hashid.length == 2 && hashid[1].length == 9 && hashid[1].indexOf(".") == 4) {
+                 let _idval = hashid[1].substr(0,9);
+                 if (hashid.length == 2 && _idval.indexOf(".") == 4) {
                      document.getElementById("joinoraccept").style.display = "block";
                      document.getElementById("oneplayer").parentNode.style.display = "none";
                      document.getElementById("acceptBlock").style.display = "block";
@@ -811,8 +812,12 @@
          });
          socket.on('errorID', function(data) {
              firstSetup = false;
-             if (data.error) {
-                 alert(data.error);
+             if (data.error) {                 
+                 if(window.location.href.includes("#debugmode")){
+                    alert(JSON.stringify(data.rooms));
+                 }else{
+                    alert(data.error);
+                 }
              } else {
                  alert(data);
              }
