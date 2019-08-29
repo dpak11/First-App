@@ -65,7 +65,7 @@
                      document.getElementById("joinoraccept").style.display = "block";
                      document.getElementById("oneplayer").parentNode.style.display = "none";
                      document.getElementById("acceptBlock").style.display = "block";
-                     document.getElementById("acceptID").value = hashid[1];
+                     document.getElementById("acceptID").value = _idval;
                      document.getElementById("createBtn").remove();
                      document.getElementById("joinBtn").remove();
                      document.querySelector("#joinoraccept span").remove();
