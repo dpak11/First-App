@@ -25,12 +25,10 @@
 
  if (Modernizr.queryselector) {
      let allclasses = document.querySelector("html").getAttribute("class");
-     console.log(allclasses);
+     const noFeaturelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
+     let nofeature = noFeaturelist.some(ftr => allclasses.includes(ftr));
 
-     const featurelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
-     let feature = featurelist.some(ftr => allclasses.includes(ftr));
-
-     if (feature) {
+     if (!nofeature) {
          compatableBrowser = true;
          if (localStorage.getItem("refresher")) {
              document.querySelector(".container").classList.remove("show-none");
