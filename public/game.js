@@ -28,14 +28,7 @@
      console.log(allclasses);
 
      const featurelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
-     let feature = true;
-
-     for (let i in featurelist) {
-         if (allclasses.includes(featurelist[i])) {
-             feature = false;
-             break;
-         }
-     }
+     let feature = featurelist.some(ftr => allclasses.includes(ftr));
 
      if (feature) {
          compatableBrowser = true;
@@ -95,20 +88,20 @@
  const puzzSkip = document.getElementById("skiptest");
  const msgIconBtn = document.getElementById("msgicon");
 
- oneplayerBtn.addEventListener("click", function(e) {
+ oneplayerBtn.addEventListener("click", () => {
      randomizer(11, null);
      document.getElementById("playmode").remove();
      document.getElementById("gametable").classList.remove("show-none");
  });
 
- twoplayerBtn.addEventListener("click", function(e) {
+ twoplayerBtn.addEventListener("click", () => {
      document.getElementById("joinoraccept").style.display = "block";
      document.getElementById("introTipbox").style.display = "block";
      document.getElementById("oneplayer").parentNode.style.display = "none";
      singlePlayer = false;
  });
 
- anotherReqBtn.addEventListener("click", function() {
+ anotherReqBtn.addEventListener("click", () => {
      if (isChallenger) {
          document.getElementById("anotherYes").remove();
          document.getElementById("anotherNo").remove();
@@ -124,7 +117,7 @@
 
  });
 
- declineBtn.addEventListener("click", function() {
+ declineBtn.addEventListener("click", () => {
      if (window.location.href.includes("playgame?gameid=")) {
          let base = window.location.href.split("?gameid=");
          window.location.href = base[0];
@@ -134,11 +127,11 @@
  });
 
  if (joinBtn && createBtn) {
-     joinBtn.addEventListener("click", function() {
+     joinBtn.addEventListener("click", () => {
          document.getElementById("acceptBlock").style.display = "block";
      });
 
-     createBtn.addEventListener("click", function() {
+     createBtn.addEventListener("click", () => {
          let name = document.getElementById("username").value.toLowerCase().trim();
          let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
          if (pattern.test(name)) {
@@ -150,18 +143,13 @@
  }
 
 
- readyBtn.addEventListener("click", function() {
+ readyBtn.addEventListener("click", () => {
      let acceptID = document.getElementById("acceptID").value.trim();
      let name = document.getElementById("username").value.toLowerCase().trim();
      let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
      if (pattern.test(name)) {
-         if (acceptID.length == 9 && acceptID.includes(".")) {
-             let id = acceptID.split(".");
-             if (id.length == 2 && id[0].length == 4 && id[1].length == 4) {
-                 socketHandlers("join", { name: name, id: acceptID });
-             } else {
-                 alert("Invalid ID");
-             }
+         if ((/^(\d{4}\.\d{4})$/).test(acceptID)) {             
+             socketHandlers("join", { name: name, id: acceptID });             
          } else {
              alert("Invalid ID");
          }
@@ -171,7 +159,7 @@
 
  });
 
- puzzTry.addEventListener("click", function() {
+ puzzTry.addEventListener("click", () => {
      if (isChallenger) {
          socket.emit('getWord', { player: "one" });
      } else {
@@ -180,7 +168,7 @@
      }
  });
 
- puzzSkip.addEventListener("click", function() {
+ puzzSkip.addEventListener("click", () => {
      if (isChallenger) {
          emitPuzzle({ set: false });
      } else {
@@ -191,7 +179,7 @@
 
  });
 
- msgIconBtn.addEventListener("click", function() {
+ msgIconBtn.addEventListener("click", () => {
      msgIconBtn.style.display = "none";
      document.getElementById("puzword").classList.remove("show-none");
      document.getElementById("plIntroMsg").innerHTML = `<b>${player1Name}</b> has given you a Scrambled Word to solve in <b>25 Seconds</b>. If you get it correct, you will gain all the 10 points and also escape the Red Bomb`;

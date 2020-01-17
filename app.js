@@ -35,12 +35,8 @@ const broadcastCellPicks = (socket, status, data) => {
 };
 
 const searchSocket = (idval) => {
-    let rooms = io.sockets.mygameRooms;
-    for (let rm in rooms) {
-        if (rooms[rm].id == idval) {
-            return rooms[rm];
-        }
-    }
+    let rooms = io.sockets.mygameRooms.filter(_room => _room.id == idval);
+    if(rooms.length == 1){ return rooms[0]; }
     return false;
 
 };
@@ -48,7 +44,7 @@ const searchSocket = (idval) => {
 io.on('connection', (socket) => {
     console.log('made socket connection', socket.id);
 
-    socket.on('createRoom', function(data) {
+    socket.on('createRoom', (data) => {
         console.log("Creating for: " + data.player1);
 
         let obj = {
@@ -85,55 +81,51 @@ io.on('connection', (socket) => {
         //socket.broadcast.emit('hi');
     });
 
-    socket.on('joinRoom', function(data) {
+    socket.on('joinRoom', (data) => {
         console.log("Joining for: " + data.player2);
         let acceptID = data.id;
-        if (acceptID.length == 9 && acceptID.includes(".")) {
-            let id = acceptID.split(".");
-            if (id.length == 2 && id[0].length == 4 && id[1].length == 4) {
-                let srch = searchSocket(acceptID);
-                if (srch) {
-                    let ply = srch.players;
-                    let plName = data.player2.toLowerCase();
-                    if ((!srch.preserveReload && ply.length == 1) || (srch.preserveReload && ply.length == 2)) {
-                        if (ply[0].name != plName) {
-                            if (srch.preserveReload) {
-                                console.log("joining room preserve reload");
-                                srch.players[1].sock = socket.id;
-                                srch.preserveReload = false;
-                            } else {
-                                srch.players.push({ sock: socket.id, name: plName });
-                            }
-
-                            let isPuzzle = srch.puzzler ? JSON.parse(JSON.stringify(srch.puzzler)) : false;
-                            if (srch.puzzler) { srch.puzzler = { set: false }; }
-
-                            socket.emit('joined', { players: srch.players, id: acceptID, cells: srch.cellPoints, puzzler: isPuzzle });
-                            socket.broadcast.to(srch.players[0].sock).emit('player2in', { players: srch.players, id: acceptID });
-
+        if ((/^(\d{4}\.\d{4})$/).test(acceptID)) {            
+            let srch = searchSocket(acceptID);
+            if (srch) {
+                let ply = srch.players;
+                let plName = data.player2.toLowerCase();
+                if ((!srch.preserveReload && ply.length == 1) || (srch.preserveReload && ply.length == 2)) {
+                    if (ply[0].name != plName) {
+                        if (srch.preserveReload) {
+                            console.log("joining room preserve reload");
+                            srch.players[1].sock = socket.id;
+                            srch.preserveReload = false;
                         } else {
-                            socket.emit('duplicateName', "");
+                            srch.players.push({ sock: socket.id, name: plName });
                         }
-                    } else if (ply.length > 1) {
-                        socket.emit('playerfull', "");
-                    } else {
-                        socket.emit('noplayer', "");
-                    }
-                } else {
-                    console.log('ID not found');
-                    socket.emit('errorID', { error: "ID not found", rooms: io.sockets.mygameRooms });
-                }
 
+                        let isPuzzle = srch.puzzler ? JSON.parse(JSON.stringify(srch.puzzler)) : false;
+                        if (srch.puzzler) { srch.puzzler = { set: false }; }
+
+                        socket.emit('joined', { players: srch.players, id: acceptID, cells: srch.cellPoints, puzzler: isPuzzle });
+                        socket.broadcast.to(srch.players[0].sock).emit('player2in', { players: srch.players, id: acceptID });
+
+                    } else {
+                        socket.emit('duplicateName', "");
+                    }
+                } else if (ply.length > 1) {
+                    socket.emit('playerfull', "");
+                } else {
+                    socket.emit('noplayer', "");
+                }
             } else {
-                socket.emit('errorID', "You entered an Invalid ID");
+                console.log('ID not found');
+                socket.emit('errorID', { error: "ID not found", rooms: io.sockets.mygameRooms });
             }
+
+            
         } else {
             socket.emit('errorID', "You entered an Invalid ID");
         }
 
     });
 
-    socket.on('cellsPicked', function(data) {
+    socket.on('cellsPicked', (data) => {
         let srch = searchSocket(data.id);
         if (srch) {
             srch.cellPoints = data.cells;
@@ -150,24 +142,24 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on('correctPick', function(data) {
+    socket.on('correctPick', (data) => {
         broadcastCellPicks(socket, "correct", data);
     });
-    socket.on('wrongPick', function(data) {
+    socket.on('wrongPick', (data) => {
         broadcastCellPicks(socket, "wrong", data);
     });
-    socket.on('bombPick', function(data) {
+    socket.on('bombPick', (data) => {
         broadcastCellPicks(socket, "bomb", data);
     });
 
-    socket.on('puzzleBombClear', function(data) {
+    socket.on('puzzleBombClear', (data) => {
         let srch = searchSocket(data.id);
         if (srch) {
             socket.broadcast.to(srch.players[0].sock).emit('puzzBombCleared', '');
         }
     });
 
-    socket.on('puzzleFailed', function(data) {
+    socket.on('puzzleFailed', (data) => {
         let srch = searchSocket(data.id);
         if (srch) {
             socket.broadcast.to(srch.players[0].sock).emit('p2PuzzleFailed', '');
@@ -175,14 +167,14 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on('reqestChallenge', function(data) {
+    socket.on('reqestChallenge', (data) => {
         let srch = searchSocket(data.id);
         if (srch) {
             socket.broadcast.to(srch.players[0].sock).emit('ChlngReqFromPlayer2', { id: srch.id });
         }
     });
 
-    socket.on('acceptRequest', function(data) {
+    socket.on('acceptRequest', (data) => {
         let srch = searchSocket(data.id);
         if (srch) {
             if (srch.players.length == 2) {
@@ -193,7 +185,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('getWord', function(data) {
+    socket.on('getWord', (data) => {
         console.log('word pick....');
         let words = "ability absence academy account accused achieve acquire address advance adviser airline airport alcohol analyst ancient anxious anxiety article assault attract auction average banking balance battery bedroom believe benefit billion brother cabinet captain capital careful caption capture carrier caution ceiling century central chapter charity chicken circuit classic climate collect clothes combine comfort college command comment compact compete compare company concept confirm concert connect content contact control council correct convert country counter crystal culture current decline default deliver defence desktop density destroy develop diamond discuss disease display distant driving drawing dynamic eastern economy element enhance essence evening examine example explain explore express factory extreme failure fashion fiction fifteen finance fishing forever foreign fitness formula fortune forward founder freedom general gateway gallery genetic genuine greater healthy helpful highway himself history housing holiday hundred husband illegal illness imagine include improve inquiry insight install instant involve intense journey justice kitchen kingdom liberty library license machine manager married maximum meaning meeting medical measure message million mineral minimum mistake mission mistake monthly monitor morning musical mystery natural nervous neutral network nuclear nothing nursing obvious offense nursing officer opening operate opinion optical outdoor organic outcome overall outside outlook package pacific partner parking passion patient pattern payment percent pension perform perfect picture pioneer plastic poverty popular precise predict premium prepare present primary printer privacy private problem process profile program product project promise protect protein protest publish quality qualify railway quarter respect restore satisfy science serious section silence speaker special station website welcome western welcome vehicle village uniform";
         let wordlist = words.split(" ");
@@ -212,7 +204,7 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', () => {
         console.log('user disconnected: ' + socket.id);
         socket.broadcast.emit('disconnected', { id: socket.id });
         if (io.sockets.mygameRooms) {
