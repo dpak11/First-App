@@ -23,202 +23,172 @@
  let pl2Puzz = {};
 
 
- if (Modernizr.queryselector) {
-     let allclasses = document.querySelector("html").getAttribute("class");
-     const noFeaturelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
-     let nofeature = noFeaturelist.some(ftr => allclasses.includes(ftr));
+ const getCacheData = () => {
+     let cached = localStorage.getItem("refresher");
+     if (cached) {
+         let cache = JSON.parse(cached);
+         gameID = cache.id;
+         thisPlayer = cache.name;
+         challengerPoints = parseInt(cache.pl1score);
+         temp_total = parseInt(cache.pl2score);
 
-     if (!nofeature) {
-         compatableBrowser = true;
-         if (localStorage.getItem("refresher")) {
-             document.querySelector(".container").classList.remove("show-none");
-             let cache = JSON.parse(localStorage.getItem("refresher"));
-             gameID = cache.id;
-             thisPlayer = cache.name;
-             challengerPoints = parseInt(cache.pl1score);
-             temp_total = parseInt(cache.pl2score);
-             localStorage.clear();
-             singlePlayer = false;
-
-             if (cache.player == "two") {
-                 isChallenger = false;
-                 socketHandlers("join", { name: thisPlayer, id: gameID, preserve: false });
-             } else {
-                 isPreserve = true;
-                 socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
-             }
-
+         if (cache.player == "two") {
+             isChallenger = false;
+             socketHandlers("join", { name: thisPlayer, id: gameID, preserve: false });
          } else {
-             if (window.location.href.includes("playgame?gameid=")) {
-                 let hashid = window.location.href.split("?gameid=");
-                 let _idval = hashid[1].substr(0,9);
-                 if (hashid.length == 2 && _idval.indexOf(".") == 4) {
-                     document.getElementById("joinoraccept").style.display = "block";
-                     document.getElementById("oneplayer").parentNode.style.display = "none";
-                     document.getElementById("acceptBlock").style.display = "block";
-                     document.getElementById("acceptID").value = _idval;
-                     document.getElementById("createBtn").remove();
-                     document.getElementById("joinBtn").remove();
-                     document.querySelector("#joinoraccept span").remove();
-                     document.getElementById("twoplayer").innerText = "Welcome Player-2";
-                     singlePlayer = false;
-
-                 }
-             }
+             isPreserve = true;
+             socketHandlers("create", { name: thisPlayer, preserve: true, id: gameID });
          }
-
-     } else {
-         alert("Sorry, your browser does not support some features.\n Please view this page on the latest version Google Chrome");
+         return true;
      }
+     return false;
+ };
 
- } else {
-     alert("Sorry, you are using an outdated browser");
- }
-
- const oneplayerBtn = document.getElementById("oneplayer");
- const twoplayerBtn = document.getElementById("twoplayer");
- const joinBtn = document.getElementById("joinBtn");
- const readyBtn = document.getElementById("readyBtn");
- const createBtn = document.getElementById("createBtn");
- const anotherReqBtn = document.getElementById("anotherYes");
- const declineBtn = document.getElementById("anotherNo");
- const puzzTry = document.getElementById("trytest");
- const puzzSkip = document.getElementById("skiptest");
- const msgIconBtn = document.getElementById("msgicon");
-
- oneplayerBtn.addEventListener("click", () => {
-     randomizer(11, null);
-     document.getElementById("playmode").remove();
-     document.getElementById("gametable").classList.remove("show-none");
- });
-
- twoplayerBtn.addEventListener("click", () => {
-     document.getElementById("joinoraccept").style.display = "block";
-     document.getElementById("introTipbox").style.display = "block";
-     document.getElementById("oneplayer").parentNode.style.display = "none";
-     singlePlayer = false;
- });
-
- anotherReqBtn.addEventListener("click", () => {
-     if (isChallenger) {
-         document.getElementById("anotherYes").remove();
-         document.getElementById("anotherNo").remove();
-         socket.emit('acceptRequest', { id: gameID });
-         localStorage.setItem("refresher", JSON.stringify({ id: gameID, name: thisPlayer, player: "one", pl1score: challengerPoints, pl2score: totalPoints + temp_total }));
-         setTimeout(function() { window.location.reload(); }, 1000);
-     } else {
-         socket.emit('reqestChallenge', { id: gameID });
-         document.querySelector("#anotherGameOpt h4").innerText = "Waiting to accept...";
-         document.getElementById("anotherYes").remove();
-         document.getElementById("anotherNo").remove();
-     }
-
- });
-
- declineBtn.addEventListener("click", () => {
+ const getURLGameID = () => {
      if (window.location.href.includes("playgame?gameid=")) {
-         let base = window.location.href.split("?gameid=");
-         window.location.href = base[0];
-     } else {
-         window.location.reload();
-     }
- });
-
- if (joinBtn && createBtn) {
-     joinBtn.addEventListener("click", () => {
-         document.getElementById("acceptBlock").style.display = "block";
-     });
-
-     createBtn.addEventListener("click", () => {
-         let name = document.getElementById("username").value.toLowerCase().trim();
-         let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
-         if (pattern.test(name)) {
-             socketHandlers("create", { name: name, preserve: false, id: null });
-         } else {
-             alert("Enter a valid User Name");
-         }
-     });
- }
-
-
- readyBtn.addEventListener("click", () => {
-     let acceptID = document.getElementById("acceptID").value.trim();
-     let name = document.getElementById("username").value.toLowerCase().trim();
-     let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
-     if (pattern.test(name)) {
-         if ((/^(\d{4}\.\d{4})$/).test(acceptID)) {             
-             socketHandlers("join", { name: name, id: acceptID });             
-         } else {
-             alert("Invalid ID");
-         }
-     } else {
-         alert("Enter a valid User Name");
-     }
-
- });
-
- puzzTry.addEventListener("click", () => {
-     if (isChallenger) {
-         socket.emit('getWord', { player: "one" });
-     } else {
-         socket.emit('getWord', { player: "two", id: gameID });
-         scrambleValidate();
-     }
- });
-
- puzzSkip.addEventListener("click", () => {
-     if (isChallenger) {
-         emitPuzzle({ set: false });
-     } else {
-         document.getElementById("puzword").classList.add("show-none");
-         document.getElementById("puzword").classList.remove("puzzTween");
-         msgIconBtn.style.display = "block";
-     }
-
- });
-
- msgIconBtn.addEventListener("click", () => {
-     msgIconBtn.style.display = "none";
-     document.getElementById("puzword").classList.remove("show-none");
-     document.getElementById("plIntroMsg").innerHTML = `<b>${player1Name}</b> has given you a Scrambled Word to solve in <b>25 Seconds</b>. If you get it correct, you will gain all the 10 points and also escape the Red Bomb`;
-
- });
-
-
- const soundCheck = {
-     count: 0,
-     isLoad: function() {
-         this.count++;
-         if (this.count == 3 && compatableBrowser) {
-             if (document.getElementById("playmode")) {
-                 document.getElementById("playmode").classList.remove("show-none");
-             }
+         let hashid = window.location.href.split("?gameid=");
+         let _idval = hashid[1].substr(0, 9);
+         if (hashid.length == 2 && _idval.indexOf(".") == 4) {
+             document.getElementById("joinoraccept").style.display = "block";
+             document.getElementById("oneplayer").parentNode.style.display = "none";
+             document.getElementById("acceptBlock").style.display = "block";
+             document.getElementById("acceptID").value = _idval;
+             document.getElementById("createBtn").remove();
+             document.getElementById("joinBtn").remove();
+             document.querySelector("#joinoraccept span").remove();
+             document.getElementById("twoplayer").innerText = "Welcome Player-2";
+             singlePlayer = false;
 
          }
      }
  };
 
+ const checkBrowserCompatiblity = () => {
+     if (Modernizr.queryselector) {
+         const allclasses = document.querySelector("html").getAttribute("class");
+         const noFeaturelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
+         let nofeature = noFeaturelist.some(ftr => allclasses.includes(ftr));
+         if (nofeature) {
+             return { ok: false, alertMsg: "Sorry, your browser does not support some features.\n Please view this page on the latest Google Chrome" };
+         }
+         compatableBrowser = true;
+         return { ok: true };
+     }
+     return { ok: false, alertMsg: "Sorry, you are using an outdated browser" };
 
- const pointsSound = new Howl({
-     src: ['assets/points.mp3', 'assets/points.wav']
- });
- const missoutSound = new Howl({
-     src: ['assets/missout.mp3', 'assets/missout.wav']
- });
- const bombSound = new Howl({
-     src: ['assets/bombsound.mp3', 'assets/bombsound.wav']
- });
+ };
 
- pointsSound.once('load', function() {
-     soundCheck.isLoad();
- });
- missoutSound.once('load', function() {
-     soundCheck.isLoad();
- });
- bombSound.once('load', function() {
-     soundCheck.isLoad();
- });
 
+ const attachClickEvents = () => {
+     const oneplayerBtn = document.getElementById("oneplayer");
+     const twoplayerBtn = document.getElementById("twoplayer");
+     const joinBtn = document.getElementById("joinBtn");
+     const readyBtn = document.getElementById("readyBtn");
+     const createBtn = document.getElementById("createBtn");
+     const anotherReqBtn = document.getElementById("anotherYes");
+     const declineBtn = document.getElementById("anotherNo");
+     const puzzTry = document.getElementById("trytest");
+     const puzzSkip = document.getElementById("skiptest");
+     const msgIconBtn = document.getElementById("msgicon");
+
+     oneplayerBtn.addEventListener("click", () => {
+         randomizer(11, null);
+         document.getElementById("playmode").remove();
+         document.getElementById("gametable").classList.remove("show-none");
+     });
+
+     twoplayerBtn.addEventListener("click", () => {
+         document.getElementById("joinoraccept").style.display = "block";
+         document.getElementById("introTipbox").style.display = "block";
+         document.getElementById("oneplayer").parentNode.style.display = "none";
+         singlePlayer = false;
+     });
+
+     anotherReqBtn.addEventListener("click", () => {
+         if (isChallenger) {
+             document.getElementById("anotherYes").remove();
+             document.getElementById("anotherNo").remove();
+             socket.emit('acceptRequest', { id: gameID });
+             localStorage.setItem("refresher", JSON.stringify({ id: gameID, name: thisPlayer, player: "one", pl1score: challengerPoints, pl2score: totalPoints + temp_total }));
+             setTimeout(function() { window.location.reload(); }, 1000);
+         } else {
+             socket.emit('reqestChallenge', { id: gameID });
+             document.querySelector("#anotherGameOpt h4").innerText = "Waiting to accept...";
+             document.getElementById("anotherYes").remove();
+             document.getElementById("anotherNo").remove();
+         }
+
+     });
+
+     declineBtn.addEventListener("click", () => {
+         if (window.location.href.includes("playgame?gameid=")) {
+             let base = window.location.href.split("?gameid=");
+             window.location.href = base[0];
+         } else {
+             window.location.reload();
+         }
+     });
+
+     if (joinBtn && createBtn) {
+         joinBtn.addEventListener("click", () => {
+             document.getElementById("acceptBlock").style.display = "block";
+         });
+
+         createBtn.addEventListener("click", () => {
+             let name = document.getElementById("username").value.toLowerCase().trim();
+             let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
+             if (pattern.test(name)) {
+                 socketHandlers("create", { name: name, preserve: false, id: null });
+             } else {
+                 alert("Enter a valid User Name");
+             }
+         });
+     }
+
+
+     readyBtn.addEventListener("click", () => {
+         let acceptID = document.getElementById("acceptID").value.trim();
+         let name = document.getElementById("username").value.toLowerCase().trim();
+         let pattern = new RegExp("^([a-zA-Z0-9_]){2,20}$");
+         if (pattern.test(name)) {
+             if ((/^(\d{4}\.\d{4})$/).test(acceptID)) {
+                 socketHandlers("join", { name: name, id: acceptID });
+             } else {
+                 alert("Invalid ID");
+             }
+         } else {
+             alert("Enter a valid User Name");
+         }
+
+     });
+
+     puzzTry.addEventListener("click", () => {
+         if (isChallenger) {
+             socket.emit('getWord', { player: "one" });
+         } else {
+             socket.emit('getWord', { player: "two", id: gameID });
+             scrambleValidate();
+         }
+     });
+
+     puzzSkip.addEventListener("click", () => {
+         if (isChallenger) {
+             emitPuzzle({ set: false });
+         } else {
+             document.getElementById("puzword").classList.add("show-none");
+             document.getElementById("puzword").classList.remove("puzzTween");
+             msgIconBtn.style.display = "block";
+         }
+
+     });
+
+     msgIconBtn.addEventListener("click", () => {
+         msgIconBtn.style.display = "none";
+         document.getElementById("puzword").classList.remove("show-none");
+         document.getElementById("plIntroMsg").innerHTML = `<b>${player1Name}</b> has given you a Scrambled Word to solve in <b>25 Seconds</b>. If you get it correct, you will gain all the 10 points and also escape the Red Bomb`;
+
+     });
+ };
 
 
 
@@ -798,11 +768,11 @@
          });
          socket.on('errorID', function(data) {
              firstSetup = false;
-             if (data.error) {                 
-                 if(window.location.href.includes("#debugmode")){
-                    alert(JSON.stringify(data.rooms));
-                 }else{
-                    alert(data.error);
+             if (data.error) {
+                 if (window.location.href.includes("#debugmode")) {
+                     alert(JSON.stringify(data.rooms));
+                 } else {
+                     alert(data.error);
                  }
              } else {
                  alert(data);
@@ -837,28 +807,56 @@
 
  }
 
- setTimeout(function() {
 
-    // Certin ISP's such as BSNL is found to inject javascript 'tracking' code into websites that do not have SSL certificates.
-    // The below code tries to detect if any externl JS has been injected into <script> tag.
 
-     let myscripts = document.querySelectorAll("script");
-     let extr_script = false;
-
-     
-     myscripts.forEach(function(s) {
-         if (!s.src.includes("socket.io.js") && !s.src.includes("howler.min.js") && !s.src.includes("modernizr-custom.js") && !s.src.includes("game.js")) {
-             extr_script = true;
-         }
-     });
-
-     // If external script is detected, then display this message to user, and do not initiate the Game. 
-     if (extr_script) {
-         document.body.innerHTML = "<h4>Server is too busy.</h4> <p>Please visit again after sometime, or we recommend you to <b>try from a different ISP (Wifi/3G/4G)</b></p>";
-         document.body.style.padding = "20px";
-
+ const isBrowserCompatible = checkBrowserCompatiblity();
+ if (isBrowserCompatible.ok) {
+    document.querySelector(".container").classList.remove("show-none");
+     if (getCacheData()) {         
+         singlePlayer = false;
+         localStorage.clear();
      } else {
-         document.querySelector(".container").classList.remove("show-none");
+         getURLGameID();
      }
+ } else {
+     alert(isBrowserCompatible.alertMsg);
+ }
 
- }, 2000);
+
+ const soundCheck = {
+     count: 0,
+     isLoad: function() {
+         this.count++;
+         if (this.count == 3 && compatableBrowser) {
+             if (document.getElementById("playmode")) {
+                 document.getElementById("playmode").classList.remove("show-none");
+             }
+
+         }
+     }
+ };
+
+
+ const pointsSound = new Howl({
+     src: ['assets/points.mp3', 'assets/points.wav']
+ });
+ const missoutSound = new Howl({
+     src: ['assets/missout.mp3', 'assets/missout.wav']
+ });
+ const bombSound = new Howl({
+     src: ['assets/bombsound.mp3', 'assets/bombsound.wav']
+ });
+
+ pointsSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+ missoutSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+ bombSound.once('load', function() {
+     soundCheck.isLoad();
+ });
+
+ attachClickEvents();
+
+ 
