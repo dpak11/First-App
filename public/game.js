@@ -69,7 +69,7 @@
          const noFeaturelist = ["no-cssanimations", "no-arrow", "no-classList", "no-opacity", "no-csstransforms", "no-json", "no-localstorage", "no-templatestrings", "no-mediaqueries", "no-csstransforms3d", "no-flexbox", "no-boxshadow", "no-borderradius", "no-placeholder", "no-rgba", "no-cssgradients"];
          let nofeature = noFeaturelist.some(ftr => allclasses.includes(ftr));
          if (nofeature) {
-             return { ok: false, alertMsg: "Sorry, your browser does not support some features.\n Please view this page on the latest Google Chrome" };
+             return { ok: false, alertMsg: "Sorry, your browser does not support some features.\n Please view this page on the latest Google Chrome or Firefox" };
          }
          compatableBrowser = true;
          return { ok: true };
@@ -265,9 +265,9 @@
                          if (challengeSetsCount == 10) {
                              thisElt.classList.add("greenbox", "marked");
                              document.getElementById("challengerInfo").innerHTML = `Good. Now pick the final<br/> <span>Bomber Ball</span>`;
-                         } else if (challengeSetsCount == 11) {
-                             thisElt.classList.add("redbomb", "marked");
+                         } else if (challengeSetsCount == 11) {                             
                              challengeEnabled = false;
+                             thisElt.classList.add("redbomb", "marked");
                              document.getElementById("challengerInfo").innerHTML = `You are almost Done!`;
                              setTimeout(function() {
                                  document.getElementById("puzword").classList.remove("show-none");
@@ -357,21 +357,21 @@
      document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
  };
 
- const pl2PuzzleFail = () => {
-     document.getElementById("puzword").remove();
+ const pl2PuzzleFail = () => {     
      const pcells = document.querySelectorAll("#gametable .row p");
      pcells.forEach(function(elm) {
          if (elm.getAttribute("data-active") == "on") {
              elm.setAttribute("data-active", "off");
          }
      });
-     let bmbCell = "cell" + bomber;
-     document.getElementById(bmbCell).classList.add("redbomb");
+     let bmbCell = "cell" + bomber;     
      bomber = 1000;
+     document.getElementById(bmbCell).classList.add("redbomb");
      document.getElementById("anotherGameOpt").classList.remove("show-none");
      document.getElementById("anotherGameOpt").classList.add("tweenDown");
      document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
      document.getElementById("challengerInfo").innerHTML = `Better Luck next time`;
+     document.getElementById("puzword").remove();
      socket.emit("puzzleFailed", { id: gameID });
 
  };
@@ -387,17 +387,17 @@
              }
          }
      });
-     let bmbCell = "cell" + bomber;
-     document.getElementById(bmbCell).style.opacity = 0.4;
+     let bmbCell = "cell" + bomber;     
      bomber = 1000;
      totalPoints = 10;
      document.querySelector("#points span").innerText = totalPoints + temp_total;
-     pointsSound.play();
+     document.getElementById(bmbCell).style.opacity = 0.4;     
      document.getElementById("anotherGameOpt").classList.remove("show-none");
      document.getElementById("anotherGameOpt").classList.add("tweenDown");
      document.getElementById("challengerInfo").innerHTML = `You gained 10 points and escaped the Red Bomb<br/>
                                     Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
      document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+     pointsSound.play();
      socket.emit("puzzleBombClear", { id: gameID });
 
  };
@@ -406,9 +406,9 @@
      document.getElementById("refreshScramble").removeEventListener("click", refreshScr);
      clearInterval(countDownInterval);
      countDownCount = 25;
-     let p_letters = document.querySelectorAll("#puzword div span");
-     p_letters.forEach(function(sp) {
-         sp.remove();
+     let puzzle_letters = document.querySelectorAll("#puzword div span");
+     puzzle_letters.forEach(function(letter) {
+         letter.remove();
      });
 
      socket.emit('getWord', { player: "one" });
@@ -429,7 +429,6 @@
 
      let _word = isChallenger ? stringCodeMixer("plain", w.word) : pl2Puzz.word;
      let _scramb = isChallenger ? new_w : pl2Puzz.scramb.split("");
-
 
      document.getElementById("thetimer").style.display = "block";
      document.getElementById("thetimer").innerText = countDownCount;
@@ -474,10 +473,10 @@
      document.getElementById("puzword").setAttribute("data-pzw", _word);
      document.querySelector("#puzword div").innerHTML = `<span>${_scramb[0]}</span><span>${_scramb[1]}</span><span>${_scramb[2]}</span><span>${_scramb[3]}</span><span>${_scramb[4]}</span><span>${_scramb[5]}</span><span>${_scramb[6]}</span>`;
      document.getElementById("puzword").setAttribute("data-scramb", String(_scramb.join("")));
-     let p_letters = document.querySelectorAll("#puzword div span");
+     let puzzle_letters = document.querySelectorAll("#puzword div span");
 
-     p_letters.forEach(function(sp) {
-         sp.addEventListener("click", function(el) {
+     puzzle_letters.forEach(function(letter) {
+         letter.addEventListener("click", function(el) {
              if (document.getElementById("refreshScramble")) {
                  document.getElementById("refreshScramble").remove();
                  document.getElementById("temp_or").remove();
@@ -490,7 +489,6 @@
              el.target.remove();
 
              if (_txt.length == 7) {
-                 //let _right = window.atob(document.getElementById("puzword").getAttribute("data-pzw"));
                  let _right = stringCodeMixer("encoded", document.getElementById("puzword").getAttribute("data-pzw"));
                  if (_txt == _right) {
                      clearInterval(countDownInterval);
@@ -589,7 +587,7 @@
  const watchReview = (status, num) => {
      if (status == "correct") {
          let tabcell = "cell" + num;
-         document.getElementById(tabcell).classList.add("zoom");
+         document.getElementById(tabcell).classList.add("zoomout");
          totalPoints++;
          document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> has scored <b>${totalPoints+temp_total}</b> points`;
          pointsSound.play();
@@ -612,9 +610,6 @@
      }
  };
 
-
-
- // Listen for events
 
  function socketHandlers(type, vals) {
      if (socket == null) {
@@ -710,7 +705,7 @@
              xcells.forEach(function(elm) {
                  let clss = elm.getAttribute("class");
                  if (clss.includes("greenbox")) {
-                     elm.classList.add("zoom");
+                     elm.classList.add("zoomout");
                  }
              });
              pointsSound.play();
@@ -812,6 +807,7 @@
  const isBrowserCompatible = checkBrowserCompatiblity();
  if (isBrowserCompatible.ok) {
     document.querySelector(".container").classList.remove("show-none");
+    attachClickEvents();
      if (getCacheData()) {         
          singlePlayer = false;
          localStorage.clear();
@@ -857,6 +853,6 @@
      soundCheck.isLoad();
  });
 
- attachClickEvents();
+ 
 
  

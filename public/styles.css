@@ -47,7 +47,7 @@
         font-weight: bold;
     }
 
-    .marked.zoom {
+    .marked.zoomout {
         transform: scale(0.5);
     }
 
