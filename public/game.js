@@ -257,29 +257,26 @@
      cells.forEach(function(elem) {
          elem.addEventListener("click", function(e) {
              let thisElt = e.target;
-             if (isChallenger && challengeEnabled) {
-                 if (!thisElt.classList.contains("marked")) {
-                     if (challengeSetsCount < 11) {
-                         challengeSetsCount++;
-                         challengerCellsPicked.push(parseInt(thisElt.getAttribute("id").split("cell")[1]));
-                         if (challengeSetsCount == 10) {
-                             thisElt.classList.add("greenbox", "marked");
-                             document.getElementById("challengerInfo").innerHTML = `Good. Now pick the final<br/> <span>Bomber Ball</span>`;
-                         } else if (challengeSetsCount == 11) {                             
-                             challengeEnabled = false;
-                             thisElt.classList.add("redbomb", "marked");
-                             document.getElementById("challengerInfo").innerHTML = `You are almost Done!`;
-                             setTimeout(function() {
-                                 document.getElementById("puzword").classList.remove("show-none");
-                                 document.getElementById("puzword").classList.add("puzzTween");
-                             }, 500);
+             if (isChallenger && challengeEnabled && !thisElt.classList.contains("marked") && challengeSetsCount < 11) {
+                 challengeSetsCount++;
+                 challengerCellsPicked.push(parseInt(thisElt.getAttribute("id").split("cell")[1]));
+                 if (challengeSetsCount == 10) {
+                     thisElt.classList.add("greenbox", "marked");
+                     document.getElementById("challengerInfo").innerHTML = `Good. Now pick the final<br/> <span>Bomber Ball</span>`;
+                 } else if (challengeSetsCount == 11) {
+                     challengeEnabled = false;
+                     thisElt.classList.add("redbomb", "marked");
+                     document.getElementById("challengerInfo").innerHTML = `You are almost Done!`;
+                     setTimeout(function() {
+                         document.getElementById("puzword").classList.remove("show-none");
+                         document.getElementById("puzword").classList.add("puzzTween");
+                     }, 500);
 
-                         } else {
-                             thisElt.classList.add("greenbox", "marked");
-                             document.getElementById("challengerInfo").innerHTML = `Pick <span>${10-challengeSetsCount}</span> more balls`;
-                         }
-                     }
+                 } else {
+                     thisElt.classList.add("greenbox", "marked");
+                     document.getElementById("challengerInfo").innerHTML = `Pick <span>${10-challengeSetsCount}</span> more balls`;
                  }
+
              }
              if (!isChallenger) {
                  let _num = parseInt(thisElt.getAttribute("id").split("cell")[1]);
@@ -357,14 +354,14 @@
      document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
  };
 
- const pl2PuzzleFail = () => {     
+ const pl2PuzzleFail = () => {
      const pcells = document.querySelectorAll("#gametable .row p");
      pcells.forEach(function(elm) {
          if (elm.getAttribute("data-active") == "on") {
              elm.setAttribute("data-active", "off");
          }
      });
-     let bmbCell = "cell" + bomber;     
+     let bmbCell = "cell" + bomber;
      bomber = 1000;
      document.getElementById(bmbCell).classList.add("redbomb");
      document.getElementById("anotherGameOpt").classList.remove("show-none");
@@ -387,11 +384,11 @@
              }
          }
      });
-     let bmbCell = "cell" + bomber;     
+     let bmbCell = "cell" + bomber;
      bomber = 1000;
      totalPoints = 10;
      document.querySelector("#points span").innerText = totalPoints + temp_total;
-     document.getElementById(bmbCell).style.opacity = 0.4;     
+     document.getElementById(bmbCell).style.opacity = 0.4;
      document.getElementById("anotherGameOpt").classList.remove("show-none");
      document.getElementById("anotherGameOpt").classList.add("tweenDown");
      document.getElementById("challengerInfo").innerHTML = `You gained 10 points and escaped the Red Bomb<br/>
@@ -806,9 +803,9 @@
 
  const isBrowserCompatible = checkBrowserCompatiblity();
  if (isBrowserCompatible.ok) {
-    document.querySelector(".container").classList.remove("show-none");
-    attachClickEvents();
-     if (getCacheData()) {         
+     document.querySelector(".container").classList.remove("show-none");
+     attachClickEvents();
+     if (getCacheData()) {
          singlePlayer = false;
          localStorage.clear();
      } else {
@@ -852,7 +849,3 @@
  bombSound.once('load', function() {
      soundCheck.isLoad();
  });
-
- 
-
- 
