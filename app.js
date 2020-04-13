@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
                 }
             } else {
                 console.log('ID not found');
-                socket.emit('errorID', { error: "ID not found", rooms: io.sockets.mygameRooms });
+                socket.emit('errorID', { error: "Game ID expired or does not exist", rooms: io.sockets.mygameRooms });
             }
 
             
