@@ -148,14 +148,24 @@
     #challengerInfo span.link-game {
         font-size: .7em;
         font-weight: normal;
-        color: #743ede;
+        color: #3f0b9b;
         padding: 3px;
-        border-bottom: 2px solid #743ede;
-    }
+        border-bottom: 1px solid #3f0b9b;
+    }    
 
     #challengerInfo span.sm-txt {
         font-weight: normal;
         font-size: .8em;
+    }
+
+    #challengerInfo span.share-game{
+        font-size: .7em;
+        color: #782eaa;
+        padding: 4px 8px;
+        background-color: #dedc36;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
     }
 
     #gameover {

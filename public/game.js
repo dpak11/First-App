@@ -344,11 +344,24 @@
      if (isPreserve) {
          document.getElementById("challengerInfo").innerHTML = `Your Challenge delivered to <b>${secondPlayer}</b>`;
      } else {
-         document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/><a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
-         document.querySelector("#challengerInfo a").addEventListener("click", function(e) {
-             e.preventDefault();
-             return false;
-         });
+        const gameID_btn = navigator.share ? `<span class="share-game">Share Game ID</span>` : `<a href="${gidurl}"><span class="link-game">${gidurl}</span></a>`;
+         document.getElementById("challengerInfo").innerHTML = `Challenge Ready! <br/>Share this <b>Game ID</b> with the person who will play your challenge.<br/>${gameID_btn}`;
+         if(navigator.share){
+            document.querySelector("#challengerInfo .share-game").addEventListener("click", function(e) {
+                 const shareData = {
+                  title: 'Guessing Game',
+                  text: 'Can you play this challenge?',
+                  url: gidurl
+                };
+                navigator.share(shareData);
+             });
+         }else{
+            document.querySelector("#challengerInfo a").addEventListener("click", function(e) {
+                 e.preventDefault();
+                 return false;
+             });
+         }
+         
      }
      let inner = document.getElementById("chgID").innerHTML;
      document.getElementById("chgID").innerHTML = `${inner} / <span>Game ID: ${gameID}</span>`;
