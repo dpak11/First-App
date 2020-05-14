@@ -48,10 +48,10 @@
      if (window.location.href.includes("playgame?gameid=")) {
          let hashid = window.location.href.split("?gameid=");
          let _idval = hashid[1].substr(0, 9);
-         if (hashid.length == 2 && _idval.indexOf(".") == 4) {
-             document.getElementById("joinoraccept").style.display = "block";
+         if (hashid.length == 2 && _idval.indexOf(".") == 4) {             
              document.getElementById("oneplayer").parentNode.style.display = "none";
              document.getElementById("acceptBlock").style.display = "block";
+             document.getElementById("joinoraccept").style.display = "block";
              document.getElementById("acceptID").value = _idval;
              document.getElementById("createBtn").remove();
              document.getElementById("joinBtn").remove();
@@ -374,14 +374,14 @@
              elm.setAttribute("data-active", "off");
          }
      });
-     let bmbCell = "cell" + bomber;
      bomber = 1000;
+     let bmbCell = "cell" + bomber;  
+     document.getElementById("puzword").remove();   
      document.getElementById(bmbCell).classList.add("redbomb");
      document.getElementById("anotherGameOpt").classList.remove("show-none");
      document.getElementById("anotherGameOpt").classList.add("tweenDown");
      document.querySelector("#anotherGameOpt h4").innerText = "Add more points to your score? Ask for a Challenge.";
-     document.getElementById("challengerInfo").innerHTML = `Better Luck next time`;
-     document.getElementById("puzword").remove();
+     document.getElementById("challengerInfo").innerHTML = `Better Luck next time`;     
      socket.emit("puzzleFailed", { id: gameID });
 
  };
@@ -400,13 +400,13 @@
      let bmbCell = "cell" + bomber;
      bomber = 1000;
      totalPoints = 10;
-     document.querySelector("#points span").innerText = totalPoints + temp_total;
      document.getElementById(bmbCell).style.opacity = 0.4;
+     document.querySelector("#points span").innerText = totalPoints + temp_total;     
      document.getElementById("anotherGameOpt").classList.remove("show-none");
      document.getElementById("anotherGameOpt").classList.add("tweenDown");
      document.getElementById("challengerInfo").innerHTML = `You gained 10 points and escaped the Red Bomb<br/>
                                     Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
-     document.querySelector("#anotherGameOpt h4").innerText = "Do you want to take another Challenge?";
+     document.querySelector("#anotherGameOpt h4").innerText = "Do you like to take up another Challenge?";
      pointsSound.play();
      socket.emit("puzzleBombClear", { id: gameID });
 
@@ -483,8 +483,8 @@
      document.getElementById("puzword").setAttribute("data-pzw", _word);
      document.querySelector("#puzword div").innerHTML = `<span>${_scramb[0]}</span><span>${_scramb[1]}</span><span>${_scramb[2]}</span><span>${_scramb[3]}</span><span>${_scramb[4]}</span><span>${_scramb[5]}</span><span>${_scramb[6]}</span>`;
      document.getElementById("puzword").setAttribute("data-scramb", String(_scramb.join("")));
-     let puzzle_letters = document.querySelectorAll("#puzword div span");
 
+     let puzzle_letters = document.querySelectorAll("#puzword div span");
      puzzle_letters.forEach(function(letter) {
          letter.addEventListener("click", function(el) {
              if (document.getElementById("refreshScramble")) {
@@ -595,15 +595,14 @@
 
 
  const watchReview = (status, num) => {
-     if (status == "correct") {
-         let tabcell = "cell" + num;
+     const tabcell = "cell" + num;
+     if (status == "correct") {                 
+         totalPoints++;          
          document.getElementById(tabcell).classList.add("zoomout");
-         totalPoints++;
          document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> has scored <b>${totalPoints+temp_total}</b> points`;
          pointsSound.play();
      }
      if (status == "wrong") {
-         let tabcell = "cell" + num;
          let c = document.getElementById(tabcell);
          c.addEventListener("animationend", function() {
              c.style.opacity = 0;
@@ -611,12 +610,11 @@
          c.classList.add("disappear");
      }
      if (status == "bomb") {
-         let tabcell = "cell" + num;
-         document.getElementById(tabcell).classList.add("apply-shake");
-         bombSound.play();
          challengerPoints = challengerPoints + 5;
+         document.getElementById(tabcell).classList.add("apply-shake");
          document.getElementById("challengerInfo").innerHTML = `<b>${secondPlayer}</b> is Bombed!<br/>
          <b>Your score: ${challengerPoints}</b>, ${secondPlayer}'s score: <b>${totalPoints+temp_total}</b> `;
+         bombSound.play();
      }
  };
 
@@ -650,17 +648,17 @@
 
 
      if (firstSetup) {
-         socket.on('roomcreated', function(data) {
-             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.player}`;
+         socket.on('roomcreated', function(data) {            
              thisPlayer = data.player;
+             gameID = data.id;   
+             isChallenger = true;       
              document.getElementById("playmode").remove();
              document.getElementById("gametable").classList.remove("show-none");
              document.getElementById("GameHeader").classList.remove("show-none");
+             document.getElementById("gametable").classList.remove("align-items-center"); 
+             document.getElementById("chgID").innerHTML = `<b>Players:</b> ${data.player}`;            
              document.querySelector("#points div").innerHTML = "";
-             document.getElementById("gametable").classList.remove("align-items-center");
-             document.getElementById("gametable").style.marginTop = "30px";
-             isChallenger = true;
-             gameID = data.id;
+             document.getElementById("gametable").style.marginTop = "30px";             
              bindCellEvents();
 
          });
