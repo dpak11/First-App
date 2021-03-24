@@ -193,16 +193,7 @@
 
 
  const shrinkRemaining = () => {
-     if (!singlePlayer) {
-         challengerPoints = challengerPoints + 5;
-         document.getElementById("challengerInfo").innerHTML = `<b>Game Over!</b><br/>
-    Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
-     } else {
-         document.querySelector("#gameover span").innerText = `Game Over!
-    You Scored ${totalPoints} points`;
-     }
-
-
+     gameOver();
      let remainingElts = document.querySelectorAll("#gametable .row p");
      remainingElts.forEach(function(e) {
          if (!e.getAttribute("class").includes("disappear") && !e.getAttribute("class").includes("apply-shake")) {
@@ -217,7 +208,18 @@
 
  };
 
- const gameState = {
+ const gameOver = () => {
+    if (!singlePlayer) {
+        challengerPoints = challengerPoints + 5;
+        document.getElementById("challengerInfo").innerHTML = `<b>Game Over!</b><br/>
+   Your Score: ${totalPoints+temp_total}, ${player1Name}'s score: ${challengerPoints}`;
+    } else {
+        document.querySelector("#gameover span").innerText = `Game Over!
+   You Scored ${totalPoints} points`;
+    }
+ };
+
+ const GameState = {
      getPoints: function(e) {
          e.classList.add("greenbox");
          totalPoints++;
@@ -282,7 +284,7 @@
                  let _num = parseInt(thisElt.getAttribute("id").split("cell")[1]);
                  if (thisElt.getAttribute("data-active") == "on") {
                      if (bomber === _num) {
-                         gameState.bombed(thisElt);
+                         GameState.bombed(thisElt);
                          if (!singlePlayer) {
                              socket.emit('bombPick', { cell: _num, id: gameID });
                              document.getElementById("msgicon").remove();
@@ -293,7 +295,7 @@
                          }
 
                      } else {
-                         gameState.getPoints(thisElt);
+                         GameState.getPoints(thisElt);
                          if (!singlePlayer) {
                              if (totalPoints == 9) {
                                  document.getElementById("msgicon").remove();
@@ -315,7 +317,7 @@
                      }
 
                  } else if (thisElt.getAttribute("data-active") != "off") {
-                     gameState.missed(thisElt);
+                     GameState.missed(thisElt);
                      if (!singlePlayer) {
                          socket.emit('wrongPick', { cell: _num, id: gameID });
                      }
